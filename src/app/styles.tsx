@@ -1,25 +1,25 @@
-import tw from "tailwind-styled-components";
+import tw from 'tailwind-styled-components'
 
 export const PageContainer = tw.div`
     flex
     justify-center
     h-screen
     w-screen
-`;
+`
 
 export const PageContent = tw.div`
     flex 
     flex-col
     h-full
     items-center 
-`;
+`
 
 export const Title = tw.h1`
     mt-4
     text-3xl
     font-semibold
     uppercase
-`;
+`
 
 export const MainContainer = tw.div`
     flex
@@ -31,7 +31,7 @@ export const MainContainer = tw.div`
     h-full
     my-5
     rounded
-`;
+`
 
 export const CodeInput = tw.textarea`
     p-2
@@ -52,7 +52,7 @@ export const CodeInput = tw.textarea`
     outline-2
     outline-stone-800
     focus:outline-4
-`;
+`
 
 export const LoadButton = tw.button`
     relative
@@ -87,20 +87,20 @@ export const LoadButton = tw.button`
     hover:before:scale-x-100
 
     before:active:shadow-2xl
-`;
+`
 
 export const TitleLabel = tw.h2`
     font-semibold
     text-stone-200
     text-xl
-`;
+`
 
 export const VerticalSeparator = tw.div`
    bg-stone-500
    h-full
    w-1
    mx-4
-`;
+`
 
 export const DataflowTagInput = tw.input`
     p-2
@@ -119,7 +119,7 @@ export const DataflowTagInput = tw.input`
     outline-1
     outline-stone-800
     focus:outline-2
-`;
+`
 
 export const Header = tw.header`
     flex 
@@ -129,7 +129,7 @@ export const Header = tw.header`
     h-32 
     justify-center 
     items-center
-`;
+`
 
 export const Main = tw.main`
     flex 
@@ -140,7 +140,7 @@ export const Main = tw.main`
     gap-10 
     m-5 
     p-5
-`;
+`
 
 export const Section = tw.section`
     flex 
@@ -149,11 +149,11 @@ export const Section = tw.section`
     h-full 
     gap-4 
     pb-5
-`;
+`
 
 export const Footer = tw.footer`
 
-`;
+`
 
 export const TransformationPlaceholder = tw.div`
     flex
@@ -170,7 +170,7 @@ export const TransformationPlaceholder = tw.div`
     cursor-pointer
     
     hover:bg-stone-400
-`;
+`
 
 export const AddTransformationButton = tw.button`
     bg-stone-100
@@ -181,7 +181,7 @@ export const AddTransformationButton = tw.button`
     duration-300
 
     hover:bg-stone-400
-`;
+`
 
 export const TransformationsList = tw.div`
     flex 
@@ -194,4 +194,4 @@ export const TransformationsList = tw.div`
     text-center 
     p-3 
     items-center
-`;
+`

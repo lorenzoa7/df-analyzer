@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import * as C from "./styles";
-import { BsFillPencilFill } from "react-icons/bs";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { TransformationForm } from "@/components";
+import { TransformationForm } from '@/components'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import { useState } from 'react'
+import { BsFillPencilFill } from 'react-icons/bs'
+import * as C from './styles'
 
 export default function Home() {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
 
   return (
     <C.PageContainer>
@@ -18,7 +18,7 @@ export default function Home() {
           open={open}
           onClose={() => setOpen(false)}
           fullWidth={true}
-          maxWidth={"lg"}
+          maxWidth={'lg'}
         >
           <DialogTitle>Create new transformation</DialogTitle>
           <DialogContent>
@@ -70,5 +70,5 @@ export default function Home() {
         </C.MainContainer>
       </C.PageContent>
     </C.PageContainer>
-  );
+  )
 }
