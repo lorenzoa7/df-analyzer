@@ -1,1 +1,4 @@
-export { default as TransformationForm } from './TransformationForm'
+import TransformationForm from './TransformationForm'
+
+export { TransformationForm }
+

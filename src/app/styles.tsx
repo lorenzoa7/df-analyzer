@@ -175,10 +175,13 @@ export const TransformationPlaceholder = tw.div`
 export const AddTransformationButton = tw.button`
     bg-stone-100
     w-24
+    h-12
     rounded-xl
     text-2xl
     font-bold
     duration-300
+    text-center
+
 
     hover:bg-stone-400
 `

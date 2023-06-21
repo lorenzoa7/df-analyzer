@@ -7,7 +7,7 @@ import InputAttribute from './InputAttribute'
 import * as C from './styles'
 
 export default function InputForm() {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <C.Form>

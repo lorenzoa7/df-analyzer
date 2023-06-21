@@ -1,5 +1,13 @@
 import tw from 'tailwind-styled-components'
 
+// Interfaces
+
+interface IOListProps {
+  type?: string
+}
+
+// Styles
+
 export const Form = tw.form`
     flex
     flex-col
@@ -26,7 +34,7 @@ export const InputGroup = tw.div`
     gap-2
 `
 
-export const IOList = tw.div`
+export const IOList = tw.div<IOListProps>`
 
     ${(props) => (props.type === 'output' && 'h-[28rem]') || 'h-64'}
 
@@ -62,6 +70,7 @@ export const IOPlaceholder = tw.div`
 export const AddIOButton = tw.button`
     bg-stone-600
     w-24
+    h-12
     rounded-xl
     text-2xl
     text-white

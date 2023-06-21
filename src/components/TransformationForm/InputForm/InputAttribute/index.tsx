@@ -1,16 +1,17 @@
+import { InputChangeEvent } from '@/utils/types'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import * as C from './styles'
 
 export default function InputAttribute() {
-  const [type, setType] = useState<string>('TEXT')
-  const [name, setName] = useState<string>('')
+  const [type, setType] = useState('TEXT')
+  const [name, setName] = useState('')
 
   const handleChangeType = (e: SelectChangeEvent): void => {
     setType(e.target.value)
   }
 
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeName = (e: InputChangeEvent): void => {
     setName(e.target.value)
   }
 

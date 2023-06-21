@@ -8,8 +8,8 @@ import OutputForm from './OutputForm'
 import * as C from './styles'
 
 export default function TransformationForm() {
-  const [openInput, setOpenInput] = useState<boolean>(false)
-  const [openOutput, setOpenOutput] = useState<boolean>(false)
+  const [openInput, setOpenInput] = useState(false)
+  const [openOutput, setOpenOutput] = useState(false)
 
   return (
     <C.Form>

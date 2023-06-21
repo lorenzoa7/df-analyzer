@@ -1,6 +1,7 @@
 'use client'
 
 import { TransformationForm } from '@/components'
+import { TextareaChangeEvent } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -9,7 +10,12 @@ import { BsFillPencilFill } from 'react-icons/bs'
 import * as C from './styles'
 
 export default function Home() {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState(false)
+  const [code, setCode] = useState('')
+
+  const handleChangeCode = (e: TextareaChangeEvent) => {
+    setCode(e.target.value)
+  }
 
   return (
     <C.PageContainer>
@@ -36,7 +42,11 @@ export default function Home() {
           <C.Main>
             <C.Section>
               <C.TitleLabel>Code Input</C.TitleLabel>
-              <C.CodeInput placeholder="Paste your code here..." />
+              <C.CodeInput
+                placeholder="Paste your code here..."
+                value={code}
+                onChange={handleChangeCode}
+              />
             </C.Section>
 
             <C.VerticalSeparator />

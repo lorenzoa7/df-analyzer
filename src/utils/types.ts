@@ -1,5 +1,5 @@
-export type InputChangeEvent = React.ChangeEventHandler<HTMLInputElement>
-export type TextareaChangeEvent = React.ChangeEventHandler<HTMLTextAreaElement>
-export type SelectChangeEvent = React.ChangeEventHandler<HTMLSelectElement>
-export type FormEvent = React.FormEventHandler<EventTarget>
-export type MouseEvent = React.MouseEventHandler<HTMLButtonElement>
+export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
+export type TextareaChangeEvent = React.ChangeEvent<HTMLTextAreaElement>
+export type SelectChangeEvent = React.ChangeEvent<HTMLSelectElement>
+export type FormEvent = React.FormEvent<EventTarget>
+export type MouseEvent = React.MouseEvent<HTMLButtonElement>

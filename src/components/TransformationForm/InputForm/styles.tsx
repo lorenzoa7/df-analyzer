@@ -60,6 +60,7 @@ export const IOPlaceholder = tw.div`
 export const AddIOButton = tw.button`
     bg-stone-600
     w-24
+    h-12
     rounded-xl
     text-2xl
     text-white

@@ -7,7 +7,7 @@ import OutputAttribute from './OutputAttribute'
 import * as C from './styles'
 
 export default function OutputForm() {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <C.Form>
