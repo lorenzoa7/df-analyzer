@@ -5,28 +5,26 @@ import { BsFillPencilFill } from 'react-icons/bs'
 import * as C from './styles'
 
 export default function Transformations() {
-  const { setOpenTransformationDialog } = useData()
+  const { setOpenTransformationDialog, appData, setAppData } = useData()
 
   return (
-    <C.TransformationsList>
-      <C.TransformationPlaceholder>
-        <BsFillPencilFill size={20} />
-        Transformation 1
-      </C.TransformationPlaceholder>
-      <C.TransformationPlaceholder>
-        <BsFillPencilFill size={20} />
-        Transformation 2
-      </C.TransformationPlaceholder>
-      <C.TransformationPlaceholder>
-        <BsFillPencilFill size={20} />
-        Transformation 3
-      </C.TransformationPlaceholder>
-
+    <C.TransformationsContainer>
       <C.AddTransformationButton
         onClick={() => setOpenTransformationDialog(true)}
       >
         +
       </C.AddTransformationButton>
-    </C.TransformationsList>
+
+      {appData.transformations.length === 0 ? (
+        <C.Label>Create new transformations</C.Label>
+      ) : (
+        appData.transformations?.map((transformation, index) => (
+          <C.TransformationPlaceholder key={index}>
+            <BsFillPencilFill size={20} />
+            {transformation.name}
+          </C.TransformationPlaceholder>
+        ))
+      )}
+    </C.TransformationsContainer>
   )
 }

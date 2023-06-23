@@ -12,6 +12,7 @@ export const PageContent = tw.div`
     flex-col
     h-full
     items-center 
+    justify-around
 `
 
 export const Title = tw.h1`
@@ -28,7 +29,7 @@ export const MainContainer = tw.div`
     w-[calc(100vw-25vw)]
     bg-stone-800
     p-5
-    h-full
+    h-11/12
     my-5
     rounded
 `
@@ -134,7 +135,7 @@ export const Header = tw.header`
 export const Main = tw.main`
     flex 
     w-full 
-    h-full 
+    h-[500px] 
     justify-center 
     items-center 
     gap-10 
@@ -152,7 +153,10 @@ export const Section = tw.section`
 `
 
 export const Footer = tw.footer`
-
+    w-full
+    flex
+    items-center
+    justify-center
 `
 
 export const TransformationPlaceholder = tw.div`
