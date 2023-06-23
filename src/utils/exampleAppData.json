@@ -1,0 +1,29 @@
+{
+    "dataflow_tag": "Tag",
+    "code": "console.log('Hello World')",
+    "transformations": [
+        {
+            "name": "Transformation 1",
+            "output": {
+                "name": "Output",
+                "attributes": [
+                    {
+                        "name": "Output Attribute 1",
+                        "type": "TEXT"
+                    }
+                ]
+            },
+            "inputs": [
+                {
+                    "name": "Input 1",
+                    "attributes": [
+                        {
+                            "name": "Input Attribute 1",
+                            "type": "TEXT"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

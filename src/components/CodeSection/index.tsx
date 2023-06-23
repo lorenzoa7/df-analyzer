@@ -1,11 +1,11 @@
 'use client'
 
-import useData from '@/hooks/useData'
 import { TextareaChangeEvent } from '@/utils/types'
+import { useState } from 'react'
 import * as C from './styles'
 
 export default function CodeSection() {
-  const { code, setCode } = useData()
+  const [code, setCode] = useState('')
 
   return (
     <C.Section>
