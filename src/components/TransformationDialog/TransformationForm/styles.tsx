@@ -1,8 +1,8 @@
 import tw from 'tailwind-styled-components'
 
-// Interfaces
+// Types
 
-interface IOListProps {
+type IOListProps = {
   type?: string
 }
 

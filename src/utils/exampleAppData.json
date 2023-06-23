@@ -3,11 +3,13 @@
     "code": "console.log('Hello World')",
     "transformations": [
         {
+            "id": 1,
             "name": "Transformation 1",
             "output": {
                 "name": "Output",
                 "attributes": [
                     {
+                        "id": 1,
                         "name": "Output Attribute 1",
                         "type": "TEXT"
                     }
@@ -15,9 +17,11 @@
             },
             "inputs": [
                 {
+                    "id": 1,
                     "name": "Input 1",
                     "attributes": [
                         {
+                            "id": 1,
                             "name": "Input Attribute 1",
                             "type": "TEXT"
                         }

@@ -1,5 +1,11 @@
 import tw from 'tailwind-styled-components'
 
+// Types
+
+type DeleteTransformationProps = {
+  $hover?: boolean
+}
+
 export const TransformationPlaceholder = tw.div`
     flex
     p-5
@@ -13,6 +19,7 @@ export const TransformationPlaceholder = tw.div`
     gap-5
     duration-300
     cursor-pointer
+    [&>*:last-child]:hover:scale-110
     
     hover:bg-stone-400
 `
@@ -59,4 +66,20 @@ export const Label = tw.p`
     items-center
     text-center
     p-3
+`
+
+export const DeleteTransformation = tw.div<DeleteTransformationProps>`
+
+    w-8 
+    h-8 
+    rounded
+    flex 
+    items-center 
+    justify-center
+    text-white
+    duration-150
+    cursor-pointer
+    bg-stone-700
+    hover:bg-stone-900
+    scale-0
 `

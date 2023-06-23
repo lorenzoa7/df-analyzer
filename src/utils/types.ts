@@ -15,6 +15,7 @@ export type DataFlow = {
 }
 
 export type Transformation = {
+  id: number
   name: string
   output: Output
   inputs: Input[]
@@ -26,11 +27,13 @@ export type Output = {
 }
 
 export type Input = {
+  id: number
   name: string
   attributes: Attribute[]
 }
 
 export type Attribute = {
+  id: number
   name: string
   type: string
 }
