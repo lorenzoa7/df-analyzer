@@ -1,4 +1,6 @@
-import TransformationForm from './TransformationForm'
+import CodeSection from './CodeSection'
+import TransformationDialog from './TransformationDialog'
+import Transformations from './Transformations'
 
-export { TransformationForm }
+export { CodeSection, TransformationDialog, Transformations }
 

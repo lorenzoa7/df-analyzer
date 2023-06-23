@@ -1,3 +1,4 @@
+import { DataProvider } from '@/contexts/data'
 import '@/styles/globals.css'
 
 export const metadata = {
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <DataProvider>{children}</DataProvider>
+      </body>
     </html>
   )
 }

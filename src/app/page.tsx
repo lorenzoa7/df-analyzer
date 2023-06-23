@@ -1,36 +1,15 @@
-'use client'
-
-import { TransformationForm } from '@/components'
-import { TextareaChangeEvent } from '@/utils/types'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import { useState } from 'react'
-import { BsFillPencilFill } from 'react-icons/bs'
+import {
+  CodeSection,
+  TransformationDialog,
+  Transformations,
+} from '@/components'
 import * as C from './styles'
 
 export default function Home() {
-  const [open, setOpen] = useState(false)
-  const [code, setCode] = useState('')
-
-  const handleChangeCode = (e: TextareaChangeEvent) => {
-    setCode(e.target.value)
-  }
-
   return (
     <C.PageContainer>
       <C.PageContent>
-        <Dialog
-          open={open}
-          onClose={() => setOpen(false)}
-          fullWidth={true}
-          maxWidth={'lg'}
-        >
-          <DialogTitle>Create new transformation</DialogTitle>
-          <DialogContent>
-            <TransformationForm />
-          </DialogContent>
-        </Dialog>
+        <TransformationDialog />
 
         <C.Title>Df-Analyzer</C.Title>
         <C.MainContainer>
@@ -40,37 +19,13 @@ export default function Home() {
           </C.Header>
 
           <C.Main>
-            <C.Section>
-              <C.TitleLabel>Code Input</C.TitleLabel>
-              <C.CodeInput
-                placeholder="Paste your code here..."
-                value={code}
-                onChange={handleChangeCode}
-              />
-            </C.Section>
+            <CodeSection />
 
             <C.VerticalSeparator />
 
             <C.Section>
               <C.TitleLabel>Transformations</C.TitleLabel>
-              <C.TransformationsList>
-                <C.TransformationPlaceholder>
-                  <BsFillPencilFill size={20} />
-                  Transformation 1
-                </C.TransformationPlaceholder>
-                <C.TransformationPlaceholder>
-                  <BsFillPencilFill size={20} />
-                  Transformation 2
-                </C.TransformationPlaceholder>
-                <C.TransformationPlaceholder>
-                  <BsFillPencilFill size={20} />
-                  Transformation 3
-                </C.TransformationPlaceholder>
-
-                <C.AddTransformationButton onClick={() => setOpen(true)}>
-                  +
-                </C.AddTransformationButton>
-              </C.TransformationsList>
+              <Transformations />
             </C.Section>
           </C.Main>
 
