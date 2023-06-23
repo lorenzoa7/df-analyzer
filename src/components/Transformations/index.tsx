@@ -1,14 +1,25 @@
 'use client'
 
+import { TransformationDialog } from '@/components'
 import { findHighestTransformationId } from '@/functions'
 import useData from '@/hooks/useData'
 import { MouseEvent, Transformation } from '@/utils/types'
+import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import * as C from './styles'
 
 export default function Transformations() {
   const { setOpenTransformationDialog, appData, setAppData } = useData()
+  const [transformationData, setTransformationData] = useState<Transformation>({
+    id: findHighestTransformationId(appData.transformations) + 1,
+    name: '',
+    output: {
+      name: '',
+      attributes: [],
+    },
+    inputs: [],
+  })
 
   const addTransformation = () => {
     const transformationsList = appData.transformations
@@ -37,8 +48,19 @@ export default function Transformations() {
     setAppData({ ...appData, transformations: updatedTransformations })
   }
 
+  const editTransformation = ({ id, name, output, inputs }: Transformation) => {
+    setTransformationData({ id, name, output, inputs })
+    setOpenTransformationDialog(true)
+  }
+
   return (
     <C.TransformationsContainer>
+      <TransformationDialog
+        id={transformationData?.id}
+        name={transformationData?.name}
+        output={transformationData?.output}
+        inputs={transformationData?.inputs}
+      />
       <C.AddTransformationButton onClick={addTransformation}>
         +
       </C.AddTransformationButton>
@@ -49,7 +71,7 @@ export default function Transformations() {
         appData.transformations?.map((transformation, index) => (
           <C.TransformationPlaceholder
             key={index}
-            onClick={() => console.log('clicou')}
+            onClick={() => editTransformation(transformation)}
           >
             <BsFillPencilFill size={20} />
             <span className="w-full text-start">{transformation.name}</span>

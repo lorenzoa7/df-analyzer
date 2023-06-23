@@ -1,16 +1,10 @@
-import {
-  CodeSection,
-  TransformationDialog,
-  Transformations,
-} from '@/components'
+import { CodeSection, Transformations } from '@/components'
 import * as C from './styles'
 
 export default function Home() {
   return (
     <C.PageContainer>
       <C.PageContent>
-        <TransformationDialog />
-
         <C.Title>Df-Analyzer</C.Title>
         <C.MainContainer>
           <C.Header>

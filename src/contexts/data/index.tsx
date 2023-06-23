@@ -1,5 +1,6 @@
 'use client'
 
+import { getLocalStorage, setLocalStorage } from '@/functions'
 import { DataFlow } from '@/utils/types'
 import {
   Dispatch,
@@ -32,15 +33,11 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const [appData, setAppData] = useState(
-    localStorage.getItem('appData')
-      ? JSON.parse(localStorage.getItem('appData')!)
-      : defaultAppData,
+    getLocalStorage('app_data') ? getLocalStorage('app_data') : defaultAppData,
   )
 
   const saveAppData = useCallback(() => {
-    const jsonAppData = JSON.stringify(appData)
-
-    localStorage.setItem('appData', jsonAppData)
+    setLocalStorage('app_data', appData)
   }, [appData])
 
   useEffect(() => saveAppData(), [saveAppData])
