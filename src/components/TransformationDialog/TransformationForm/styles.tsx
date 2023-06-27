@@ -28,7 +28,7 @@ export const Input = tw.input`
     rounded
 `
 
-export const InputGroup = tw.div`
+export const DivGroup = tw.div`
     flex
     flex-col
     gap-2

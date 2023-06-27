@@ -1,16 +1,10 @@
 'use client'
 
 import useTransformation from '@/hooks/useTransformation'
-import { Transformation } from '@/utils/types'
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 import TransformationForm from './TransformationForm'
 
-export default function TransformationDialog({
-  id,
-  name,
-  output,
-  inputs,
-}: Transformation) {
+export default function TransformationDialog() {
   const { openTransformationDialog, setOpenTransformationDialog } =
     useTransformation()
 
@@ -23,12 +17,7 @@ export default function TransformationDialog({
     >
       <DialogTitle>Create new transformation</DialogTitle>
       <DialogContent>
-        <TransformationForm
-          id={id}
-          name={name}
-          output={output}
-          inputs={inputs}
-        />
+        <TransformationForm />
       </DialogContent>
     </Dialog>
   )

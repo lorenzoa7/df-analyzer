@@ -5,16 +5,17 @@ import { findHighestTransformationId } from '@/functions'
 import useGeneral from '@/hooks/useGeneral'
 import useTransformation from '@/hooks/useTransformation'
 import { MouseEvent, Transformation } from '@/utils/types'
-import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import * as C from './styles'
 
 export default function Transformations() {
-  const { setOpenTransformationDialog } = useTransformation()
+  const {
+    setOpenTransformationDialog,
+    selectedTransformation,
+    setSelectedTransformation,
+  } = useTransformation()
   const { appData, setAppData } = useGeneral()
-  const [selectedTransformation, setSelectedTransformation] =
-    useState<Transformation | null>(null)
 
   const addTransformation = () => {
     const transformationsList = appData.transformations
@@ -50,12 +51,7 @@ export default function Transformations() {
 
   return (
     <C.TransformationsContainer>
-      <TransformationDialog
-        id={selectedTransformation?.id!}
-        name={selectedTransformation?.name!}
-        output={selectedTransformation?.output!}
-        inputs={selectedTransformation?.inputs!}
-      />
+      <TransformationDialog />
       <C.AddTransformationButton onClick={addTransformation}>
         +
       </C.AddTransformationButton>

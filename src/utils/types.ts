@@ -5,6 +5,7 @@ export type TextareaChangeEvent = React.ChangeEvent<HTMLTextAreaElement>
 export type SelectChangeEvent = React.ChangeEvent<HTMLSelectElement>
 export type FormEvent = React.FormEvent<EventTarget>
 export type MouseEvent = React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+export type KeyboardEvent = React.KeyboardEvent<HTMLInputElement>
 
 // DataFlow Data
 

@@ -1,8 +1,16 @@
+import useGeneral from '@/hooks/useGeneral'
+import { Transformation } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 export type TransformationContextProps = {
   openTransformationDialog: boolean
   setOpenTransformationDialog: Dispatch<SetStateAction<boolean>>
+  selectedTransformation: Transformation | null
+  setSelectedTransformation: Dispatch<SetStateAction<Transformation | null>>
+  updateTransformation: (
+    id: number,
+    updatedFields: Partial<Transformation>,
+  ) => void
 }
 
 const TransformationContext = createContext<TransformationContextProps>(
@@ -14,14 +22,40 @@ const TransformationProvider = ({
 }: {
   children: React.ReactNode
 }) => {
+  const { setAppData } = useGeneral()
+
   const [openTransformationDialog, setOpenTransformationDialog] =
     useState(false)
+
+  const [selectedTransformation, setSelectedTransformation] =
+    useState<Transformation | null>(null)
+
+  const updateTransformation = (
+    id: number,
+    updatedFields: Partial<Transformation>,
+  ): void => {
+    setAppData((prevData) => {
+      const updatedTransformations = prevData.transformations.map(
+        (transformation) => {
+          if (transformation.id === id) {
+            return { ...transformation, ...updatedFields }
+          }
+          return transformation
+        },
+      )
+
+      return { ...prevData, transformations: updatedTransformations }
+    })
+  }
 
   return (
     <TransformationContext.Provider
       value={{
         openTransformationDialog,
         setOpenTransformationDialog,
+        selectedTransformation,
+        setSelectedTransformation,
+        updateTransformation,
       }}
     >
       {children}

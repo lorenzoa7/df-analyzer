@@ -1,4 +1,6 @@
-import { Transformation } from '@/utils/types'
+import useGeneral from '@/hooks/useGeneral'
+import useTransformation from '@/hooks/useTransformation'
+import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -8,17 +10,39 @@ import InputForm from './InputForm'
 import OutputForm from './OutputForm'
 import * as C from './styles'
 
-export default function TransformationForm({
-  id,
-  name,
-  output,
-  inputs,
-}: Transformation) {
+type FormDataProps = {
+  name: string
+}
+
+export default function TransformationForm() {
   const [openInput, setOpenInput] = useState(false)
   const [openOutput, setOpenOutput] = useState(false)
+  const { selectedTransformation, updateTransformation } = useTransformation()
+  const { setAppData } = useGeneral()
+  const [formData, setFormData] = useState<FormDataProps>({
+    name: selectedTransformation?.name!,
+  })
+
+  const handleChange = (e: InputChangeEvent) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
+
+  const handleBlur = () => {
+    updateTransformation(selectedTransformation?.id!, formData)
+  }
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const target = e.target as HTMLInputElement
+      target.blur()
+    }
+  }
 
   return (
     <C.Form>
+      {/* Dialogs */}
       <Dialog
         open={openInput}
         onClose={() => setOpenInput(false)}
@@ -43,11 +67,19 @@ export default function TransformationForm({
         </DialogContent>
       </Dialog>
 
-      <C.InputGroup>
+      {/* Forms */}
+      <C.DivGroup>
         <C.Label>Name</C.Label>
-        <C.Input type="text" />
-      </C.InputGroup>
-      <C.InputGroup>
+        <C.Input
+          name="name"
+          value={formData.name}
+          type="text"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </C.DivGroup>
+      <C.DivGroup>
         <C.Label>Inputs</C.Label>
         <C.IOList>
           <C.IOPlaceholder>
@@ -63,14 +95,14 @@ export default function TransformationForm({
             +
           </C.AddIOButton>
         </C.IOList>
-      </C.InputGroup>
+      </C.DivGroup>
 
-      <C.InputGroup>
+      <C.DivGroup>
         <C.Label>Outputs</C.Label>
         <C.IOList type="output">
           <OutputForm />
         </C.IOList>
-      </C.InputGroup>
+      </C.DivGroup>
     </C.Form>
   )
 }
