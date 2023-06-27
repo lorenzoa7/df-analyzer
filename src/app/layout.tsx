@@ -1,4 +1,4 @@
-import { DataProvider } from '@/contexts/data'
+import { AppProvider } from '@/contexts/'
 import '@/styles/globals.css'
 
 export const metadata = {
@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <DataProvider>{children}</DataProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   )

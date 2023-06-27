@@ -1,3 +1,4 @@
+import { Transformation } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -7,7 +8,12 @@ import InputForm from './InputForm'
 import OutputForm from './OutputForm'
 import * as C from './styles'
 
-export default function TransformationForm() {
+export default function TransformationForm({
+  id,
+  name,
+  output,
+  inputs,
+}: Transformation) {
   const [openInput, setOpenInput] = useState(false)
   const [openOutput, setOpenOutput] = useState(false)
 

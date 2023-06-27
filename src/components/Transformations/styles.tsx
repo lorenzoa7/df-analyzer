@@ -6,7 +6,7 @@ type DeleteTransformationProps = {
   $hover?: boolean
 }
 
-export const TransformationPlaceholder = tw.div`
+export const Transformation = tw.div`
     flex
     p-5
     items-center

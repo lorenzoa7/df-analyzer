@@ -2,7 +2,8 @@
 
 import { TransformationDialog } from '@/components'
 import { findHighestTransformationId } from '@/functions'
-import useData from '@/hooks/useData'
+import useGeneral from '@/hooks/useGeneral'
+import useTransformation from '@/hooks/useTransformation'
 import { MouseEvent, Transformation } from '@/utils/types'
 import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
@@ -10,16 +11,10 @@ import { BsFillPencilFill } from 'react-icons/bs'
 import * as C from './styles'
 
 export default function Transformations() {
-  const { setOpenTransformationDialog, appData, setAppData } = useData()
-  const [transformationData, setTransformationData] = useState<Transformation>({
-    id: findHighestTransformationId(appData.transformations) + 1,
-    name: '',
-    output: {
-      name: '',
-      attributes: [],
-    },
-    inputs: [],
-  })
+  const { setOpenTransformationDialog } = useTransformation()
+  const { appData, setAppData } = useGeneral()
+  const [selectedTransformation, setSelectedTransformation] =
+    useState<Transformation | null>(null)
 
   const addTransformation = () => {
     const transformationsList = appData.transformations
@@ -48,18 +43,18 @@ export default function Transformations() {
     setAppData({ ...appData, transformations: updatedTransformations })
   }
 
-  const editTransformation = ({ id, name, output, inputs }: Transformation) => {
-    setTransformationData({ id, name, output, inputs })
+  const editTransformation = (transformation: Transformation) => {
+    setSelectedTransformation(transformation)
     setOpenTransformationDialog(true)
   }
 
   return (
     <C.TransformationsContainer>
       <TransformationDialog
-        id={transformationData?.id}
-        name={transformationData?.name}
-        output={transformationData?.output}
-        inputs={transformationData?.inputs}
+        id={selectedTransformation?.id!}
+        name={selectedTransformation?.name!}
+        output={selectedTransformation?.output!}
+        inputs={selectedTransformation?.inputs!}
       />
       <C.AddTransformationButton onClick={addTransformation}>
         +
@@ -69,7 +64,7 @@ export default function Transformations() {
         <C.Label>Create new transformations</C.Label>
       ) : (
         appData.transformations?.map((transformation, index) => (
-          <C.TransformationPlaceholder
+          <C.Transformation
             key={index}
             onClick={() => editTransformation(transformation)}
           >
@@ -80,7 +75,7 @@ export default function Transformations() {
             >
               <AiFillDelete size={'75%'} />
             </C.DeleteTransformation>
-          </C.TransformationPlaceholder>
+          </C.Transformation>
         ))
       )}
     </C.TransformationsContainer>

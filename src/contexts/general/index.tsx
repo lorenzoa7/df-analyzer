@@ -1,5 +1,3 @@
-'use client'
-
 import { getLocalStorage, setLocalStorage } from '@/functions'
 import { DataFlow } from '@/utils/types'
 import {
@@ -11,21 +9,18 @@ import {
   useState,
 } from 'react'
 
-export type DataContextProps = {
-  openTransformationDialog: boolean
-  setOpenTransformationDialog: Dispatch<SetStateAction<boolean>>
+export type GeneralContextProps = {
   appData: DataFlow
   setAppData: Dispatch<SetStateAction<DataFlow>>
   defaultAppData: DataFlow
   saveAppData: () => void
 }
 
-const DataContext = createContext<DataContextProps>({} as DataContextProps)
+const GeneralContext = createContext<GeneralContextProps>(
+  {} as GeneralContextProps,
+)
 
-const DataProvider = ({ children }: { children: React.ReactNode }) => {
-  const [openTransformationDialog, setOpenTransformationDialog] =
-    useState(false)
-
+const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
   const defaultAppData: DataFlow = {
     dataflow_tag: '',
     code: '',
@@ -43,10 +38,8 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => saveAppData(), [saveAppData])
 
   return (
-    <DataContext.Provider
+    <GeneralContext.Provider
       value={{
-        openTransformationDialog,
-        setOpenTransformationDialog,
         appData,
         setAppData,
         defaultAppData,
@@ -54,9 +47,9 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       {children}
-    </DataContext.Provider>
+    </GeneralContext.Provider>
   )
 }
 
-export { DataContext, DataProvider }
+export { GeneralContext, GeneralProvider }
 
