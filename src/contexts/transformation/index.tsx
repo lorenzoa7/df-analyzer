@@ -7,6 +7,7 @@ export type TransformationContextProps = {
   setOpenTransformationDialog: Dispatch<SetStateAction<boolean>>
   selectedTransformation: Transformation | null
   setSelectedTransformation: Dispatch<SetStateAction<Transformation | null>>
+  getTransformationById: (id: number) => Transformation | undefined
   updateTransformation: (
     id: number,
     updatedFields: Partial<Transformation>,
@@ -22,13 +23,19 @@ const TransformationProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const { setAppData } = useGeneral()
+  const { appData, setAppData } = useGeneral()
 
   const [openTransformationDialog, setOpenTransformationDialog] =
     useState(false)
 
   const [selectedTransformation, setSelectedTransformation] =
     useState<Transformation | null>(null)
+
+  const getTransformationById = (id: number): Transformation | undefined => {
+    return appData.transformations.find(
+      (transformation) => transformation.id === id,
+    )
+  }
 
   const updateTransformation = (
     id: number,
@@ -46,6 +53,13 @@ const TransformationProvider = ({
 
       return { ...prevData, transformations: updatedTransformations }
     })
+
+    setSelectedTransformation((prevSelectedTransformation) => {
+      if (prevSelectedTransformation && prevSelectedTransformation.id === id) {
+        return { ...prevSelectedTransformation, ...updatedFields }
+      }
+      return prevSelectedTransformation
+    })
   }
 
   return (
@@ -55,6 +69,7 @@ const TransformationProvider = ({
         setOpenTransformationDialog,
         selectedTransformation,
         setSelectedTransformation,
+        getTransformationById,
         updateTransformation,
       }}
     >

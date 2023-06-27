@@ -1,3 +1,4 @@
+import useAttribute from '@/hooks/useAttribute'
 import useTransformation from '@/hooks/useTransformation'
 import { InputChangeEvent, KeyboardEvent, Output } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
@@ -14,6 +15,7 @@ type FormDataProps = {
 
 export default function OutputForm() {
   const { updateTransformation, selectedTransformation } = useTransformation()
+  const { createOutputAttribute } = useAttribute()
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.output.name!,
@@ -40,6 +42,10 @@ export default function OutputForm() {
     }
   }
 
+  const handleCreateAttribute = () => {
+    createOutputAttribute(selectedTransformation!.id)
+  }
+
   return (
     <C.Form>
       {/* Forms */}
@@ -56,20 +62,22 @@ export default function OutputForm() {
       </C.InputGroup>
       <C.InputGroup>
         <C.Label>Attributes</C.Label>
-        <C.IOList>
-          <C.IOPlaceholder>
-            <BsFillPencilFill size={20} />
-            Output Attribute 1
-          </C.IOPlaceholder>
-          <C.IOPlaceholder>
-            <BsFillPencilFill size={20} />
-            Output Attribute 2
-          </C.IOPlaceholder>
+        <C.OutputAttributeList>
+          {selectedTransformation?.output.attributes.length === 0 ? (
+            <C.EmptyLabel>Create new attributes</C.EmptyLabel>
+          ) : (
+            selectedTransformation?.output.attributes.map((attribute) => (
+              <C.OutputAttribute key={attribute.id}>
+                <BsFillPencilFill size={20} />
+                {attribute.name}
+              </C.OutputAttribute>
+            ))
+          )}
 
-          <C.AddIOButton type="button" onClick={() => setOpen(true)}>
+          <C.AddAttributeButton type="button" onClick={handleCreateAttribute}>
             +
-          </C.AddIOButton>
-        </C.IOList>
+          </C.AddAttributeButton>
+        </C.OutputAttributeList>
       </C.InputGroup>
 
       {/* Dialogs */}

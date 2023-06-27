@@ -1,7 +1,7 @@
 'use client'
 
 import { TransformationDialog } from '@/components'
-import { findHighestTransformationId } from '@/functions'
+import { findHighestId } from '@/functions'
 import useGeneral from '@/hooks/useGeneral'
 import useTransformation from '@/hooks/useTransformation'
 import { MouseEvent, Transformation } from '@/utils/types'
@@ -20,7 +20,7 @@ export default function Transformations() {
   const addTransformation = () => {
     const transformationsList = appData.transformations
     const newTransformation: Transformation = {
-      id: findHighestTransformationId(transformationsList) + 1,
+      id: findHighestId(transformationsList) + 1,
       name: 'New Transformation',
       output: {
         name: '',
@@ -59,9 +59,9 @@ export default function Transformations() {
       {appData.transformations.length === 0 ? (
         <C.Label>Create new transformations</C.Label>
       ) : (
-        appData.transformations?.map((transformation, index) => (
+        appData.transformations?.map((transformation) => (
           <C.Transformation
-            key={index}
+            key={transformation.id}
             onClick={() => editTransformation(transformation)}
           >
             <BsFillPencilFill size={20} />

@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components'
 
-export const Form = tw.form`
+export const Form = tw.div`
     flex
     flex-col
     p-5
@@ -26,7 +26,7 @@ export const InputGroup = tw.div`
     gap-2
 `
 
-export const IOList = tw.div`
+export const OutputAttributeList = tw.div`
     flex 
     flex-col 
     gap-3
@@ -39,7 +39,7 @@ export const IOList = tw.div`
     items-center
 `
 
-export const IOPlaceholder = tw.div`
+export const OutputAttribute = tw.div`
     flex
     p-5
     items-center
@@ -57,7 +57,7 @@ export const IOPlaceholder = tw.div`
     hover:bg-stone-900
 `
 
-export const AddIOButton = tw.button`
+export const AddAttributeButton = tw.button`
     bg-stone-600
     w-24
     h-12
@@ -68,4 +68,16 @@ export const AddIOButton = tw.button`
     duration-300
 
     hover:bg-stone-900
+`
+export const EmptyLabel = tw.p`
+    bg-stone-600/80
+    text-white
+    h-12
+    rounded
+    font-semibold
+    uppercase
+    flex
+    items-center
+    text-center
+    p-3
 `

@@ -1,6 +1,6 @@
-import findHighestTransformationId from './findHighestTransformationId'
+import findHighestId from './findHighestId'
 import getLocalStorage from './getLocalStorage'
 import setLocalStorage from './setLocalStorage'
 
-export { findHighestTransformationId, getLocalStorage, setLocalStorage }
+export { findHighestId, getLocalStorage, setLocalStorage }
 
