@@ -1,4 +1,3 @@
-import useGeneral from '@/hooks/useGeneral'
 import useTransformation from '@/hooks/useTransformation'
 import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
@@ -16,9 +15,7 @@ type FormDataProps = {
 
 export default function TransformationForm() {
   const [openInput, setOpenInput] = useState(false)
-  const [openOutput, setOpenOutput] = useState(false)
   const { selectedTransformation, updateTransformation } = useTransformation()
-  const { setAppData } = useGeneral()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.name!,
   })
@@ -42,31 +39,6 @@ export default function TransformationForm() {
 
   return (
     <C.Form>
-      {/* Dialogs */}
-      <Dialog
-        open={openInput}
-        onClose={() => setOpenInput(false)}
-        fullWidth={true}
-        maxWidth={'md'}
-      >
-        <DialogTitle>Set new input</DialogTitle>
-        <DialogContent>
-          <InputForm />
-        </DialogContent>
-      </Dialog>
-
-      <Dialog
-        open={openOutput}
-        onClose={() => setOpenOutput(false)}
-        fullWidth={true}
-        maxWidth={'md'}
-      >
-        <DialogTitle>Set new output</DialogTitle>
-        <DialogContent>
-          <OutputForm />
-        </DialogContent>
-      </Dialog>
-
       {/* Forms */}
       <C.DivGroup>
         <C.Label>Name</C.Label>
@@ -103,6 +75,19 @@ export default function TransformationForm() {
           <OutputForm />
         </C.IOList>
       </C.DivGroup>
+
+      {/* Dialogs */}
+      <Dialog
+        open={openInput}
+        onClose={() => setOpenInput(false)}
+        fullWidth={true}
+        maxWidth={'md'}
+      >
+        <DialogTitle>Set new input</DialogTitle>
+        <DialogContent>
+          <InputForm />
+        </DialogContent>
+      </Dialog>
     </C.Form>
   )
 }
