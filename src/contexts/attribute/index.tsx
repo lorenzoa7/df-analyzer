@@ -15,11 +15,12 @@ type InputUpdateAttributeProps = {
 }
 
 export type AttributeContextProps = {
+  createOutputAttribute: (id: number) => void
   updateOutputAttribute: ({
     id,
     updatedFields,
   }: OutputUpdateAttributeProps) => void
-  createOutputAttribute: (id: number) => void
+  deleteOutputAttribute: (tranformationId: number, attributeId: number) => void
 }
 
 const AttributeContext = createContext<AttributeContextProps>(
@@ -66,11 +67,32 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const deleteOutputAttribute = (
+    transformationId: number,
+    attributeId: number,
+  ): void => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      const attributesList = transformation.output.attributes
+      const updatedAttributes = attributesList.filter(
+        (attribute) => attribute.id !== attributeId,
+      )
+
+      const editedOutput: Output = {
+        ...transformation.output,
+        attributes: updatedAttributes,
+      }
+
+      updateTransformation(transformationId, { output: editedOutput })
+    }
+  }
+
   return (
     <AttributeContext.Provider
       value={{
         createOutputAttribute,
         updateOutputAttribute,
+        deleteOutputAttribute,
       }}
     >
       {children}

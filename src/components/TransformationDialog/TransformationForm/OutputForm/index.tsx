@@ -1,10 +1,16 @@
 import useAttribute from '@/hooks/useAttribute'
 import useTransformation from '@/hooks/useTransformation'
-import { InputChangeEvent, KeyboardEvent, Output } from '@/utils/types'
+import {
+  InputChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  Output,
+} from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useState } from 'react'
+import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import OutputAttribute from './OutputAttribute'
 import * as C from './styles'
@@ -15,7 +21,7 @@ type FormDataProps = {
 
 export default function OutputForm() {
   const { updateTransformation, selectedTransformation } = useTransformation()
-  const { createOutputAttribute } = useAttribute()
+  const { createOutputAttribute, deleteOutputAttribute } = useAttribute()
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.output.name!,
@@ -46,6 +52,12 @@ export default function OutputForm() {
     createOutputAttribute(selectedTransformation!.id)
   }
 
+  const handleDeleteAttribute = (e: MouseEvent, attributeId: number) => {
+    e.stopPropagation()
+
+    deleteOutputAttribute(selectedTransformation!.id, attributeId)
+  }
+
   return (
     <C.Form>
       {/* Forms */}
@@ -69,7 +81,12 @@ export default function OutputForm() {
             selectedTransformation?.output.attributes.map((attribute) => (
               <C.OutputAttribute key={attribute.id}>
                 <BsFillPencilFill size={20} />
-                {attribute.name}
+                <span className="w-full text-start">{attribute.name}</span>
+                <C.DeleteAttribute
+                  onClick={(e) => handleDeleteAttribute(e, attribute.id)}
+                >
+                  <AiFillDelete size={'75%'} />
+                </C.DeleteAttribute>
               </C.OutputAttribute>
             ))
           )}

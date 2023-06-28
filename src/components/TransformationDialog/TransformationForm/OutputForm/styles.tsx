@@ -1,5 +1,13 @@
 import tw from 'tailwind-styled-components'
 
+// Types
+
+type DeleteAttributeProps = {
+  $hover?: boolean
+}
+
+// Styles
+
 export const Form = tw.div`
     flex
     flex-col
@@ -53,6 +61,7 @@ export const OutputAttribute = tw.div`
     gap-5
     duration-300
     cursor-pointer
+    [&>*:last-child]:hover:scale-110
     
     hover:bg-stone-900
 `
@@ -80,4 +89,18 @@ export const EmptyLabel = tw.p`
     items-center
     text-center
     p-3
+`
+export const DeleteAttribute = tw.div<DeleteAttributeProps>`
+    w-8 
+    h-8 
+    rounded
+    flex 
+    items-center 
+    justify-center
+    text-black
+    duration-150
+    cursor-pointer
+    bg-stone-200
+    hover:bg-stone-400
+    scale-0
 `
