@@ -37,14 +37,17 @@ export const InputGroup = tw.div`
 export const OutputAttributeList = tw.div`
     flex 
     flex-col 
+    items-center
     gap-3
     w-full 
     h-64
     rounded 
     bg-stone-400 
     text-center 
-    p-3 
-    items-center
+    p-3
+    overflow-y-scroll
+    scrollbar-thin 
+    scrollbar-thumb-stone-700
 `
 
 export const OutputAttribute = tw.div`
@@ -103,4 +106,8 @@ export const DeleteAttribute = tw.div<DeleteAttributeProps>`
     bg-stone-200
     hover:bg-stone-400
     scale-0
+`
+export const AddButtonContainer = tw.div`
+    w-full 
+    h-12
 `

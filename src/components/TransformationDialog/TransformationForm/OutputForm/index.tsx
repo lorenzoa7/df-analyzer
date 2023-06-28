@@ -72,9 +72,15 @@ export default function OutputForm() {
           onKeyDown={handleKeyDown}
         />
       </C.InputGroup>
+
       <C.InputGroup>
         <C.Label>Attributes</C.Label>
         <C.OutputAttributeList>
+          <C.AddButtonContainer>
+            <C.AddAttributeButton type="button" onClick={handleCreateAttribute}>
+              +
+            </C.AddAttributeButton>
+          </C.AddButtonContainer>
           {selectedTransformation?.output.attributes.length === 0 ? (
             <C.EmptyLabel>Create new attributes</C.EmptyLabel>
           ) : (
@@ -90,10 +96,6 @@ export default function OutputForm() {
               </C.OutputAttribute>
             ))
           )}
-
-          <C.AddAttributeButton type="button" onClick={handleCreateAttribute}>
-            +
-          </C.AddAttributeButton>
         </C.OutputAttributeList>
       </C.InputGroup>
 
