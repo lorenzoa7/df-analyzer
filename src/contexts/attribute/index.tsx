@@ -1,7 +1,7 @@
 import { findHighestId } from '@/functions'
 import useTransformation from '@/hooks/useTransformation'
 import { Attribute, Output } from '@/utils/types'
-import { createContext } from 'react'
+import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 type OutputUpdateAttributeProps = {
   id: number
@@ -15,6 +15,8 @@ type InputUpdateAttributeProps = {
 }
 
 export type AttributeContextProps = {
+  selectedAttribute: Attribute | null
+  setSelectedAttribute: Dispatch<SetStateAction<Attribute | null>>
   createOutputAttribute: (id: number) => void
   updateOutputAttribute: ({
     id,
@@ -29,6 +31,9 @@ const AttributeContext = createContext<AttributeContextProps>(
 
 const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
   const { updateTransformation, getTransformationById } = useTransformation()
+  const [selectedAttribute, setSelectedAttribute] = useState<Attribute | null>(
+    null,
+  )
 
   const createOutputAttribute = (id: number): void => {
     const transformation = getTransformationById(id)
@@ -90,6 +95,8 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AttributeContext.Provider
       value={{
+        selectedAttribute,
+        setSelectedAttribute,
         createOutputAttribute,
         updateOutputAttribute,
         deleteOutputAttribute,

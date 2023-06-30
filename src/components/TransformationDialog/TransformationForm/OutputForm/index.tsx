@@ -1,6 +1,7 @@
 import useAttribute from '@/hooks/useAttribute'
 import useTransformation from '@/hooks/useTransformation'
 import {
+  Attribute,
   InputChangeEvent,
   KeyboardEvent,
   MouseEvent,
@@ -21,8 +22,9 @@ type FormDataProps = {
 
 export default function OutputForm() {
   const { updateTransformation, selectedTransformation } = useTransformation()
-  const { createOutputAttribute, deleteOutputAttribute } = useAttribute()
-  const [open, setOpen] = useState(false)
+  const { createOutputAttribute, deleteOutputAttribute, setSelectedAttribute } =
+    useAttribute()
+  const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.output.name!,
   })
@@ -58,6 +60,11 @@ export default function OutputForm() {
     deleteOutputAttribute(selectedTransformation!.id, attributeId)
   }
 
+  const handleEditAttribute = (attribute: Attribute) => {
+    setSelectedAttribute(attribute)
+    setOpenAttributeDialog(true)
+  }
+
   return (
     <C.Form>
       {/* Forms */}
@@ -85,7 +92,10 @@ export default function OutputForm() {
             <C.EmptyLabel>Create new attributes</C.EmptyLabel>
           ) : (
             selectedTransformation?.output.attributes.map((attribute) => (
-              <C.OutputAttribute key={attribute.id}>
+              <C.OutputAttribute
+                key={attribute.id}
+                onClick={() => handleEditAttribute(attribute)}
+              >
                 <BsFillPencilFill size={20} />
                 <span className="w-full text-start">{attribute.name}</span>
                 <C.DeleteAttribute
@@ -101,8 +111,8 @@ export default function OutputForm() {
 
       {/* Dialogs */}
       <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openAttributeDialog}
+        onClose={() => setOpenAttributeDialog(false)}
         fullWidth={true}
         maxWidth={'xs'}
       >
