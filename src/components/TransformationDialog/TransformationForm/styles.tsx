@@ -36,7 +36,9 @@ export const DivGroup = tw.div`
 
 export const IOList = tw.div<IOListProps>`
 
-    ${(props) => (props.type === 'output' && 'h-[28rem]') || 'h-64'}
+    ${(props) =>
+      (props.type === 'output' && 'h-[28rem]') ||
+      'h-64 overflow-y-scroll scrollbar-thin scrollbar-thumb-stone-700'}
 
     flex 
     flex-col 
@@ -49,7 +51,7 @@ export const IOList = tw.div<IOListProps>`
     items-center
 `
 
-export const IOPlaceholder = tw.div`
+export const InputItem = tw.div`
     flex
     p-5
     items-center
@@ -63,6 +65,7 @@ export const IOPlaceholder = tw.div`
     gap-5
     duration-300
     cursor-pointer
+    [&>*:last-child]:hover:scale-110
     
     hover:bg-stone-900
 `
@@ -78,4 +81,36 @@ export const AddIOButton = tw.button`
     duration-300
 
     hover:bg-stone-900
+`
+export const AddButtonContainer = tw.div`
+    w-full 
+    h-12
+`
+
+export const EmptyLabel = tw.p`
+    bg-stone-600/80
+    text-white
+    h-12
+    rounded
+    font-semibold
+    uppercase
+    flex
+    items-center
+    text-center
+    p-3
+`
+
+export const DeleteInput = tw.div`
+    w-8 
+    h-8 
+    rounded
+    flex 
+    items-center 
+    justify-center
+    text-black
+    duration-150
+    cursor-pointer
+    bg-stone-200
+    hover:bg-stone-400
+    scale-0
 `

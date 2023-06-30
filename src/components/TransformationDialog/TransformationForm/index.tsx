@@ -4,6 +4,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useState } from 'react'
+import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import InputForm from './InputForm'
 import OutputForm from './OutputForm'
@@ -51,21 +52,28 @@ export default function TransformationForm() {
           onKeyDown={handleKeyDown}
         />
       </C.DivGroup>
+
       <C.DivGroup>
         <C.Label>Inputs</C.Label>
         <C.IOList>
-          <C.IOPlaceholder>
-            <BsFillPencilFill size={20} />
-            Input 1
-          </C.IOPlaceholder>
-          <C.IOPlaceholder>
-            <BsFillPencilFill size={20} />
-            Input 1
-          </C.IOPlaceholder>
-
-          <C.AddIOButton type="button" onClick={() => setOpenInput(true)}>
-            +
-          </C.AddIOButton>
+          <C.AddButtonContainer>
+            <C.AddIOButton type="button" onClick={() => setOpenInput(true)}>
+              +
+            </C.AddIOButton>
+          </C.AddButtonContainer>
+          {selectedTransformation?.inputs.length === 0 ? (
+            <C.EmptyLabel>Create new inputs</C.EmptyLabel>
+          ) : (
+            selectedTransformation?.inputs.map((input) => (
+              <C.InputItem key={input.id}>
+                <BsFillPencilFill size={20} />
+                <span className="w-full text-start">{input.name}</span>
+                <C.DeleteInput onClick={() => null}>
+                  <AiFillDelete size={'75%'} />
+                </C.DeleteInput>
+              </C.InputItem>
+            ))
+          )}
         </C.IOList>
       </C.DivGroup>
 

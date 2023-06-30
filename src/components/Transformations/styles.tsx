@@ -2,9 +2,7 @@ import tw from 'tailwind-styled-components'
 
 // Types
 
-type DeleteTransformationProps = {
-  $hover?: boolean
-}
+// Styles
 
 export const Transformation = tw.div`
     flex
@@ -68,7 +66,7 @@ export const Label = tw.p`
     p-3
 `
 
-export const DeleteTransformation = tw.div<DeleteTransformationProps>`
+export const DeleteTransformation = tw.div`
 
     w-8 
     h-8 

@@ -2,10 +2,6 @@ import tw from 'tailwind-styled-components'
 
 // Types
 
-type DeleteAttributeProps = {
-  $hover?: boolean
-}
-
 // Styles
 
 export const Form = tw.div`
@@ -93,7 +89,7 @@ export const EmptyLabel = tw.p`
     text-center
     p-3
 `
-export const DeleteAttribute = tw.div<DeleteAttributeProps>`
+export const DeleteAttribute = tw.div`
     w-8 
     h-8 
     rounded
