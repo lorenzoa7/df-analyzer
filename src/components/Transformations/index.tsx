@@ -10,11 +10,8 @@ import { BsFillPencilFill } from 'react-icons/bs'
 import * as C from './styles'
 
 export default function Transformations() {
-  const {
-    setOpenTransformationDialog,
-    selectedTransformation,
-    setSelectedTransformation,
-  } = useTransformation()
+  const { setOpenTransformationDialog, setSelectedTransformation } =
+    useTransformation()
   const { appData, setAppData } = useGeneral()
 
   const addTransformation = () => {
