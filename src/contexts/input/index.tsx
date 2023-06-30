@@ -7,6 +7,7 @@ export type InputContextProps = {
   selectedInput: Input | null
   setSelectedInput: Dispatch<SetStateAction<Input | null>>
   createInput: (id: number) => void
+  deleteInput: (tranformationId: number, attributeId: number) => void
 }
 
 const InputContext = createContext<InputContextProps>({} as InputContextProps)
@@ -31,12 +32,23 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const deleteInput = (transformationId: number, inputId: number) => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      const inputList = transformation.inputs
+      const editedInputs = inputList.filter((input) => input.id !== inputId)
+
+      updateTransformation(transformationId, { inputs: editedInputs })
+    }
+  }
+
   return (
     <InputContext.Provider
       value={{
         selectedInput,
         setSelectedInput,
         createInput,
+        deleteInput,
       }}
     >
       {children}

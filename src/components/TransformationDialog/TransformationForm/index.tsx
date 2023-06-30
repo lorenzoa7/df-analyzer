@@ -1,6 +1,6 @@
 import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
-import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
+import { InputChangeEvent, KeyboardEvent, MouseEvent } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -18,7 +18,7 @@ type FormDataProps = {
 export default function TransformationForm() {
   const [openInput, setOpenInput] = useState(false)
   const { selectedTransformation, updateTransformation } = useTransformation()
-  const { createInput } = useInput()
+  const { createInput, deleteInput } = useInput()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.name!,
   })
@@ -42,6 +42,12 @@ export default function TransformationForm() {
 
   const handleCreateInput = () => {
     createInput(selectedTransformation!.id)
+  }
+
+  const handleDeleteInput = (e: MouseEvent, inputId: number) => {
+    e.stopPropagation()
+
+    deleteInput(selectedTransformation!.id, inputId)
   }
 
   return (
@@ -74,7 +80,7 @@ export default function TransformationForm() {
               <C.InputItem key={input.id}>
                 <BsFillPencilFill size={20} />
                 <span className="w-full text-start">{input.name}</span>
-                <C.DeleteInput onClick={() => null}>
+                <C.DeleteInput onClick={(e) => handleDeleteInput(e, input.id)}>
                   <AiFillDelete size={'75%'} />
                 </C.DeleteInput>
               </C.InputItem>
