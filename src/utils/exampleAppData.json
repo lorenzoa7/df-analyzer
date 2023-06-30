@@ -1,6 +1,6 @@
 {
     "dataflow_tag": "Tag",
-    "code": "console.log('Hello World')",
+    "code": "alert('Hello World')",
     "transformations": [
         {
             "id": 1,

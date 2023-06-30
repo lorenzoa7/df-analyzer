@@ -1,4 +1,5 @@
 import useAttribute from '@/hooks/useAttribute'
+import useTransformation from '@/hooks/useTransformation'
 import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { useState } from 'react'
@@ -10,24 +11,38 @@ type FormDataProps = {
 }
 
 export default function OutputAttribute() {
-  const [type, setType] = useState('TEXT')
-  const [name, setName] = useState<string>('')
-  const { selectedAttribute } = useAttribute()
+  const { selectedAttribute, updateOutputAttribute } = useAttribute()
+  const { selectedTransformation } = useTransformation()
   const [formData, setFormData] = useState<FormDataProps>({
     type: selectedAttribute?.type!,
     name: selectedAttribute?.name!,
   })
 
   const handleChange = (e: SelectChangeEvent | InputChangeEvent) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-    if (e.target.name === 'type') console.log('type')
+    setFormData((prevState) => {
+      const updatedFormData = {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }
+
+      if (e.target.name === 'type') {
+        updateOutputAttribute({
+          attributeId: selectedAttribute?.id!,
+          transformationId: selectedTransformation?.id!,
+          updatedFields: updatedFormData,
+        })
+      }
+
+      return updatedFormData
+    })
   }
 
   const handleBlur = () => {
-    console.log('name')
+    updateOutputAttribute({
+      attributeId: selectedAttribute?.id!,
+      transformationId: selectedTransformation?.id!,
+      updatedFields: formData,
+    })
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {

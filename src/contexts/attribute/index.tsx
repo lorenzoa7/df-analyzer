@@ -4,7 +4,8 @@ import { Attribute, Output } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 type OutputUpdateAttributeProps = {
-  id: number
+  attributeId: number
+  transformationId: number
   updatedFields: Partial<Attribute>
 }
 
@@ -19,7 +20,8 @@ export type AttributeContextProps = {
   setSelectedAttribute: Dispatch<SetStateAction<Attribute | null>>
   createOutputAttribute: (id: number) => void
   updateOutputAttribute: ({
-    id,
+    attributeId,
+    transformationId,
     updatedFields,
   }: OutputUpdateAttributeProps) => void
   deleteOutputAttribute: (tranformationId: number, attributeId: number) => void
@@ -55,20 +57,30 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const updateOutputAttribute = ({
-    id,
+    attributeId,
+    transformationId,
     updatedFields,
   }: OutputUpdateAttributeProps): void => {
-    const transformation = getTransformationById(id)
+    const transformation = getTransformationById(transformationId)
     if (transformation) {
-      const editedAttributes = {
-        ...transformation.output.attributes,
-        ...updatedFields,
-      }
+      const editedAttributes = transformation.output.attributes.map(
+        (attribute) => {
+          if (attribute.id === attributeId) {
+            return {
+              ...attribute,
+              ...updatedFields,
+            }
+          }
+          return attribute
+        },
+      )
+
       const editedOutput = {
         ...transformation.output,
         attributes: editedAttributes,
       }
-      updateTransformation(id, { output: editedOutput })
+
+      updateTransformation(transformationId, { output: editedOutput })
     }
   }
 
