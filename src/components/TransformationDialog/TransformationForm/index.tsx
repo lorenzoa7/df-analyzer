@@ -1,3 +1,4 @@
+import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
 import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
@@ -17,6 +18,7 @@ type FormDataProps = {
 export default function TransformationForm() {
   const [openInput, setOpenInput] = useState(false)
   const { selectedTransformation, updateTransformation } = useTransformation()
+  const { createInput } = useInput()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.name!,
   })
@@ -38,6 +40,10 @@ export default function TransformationForm() {
     }
   }
 
+  const handleCreateInput = () => {
+    createInput(selectedTransformation!.id)
+  }
+
   return (
     <C.Form>
       {/* Forms */}
@@ -57,7 +63,7 @@ export default function TransformationForm() {
         <C.Label>Inputs</C.Label>
         <C.IOList>
           <C.AddButtonContainer>
-            <C.AddIOButton type="button" onClick={() => setOpenInput(true)}>
+            <C.AddIOButton type="button" onClick={handleCreateInput}>
               +
             </C.AddIOButton>
           </C.AddButtonContainer>
