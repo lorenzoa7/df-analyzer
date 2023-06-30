@@ -1,12 +1,12 @@
 import useAttribute from '@/hooks/useAttribute'
 import useTransformation from '@/hooks/useTransformation'
-import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
+import { AttributeType, InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { useState } from 'react'
 import * as C from './styles'
 
 type FormDataProps = {
-  type: string
+  type: AttributeType
   name: string
 }
 

@@ -33,8 +33,10 @@ export type Input = {
   attributes: Attribute[]
 }
 
+export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
+
 export type Attribute = {
   id: number
   name: string
-  type: string
+  type: AttributeType
 }
