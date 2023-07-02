@@ -1,6 +1,11 @@
 import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
-import { InputChangeEvent, KeyboardEvent, MouseEvent } from '@/utils/types'
+import {
+  Input,
+  InputChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+} from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -16,9 +21,9 @@ type FormDataProps = {
 }
 
 export default function TransformationForm() {
-  const [openInput, setOpenInput] = useState(false)
+  const [openInputDialog, setOpenInputDialog] = useState(false)
   const { selectedTransformation, updateTransformation } = useTransformation()
-  const { createInput, deleteInput } = useInput()
+  const { createInput, deleteInput, setSelectedInput } = useInput()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.name!,
   })
@@ -50,6 +55,11 @@ export default function TransformationForm() {
     deleteInput(selectedTransformation!.id, inputId)
   }
 
+  const handleEditInput = (input: Input) => {
+    setSelectedInput(input)
+    setOpenInputDialog(true)
+  }
+
   return (
     <C.Form>
       {/* Forms */}
@@ -77,7 +87,10 @@ export default function TransformationForm() {
             <C.EmptyLabel>Create new inputs</C.EmptyLabel>
           ) : (
             selectedTransformation?.inputs.map((input) => (
-              <C.InputItem key={input.id}>
+              <C.InputItem
+                key={input.id}
+                onClick={() => handleEditInput(input)}
+              >
                 <BsFillPencilFill size={20} />
                 <span className="w-full text-start">{input.name}</span>
                 <C.DeleteInput onClick={(e) => handleDeleteInput(e, input.id)}>
@@ -98,8 +111,8 @@ export default function TransformationForm() {
 
       {/* Dialogs */}
       <Dialog
-        open={openInput}
-        onClose={() => setOpenInput(false)}
+        open={openInputDialog}
+        onClose={() => setOpenInputDialog(false)}
         fullWidth={true}
         maxWidth={'md'}
       >
