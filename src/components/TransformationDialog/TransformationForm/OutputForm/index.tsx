@@ -116,7 +116,7 @@ export default function OutputForm() {
         fullWidth={true}
         maxWidth={'xs'}
       >
-        <DialogTitle>Set new output attribute</DialogTitle>
+        <DialogTitle>Set output attribute</DialogTitle>
         <DialogContent>
           <OutputAttribute />
         </DialogContent>

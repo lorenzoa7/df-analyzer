@@ -15,7 +15,7 @@ export default function TransformationDialog() {
       fullWidth={true}
       maxWidth={'lg'}
     >
-      <DialogTitle>Create new transformation</DialogTitle>
+      <DialogTitle>Set transformation</DialogTitle>
       <DialogContent>
         <TransformationForm />
       </DialogContent>

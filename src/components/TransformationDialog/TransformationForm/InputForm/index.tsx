@@ -180,20 +180,9 @@ export default function InputForm() {
             </C.InputGroup>
           </>
         )}
-
-        {/* Dialogs */}
-        <Dialog
-          open={openAttributeDialog}
-          onClose={() => setOpenAttributeDialog(false)}
-          fullWidth={true}
-          maxWidth={'xs'}
-        >
-          <DialogTitle>Set new input attribute</DialogTitle>
-          <DialogContent>
-            <InputAttribute />
-          </DialogContent>
-        </Dialog>
       </C.Form>
+
+      {/* List of Transformations */}
 
       <C.TransformationListContainer>
         <span className="text-center font-medium">
@@ -220,6 +209,19 @@ export default function InputForm() {
           ),
         )}
       </C.TransformationListContainer>
+
+      {/* Dialogs */}
+      <Dialog
+        open={openAttributeDialog}
+        onClose={() => setOpenAttributeDialog(false)}
+        fullWidth={true}
+        maxWidth={'xs'}
+      >
+        <DialogTitle>Set input attribute</DialogTitle>
+        <DialogContent>
+          <InputAttribute />
+        </DialogContent>
+      </Dialog>
     </C.Container>
   )
 }
