@@ -10,6 +10,10 @@ type TransformationItemProps = {
   $selected?: boolean
 }
 
+type PreviewProps = {
+  $preview?: boolean
+}
+
 // Styles
 
 export const Form = tw.form`
@@ -31,7 +35,10 @@ export const Input = tw.input`
     rounded
 `
 
-export const InputGroup = tw.div`
+export const InputGroup = tw.div<PreviewProps>`
+
+    ${(props) => (props.$preview ? 'contrast-75 pointer-events-none' : '')}
+
     flex
     flex-col
     gap-2
@@ -53,7 +60,10 @@ export const InputAttributeList = tw.div`
     scrollbar-thumb-stone-700
 `
 
-export const InputAttribute = tw.div`
+export const InputAttribute = tw.div<PreviewProps>`
+
+    ${(props) => (props.$preview ? 'pointer-events-none' : '')}
+
     flex
     p-5
     items-center
@@ -66,8 +76,8 @@ export const InputAttribute = tw.div`
     uppercase
     gap-5
     duration-300
-    cursor-pointer
-    [&>*:last-child]:hover:scale-110
+    cursor-pointer 
+    [&>*:last-child]:hover:scale-110 
     
     hover:bg-stone-900
 `
@@ -135,7 +145,7 @@ export const TransformationListContainer = tw.div`
     w-2/4
     p-3
     h-96
-    bg-stone-500
+    bg-stone-900
     text-white
     rounded
     overflow-y-scroll
@@ -144,20 +154,20 @@ export const TransformationListContainer = tw.div`
 `
 export const TransformationItem = tw.div<TransformationItemProps>`
 
-    ${(props) => (props.$selected ? 'outline outline-2' : 'outline-none')}
+    ${(props) =>
+      props.$selected
+        ? 'bg-stone-500 text-white'
+        : 'bg-stone-100 text-black hover:bg-stone-300'}
 
     flex
     p-5
     items-center
     w-full 
     h-12 
-    bg-stone-100 
     rounded
     font-semibold
     gap-5
     duration-300
     cursor-pointer
-    text-black
-    
-    hover:bg-stone-300
+
 `
