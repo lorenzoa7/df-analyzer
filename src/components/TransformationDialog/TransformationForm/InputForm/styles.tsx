@@ -1,9 +1,20 @@
 import tw from 'tailwind-styled-components'
 
+// Types
+
+type EmptyLabelProps = {
+  $light?: boolean
+}
+
+type TransformationItemProps = {
+  $selected?: boolean
+}
+
+// Styles
+
 export const Form = tw.form`
     flex
     flex-col
-    p-5
     w-full
     gap-5
 `
@@ -77,9 +88,13 @@ export const AddButtonContainer = tw.div`
     w-full 
     h-12
 `
-export const EmptyLabel = tw.p`
-    bg-stone-600/80
-    text-white
+export const EmptyLabel = tw.p<EmptyLabelProps>`
+
+    ${(props) =>
+      props.$light
+        ? 'bg-stone-100/80 text-black'
+        : 'bg-stone-600/80 text-white'}
+
     h-12
     rounded
     font-semibold
@@ -102,4 +117,47 @@ export const DeleteAttribute = tw.div`
     bg-stone-200
     hover:bg-stone-400
     scale-0
+`
+
+export const Container = tw.div`
+    flex
+    items-center
+    justify-center
+    w-full
+    gap-3
+    p-5
+`
+export const TransformationListContainer = tw.div`
+    flex
+    flex-col
+    items-center
+    gap-3
+    w-2/4
+    p-3
+    h-96
+    bg-stone-500
+    text-white
+    rounded
+    overflow-y-scroll
+    scrollbar-thin 
+    scrollbar-thumb-stone-300
+`
+export const TransformationItem = tw.div<TransformationItemProps>`
+
+    ${(props) => (props.$selected ? 'outline outline-2' : 'outline-none')}
+
+    flex
+    p-5
+    items-center
+    w-full 
+    h-12 
+    bg-stone-100 
+    rounded
+    font-semibold
+    gap-5
+    duration-300
+    cursor-pointer
+    text-black
+    
+    hover:bg-stone-300
 `
