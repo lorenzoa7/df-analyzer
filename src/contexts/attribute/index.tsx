@@ -27,6 +27,11 @@ export type AttributeContextProps = {
   }: OutputUpdateAttributeProps) => void
   deleteOutputAttribute: (tranformationId: number, attributeId: number) => void
   createInputAttribute: (transformationId: number, input: Input) => void
+  deleteInputAttribute: (
+    transformationId: number,
+    input: Input,
+    attributeId: number,
+  ) => void
 }
 
 const AttributeContext = createContext<AttributeContextProps>(
@@ -138,6 +143,36 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const deleteInputAttribute = (
+    transformationId: number,
+    input: Input,
+    attributeId: number,
+  ): void => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      const inputsList = transformation.inputs
+      const attributesList = input.attributes
+      const updatedAttributes = attributesList.filter(
+        (attribute) => attribute.id !== attributeId,
+      )
+
+      const editedInput: Input = {
+        ...input,
+        attributes: updatedAttributes,
+      }
+
+      const updatedInputs = inputsList.map((existingInput) => {
+        if (existingInput.id === input.id) {
+          return editedInput
+        }
+        return existingInput
+      })
+
+      updateTransformation(transformationId, { inputs: updatedInputs })
+      setSelectedInput(editedInput)
+    }
+  }
+
   return (
     <AttributeContext.Provider
       value={{
@@ -147,6 +182,7 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
         updateOutputAttribute,
         deleteOutputAttribute,
         createInputAttribute,
+        deleteInputAttribute,
       }}
     >
       {children}

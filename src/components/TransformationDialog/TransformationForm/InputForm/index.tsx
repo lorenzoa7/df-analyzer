@@ -1,7 +1,12 @@
 import useAttribute from '@/hooks/useAttribute'
 import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
-import { Attribute, InputChangeEvent, KeyboardEvent } from '@/utils/types'
+import {
+  Attribute,
+  InputChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+} from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -19,7 +24,8 @@ export default function InputForm() {
   const [open, setOpen] = useState(false)
   const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
   const { selectedInput, updateInput } = useInput()
-  const { setSelectedAttribute, createInputAttribute } = useAttribute()
+  const { setSelectedAttribute, createInputAttribute, deleteInputAttribute } =
+    useAttribute()
   const { selectedTransformation } = useTransformation()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedInput?.name!,
@@ -49,7 +55,11 @@ export default function InputForm() {
   const handleDeleteAttribute = (e: MouseEvent, attributeId: number) => {
     e.stopPropagation()
 
-    // deleteOutputAttribute(selectedTransformation!.id, attributeId)
+    deleteInputAttribute(
+      selectedTransformation!.id,
+      selectedInput!,
+      attributeId,
+    )
   }
 
   const handleEditAttribute = (attribute: Attribute) => {
