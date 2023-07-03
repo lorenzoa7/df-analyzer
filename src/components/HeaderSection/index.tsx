@@ -1,18 +1,17 @@
 'use client'
 
 import useGeneral from '@/hooks/useGeneral'
-import { TextareaChangeEvent } from '@/utils/types'
+import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import { useState } from 'react'
 import * as C from './styles'
 
-export default function CodeSection() {
+export default function HeaderSection() {
   const { appData, setAppData } = useGeneral()
-  const [code, setCode] = useState('')
   const [formData, setFormData] = useState({
-    code: appData.code,
+    dataflow_tag: appData.dataflow_tag,
   })
 
-  const handleChange = (e: TextareaChangeEvent) =>
+  const handleChange = (e: InputChangeEvent) =>
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -21,30 +20,28 @@ export default function CodeSection() {
   const handleBlur = () => {
     setAppData((prevState) => ({
       ...prevState,
-      code: formData.code,
+      dataflow_tag: formData.dataflow_tag,
     }))
   }
 
-  const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (
-    e,
-  ) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
-      const target = e.target as HTMLTextAreaElement
+      const target = e.target as HTMLInputElement
       target.blur()
     }
   }
 
   return (
-    <C.Section>
-      <C.TitleLabel>Code Input</C.TitleLabel>
-      <C.CodeInput
-        name="code"
-        placeholder="Paste your code here..."
-        value={formData.code}
+    <>
+      <C.TitleLabel>DataFlow Tag</C.TitleLabel>
+      <C.DataflowTagInput
+        name="dataflow_tag"
+        value={formData.dataflow_tag}
+        type="text"
         onChange={handleChange}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
       />
-    </C.Section>
+    </>
   )
 }

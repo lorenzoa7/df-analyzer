@@ -1,4 +1,5 @@
 import { CodeSection, Transformations } from '@/components'
+import HeaderSection from '@/components/HeaderSection'
 import * as C from './styles'
 
 export default function Home() {
@@ -8,8 +9,7 @@ export default function Home() {
         <C.Title>Df-Analyzer</C.Title>
         <C.MainContainer>
           <C.Header>
-            <C.TitleLabel>DataFlow Tag</C.TitleLabel>
-            <C.DataflowTagInput />
+            <HeaderSection />
           </C.Header>
 
           <C.Main>
