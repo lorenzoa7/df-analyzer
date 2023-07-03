@@ -26,7 +26,7 @@ export const InputGroup = tw.div`
     gap-2
 `
 
-export const IOList = tw.div`
+export const InputAttributeList = tw.div`
     flex 
     flex-col 
     gap-3
@@ -39,7 +39,7 @@ export const IOList = tw.div`
     items-center
 `
 
-export const IOPlaceholder = tw.div`
+export const InputAttribute = tw.div`
     flex
     p-5
     items-center
@@ -53,11 +53,12 @@ export const IOPlaceholder = tw.div`
     gap-5
     duration-300
     cursor-pointer
+    [&>*:last-child]:hover:scale-110
     
     hover:bg-stone-900
 `
 
-export const AddIOButton = tw.button`
+export const AddAttributeButton = tw.button`
     bg-stone-600
     w-24
     h-12
@@ -68,4 +69,34 @@ export const AddIOButton = tw.button`
     duration-300
 
     hover:bg-stone-900
+`
+export const AddButtonContainer = tw.div`
+    w-full 
+    h-12
+`
+export const EmptyLabel = tw.p`
+    bg-stone-600/80
+    text-white
+    h-12
+    rounded
+    font-semibold
+    uppercase
+    flex
+    items-center
+    text-center
+    p-3
+`
+export const DeleteAttribute = tw.div`
+    w-8 
+    h-8 
+    rounded
+    flex 
+    items-center 
+    justify-center
+    text-black
+    duration-150
+    cursor-pointer
+    bg-stone-200
+    hover:bg-stone-400
+    scale-0
 `
