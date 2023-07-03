@@ -40,6 +40,7 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
         id: findHighestId(inputList) + 1,
         name: 'New Input',
         attributes: [],
+        transformationOutputReferenceId: null,
       }
 
       const editedInputs = inputList.concat(newInput)

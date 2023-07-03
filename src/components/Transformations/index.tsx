@@ -34,11 +34,32 @@ export default function Transformations() {
 
   const deleteTransformation = (e: MouseEvent, transformationId: number) => {
     e.stopPropagation()
+
     const updatedTransformations = appData.transformations.filter(
       (transformation) => transformation.id !== transformationId,
     )
 
-    setAppData({ ...appData, transformations: updatedTransformations })
+    const updatedInputs = updatedTransformations.flatMap((transformation) => {
+      const updatedInput = transformation.inputs.map((input) => {
+        if (input.transformationOutputReferenceId === transformationId) {
+          return {
+            ...input,
+            transformationOutputReferenceId: null,
+          }
+        }
+        return input
+      })
+
+      return {
+        ...transformation,
+        inputs: updatedInput,
+      }
+    })
+
+    setAppData({
+      ...appData,
+      transformations: updatedInputs,
+    })
   }
 
   const editTransformation = (transformation: Transformation) => {

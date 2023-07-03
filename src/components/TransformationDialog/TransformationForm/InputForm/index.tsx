@@ -1,4 +1,5 @@
 import useAttribute from '@/hooks/useAttribute'
+import useGeneral from '@/hooks/useGeneral'
 import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
 import {
@@ -25,10 +26,16 @@ export default function InputForm() {
   const { selectedInput, updateInput } = useInput()
   const { setSelectedAttribute, createInputAttribute, deleteInputAttribute } =
     useAttribute()
-  const { selectedTransformation } = useTransformation()
+  const { selectedTransformation, getTransformationById } = useTransformation()
+  const { appData } = useGeneral()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedInput?.name!,
   })
+  const [outputReference, setOutputReference] = useState(
+    selectedInput?.transformationOutputReferenceId
+      ? selectedInput?.transformationOutputReferenceId
+      : selectedTransformation!.id,
+  )
 
   const handleChange = (e: InputChangeEvent) =>
     setFormData((prevState) => ({
@@ -66,50 +73,142 @@ export default function InputForm() {
     setOpenAttributeDialog(true)
   }
 
+  const handleSetOutputReference = (transformationId: number) => {
+    setOutputReference(transformationId)
+    const newReference =
+      transformationId === selectedTransformation!.id ? null : transformationId
+
+    updateInput(selectedTransformation?.id!, selectedInput?.id!, {
+      transformationOutputReferenceId: newReference,
+    })
+  }
+
   return (
-    <C.Form>
-      {/* Forms */}
+    <C.Container>
+      <C.Form>
+        {/* Forms */}
 
-      <C.InputGroup>
-        <C.Label>Name</C.Label>
-        <C.Input
-          name="name"
-          value={formData.name}
-          type="text"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-        />
-      </C.InputGroup>
+        {outputReference === selectedTransformation!.id && (
+          <>
+            <C.InputGroup>
+              <C.Label>Name</C.Label>
+              <C.Input
+                name="name"
+                value={formData.name}
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                onKeyDown={handleKeyDown}
+              />
+            </C.InputGroup>
 
-      <C.InputGroup>
-        <C.Label>Attributes</C.Label>
-        <C.InputAttributeList>
-          <C.AddButtonContainer>
-            <C.AddAttributeButton type="button" onClick={handleCreateAttribute}>
-              +
-            </C.AddAttributeButton>
-          </C.AddButtonContainer>
-          {selectedInput?.attributes.length === 0 ? (
-            <C.EmptyLabel>Create new attributes</C.EmptyLabel>
-          ) : (
-            selectedInput?.attributes.map((attribute) => (
-              <C.InputAttribute
-                key={attribute.id}
-                onClick={() => handleEditAttribute(attribute)}
-              >
-                <BsFillPencilFill size={20} />
-                <span className="w-full text-start">{attribute.name}</span>
-                <C.DeleteAttribute
-                  onClick={(e) => handleDeleteAttribute(e, attribute.id)}
-                >
-                  <AiFillDelete size={'75%'} />
-                </C.DeleteAttribute>
-              </C.InputAttribute>
-            ))
-          )}
-        </C.InputAttributeList>
-      </C.InputGroup>
+            <C.InputGroup>
+              <C.Label>Attributes</C.Label>
+              <C.InputAttributeList>
+                <>
+                  <C.AddButtonContainer>
+                    <C.AddAttributeButton
+                      type="button"
+                      onClick={handleCreateAttribute}
+                    >
+                      +
+                    </C.AddAttributeButton>
+                  </C.AddButtonContainer>
+
+                  {selectedInput?.attributes.length === 0 ? (
+                    <C.EmptyLabel>Create new attributes</C.EmptyLabel>
+                  ) : (
+                    selectedInput?.attributes.map((attribute) => (
+                      <C.InputAttribute
+                        key={attribute.id}
+                        onClick={() => handleEditAttribute(attribute)}
+                      >
+                        <BsFillPencilFill size={20} />
+                        <span className="w-full text-start">
+                          {attribute.name}
+                        </span>
+                        <C.DeleteAttribute
+                          onClick={(e) =>
+                            handleDeleteAttribute(e, attribute.id)
+                          }
+                        >
+                          <AiFillDelete size={'75%'} />
+                        </C.DeleteAttribute>
+                      </C.InputAttribute>
+                    ))
+                  )}
+                </>
+              </C.InputAttributeList>
+            </C.InputGroup>
+          </>
+        )}
+
+        {!(outputReference === selectedTransformation!.id) && (
+          <>
+            <C.InputGroup $preview>
+              <C.Label>Name</C.Label>
+              <C.Input
+                name="name"
+                value={getTransformationById(outputReference)?.output.name}
+                type="text"
+              />
+            </C.InputGroup>
+
+            <C.InputGroup>
+              <C.Label>Attributes</C.Label>
+              <C.InputAttributeList>
+                <>
+                  {getTransformationById(outputReference)?.output.attributes
+                    .length === 0 ? (
+                    <C.EmptyLabel>
+                      {`No attributes in
+                      "${getTransformationById(outputReference)?.name}" output`}
+                    </C.EmptyLabel>
+                  ) : (
+                    getTransformationById(
+                      outputReference,
+                    )?.output.attributes.map((attribute) => (
+                      <C.InputAttribute $preview key={attribute.id}>
+                        <span className="w-full text-start">
+                          {attribute.name}
+                        </span>
+                      </C.InputAttribute>
+                    ))
+                  )}
+                </>
+              </C.InputAttributeList>
+            </C.InputGroup>
+          </>
+        )}
+      </C.Form>
+
+      {/* List of Transformations */}
+
+      <C.TransformationListContainer>
+        <span className="text-center font-medium">
+          Set input as another transformation output
+        </span>
+        {selectedTransformation && (
+          <C.TransformationItem
+            key={selectedTransformation.id}
+            onClick={() => handleSetOutputReference(selectedTransformation.id)}
+            $selected={outputReference === selectedTransformation.id}
+          >
+            <span className="w-full text-start">No output reference</span>
+          </C.TransformationItem>
+        )}
+        {appData.transformations.map((transformation) =>
+          transformation.id === selectedTransformation?.id ? null : (
+            <C.TransformationItem
+              key={transformation.id}
+              onClick={() => handleSetOutputReference(transformation.id)}
+              $selected={outputReference === transformation.id}
+            >
+              <span className="w-full text-start">{transformation.name}</span>
+            </C.TransformationItem>
+          ),
+        )}
+      </C.TransformationListContainer>
 
       {/* Dialogs */}
       <Dialog
@@ -118,11 +217,11 @@ export default function InputForm() {
         fullWidth={true}
         maxWidth={'xs'}
       >
-        <DialogTitle>Set new input attribute</DialogTitle>
+        <DialogTitle>Set input attribute</DialogTitle>
         <DialogContent>
           <InputAttribute />
         </DialogContent>
       </Dialog>
-    </C.Form>
+    </C.Container>
   )
 }

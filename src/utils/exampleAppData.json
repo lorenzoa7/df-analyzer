@@ -25,7 +25,20 @@
                             "name": "Input Attribute 1",
                             "type": "TEXT"
                         }
-                    ]
+                    ],
+                    "transformationOutputReferenceId": null
+                },
+                {
+                    "id": 1,
+                    "name": "Input 1",
+                    "attributes": [
+                        {
+                            "id": 1,
+                            "name": "Input Attribute 1",
+                            "type": "TEXT"
+                        }
+                    ],
+                    "transformationOutputReferenceId": 2 
                 }
             ]
         }

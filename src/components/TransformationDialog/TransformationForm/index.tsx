@@ -116,7 +116,7 @@ export default function TransformationForm() {
         fullWidth={true}
         maxWidth={'md'}
       >
-        <DialogTitle>Set new input</DialogTitle>
+        <DialogTitle>Set input</DialogTitle>
         <DialogContent>
           <InputForm />
         </DialogContent>

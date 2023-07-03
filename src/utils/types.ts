@@ -31,6 +31,7 @@ export type Input = {
   id: number
   name: string
   attributes: Attribute[]
+  transformationOutputReferenceId: number | null
 }
 
 export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
