@@ -12,7 +12,8 @@ type OutputUpdateAttributeProps = {
 
 type InputUpdateAttributeProps = {
   transformationId: number
-  inputId: number
+  input: Input
+  attributeId: number
   updatedFields: Partial<Attribute>
 }
 
@@ -27,6 +28,12 @@ export type AttributeContextProps = {
   }: OutputUpdateAttributeProps) => void
   deleteOutputAttribute: (tranformationId: number, attributeId: number) => void
   createInputAttribute: (transformationId: number, input: Input) => void
+  updateInputAttribute: ({
+    transformationId,
+    input,
+    attributeId,
+    updatedFields,
+  }: InputUpdateAttributeProps) => void
   deleteInputAttribute: (
     transformationId: number,
     input: Input,
@@ -40,7 +47,7 @@ const AttributeContext = createContext<AttributeContextProps>(
 
 const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
   const { updateTransformation, getTransformationById } = useTransformation()
-  const { setSelectedInput } = useInput()
+  const { selectedInput, setSelectedInput } = useInput()
   const [selectedAttribute, setSelectedAttribute] = useState<Attribute | null>(
     null,
   )
@@ -143,6 +150,43 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const updateInputAttribute = ({
+    transformationId,
+    input,
+    attributeId,
+    updatedFields,
+  }: InputUpdateAttributeProps): void => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      const updatedInputs = transformation.inputs.map((existingInput) => {
+        if (existingInput.id === input.id) {
+          const updatedAttributes = existingInput.attributes.map(
+            (attribute) => {
+              if (attribute.id === attributeId) {
+                return {
+                  ...attribute,
+                  ...updatedFields,
+                }
+              }
+              return attribute
+            },
+          )
+          const updatedInput = {
+            ...existingInput,
+            attributes: updatedAttributes,
+          }
+          if (selectedInput?.id === updatedInput.id) {
+            setSelectedInput(updatedInput)
+          }
+          return updatedInput
+        }
+        return existingInput
+      })
+
+      updateTransformation(transformationId, { inputs: updatedInputs })
+    }
+  }
+
   const deleteInputAttribute = (
     transformationId: number,
     input: Input,
@@ -182,6 +226,7 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
         updateOutputAttribute,
         deleteOutputAttribute,
         createInputAttribute,
+        updateInputAttribute,
         deleteInputAttribute,
       }}
     >

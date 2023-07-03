@@ -21,7 +21,6 @@ type FormDataProps = {
 }
 
 export default function InputForm() {
-  const [open, setOpen] = useState(false)
   const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
   const { selectedInput, updateInput } = useInput()
   const { setSelectedAttribute, createInputAttribute, deleteInputAttribute } =
@@ -69,17 +68,7 @@ export default function InputForm() {
 
   return (
     <C.Form>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        fullWidth={true}
-        maxWidth={'xs'}
-      >
-        <DialogTitle>Set new input attribute</DialogTitle>
-        <DialogContent>
-          <InputAttribute />
-        </DialogContent>
-      </Dialog>
+      {/* Forms */}
 
       <C.InputGroup>
         <C.Label>Name</C.Label>
@@ -121,6 +110,19 @@ export default function InputForm() {
           )}
         </C.InputAttributeList>
       </C.InputGroup>
+
+      {/* Dialogs */}
+      <Dialog
+        open={openAttributeDialog}
+        onClose={() => setOpenAttributeDialog(false)}
+        fullWidth={true}
+        maxWidth={'xs'}
+      >
+        <DialogTitle>Set new input attribute</DialogTitle>
+        <DialogContent>
+          <InputAttribute />
+        </DialogContent>
+      </Dialog>
     </C.Form>
   )
 }
