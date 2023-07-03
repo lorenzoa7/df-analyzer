@@ -29,6 +29,7 @@ export const InputGroup = tw.div`
 export const InputAttributeList = tw.div`
     flex 
     flex-col 
+    items-center
     gap-3
     w-full 
     h-64
@@ -36,7 +37,9 @@ export const InputAttributeList = tw.div`
     bg-stone-300 
     text-center 
     p-3 
-    items-center
+    overflow-y-scroll
+    scrollbar-thin 
+    scrollbar-thumb-stone-700
 `
 
 export const InputAttribute = tw.div`

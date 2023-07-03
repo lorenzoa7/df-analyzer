@@ -1,6 +1,7 @@
 import { findHighestId } from '@/functions'
+import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
-import { Attribute, Output } from '@/utils/types'
+import { Attribute, Input, Output } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 type OutputUpdateAttributeProps = {
@@ -25,6 +26,7 @@ export type AttributeContextProps = {
     updatedFields,
   }: OutputUpdateAttributeProps) => void
   deleteOutputAttribute: (tranformationId: number, attributeId: number) => void
+  createInputAttribute: (transformationId: number, input: Input) => void
 }
 
 const AttributeContext = createContext<AttributeContextProps>(
@@ -33,6 +35,7 @@ const AttributeContext = createContext<AttributeContextProps>(
 
 const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
   const { updateTransformation, getTransformationById } = useTransformation()
+  const { setSelectedInput } = useInput()
   const [selectedAttribute, setSelectedAttribute] = useState<Attribute | null>(
     null,
   )
@@ -104,6 +107,37 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const createInputAttribute = (
+    transformationId: number,
+    input: Input,
+  ): void => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      const inputsList = transformation.inputs
+      const attributesList = input.attributes
+      const newAttribute: Attribute = {
+        id: findHighestId(attributesList) + 1,
+        name: 'New Attribute',
+        type: 'TEXT',
+      }
+
+      const editedInput: Input = {
+        ...input,
+        attributes: attributesList.concat(newAttribute),
+      }
+
+      const updatedInputs = inputsList.map((existingInput) => {
+        if (existingInput.id === input.id) {
+          return editedInput
+        }
+        return existingInput
+      })
+
+      updateTransformation(transformationId, { inputs: updatedInputs })
+      setSelectedInput(editedInput)
+    }
+  }
+
   return (
     <AttributeContext.Provider
       value={{
@@ -112,6 +146,7 @@ const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
         createOutputAttribute,
         updateOutputAttribute,
         deleteOutputAttribute,
+        createInputAttribute,
       }}
     >
       {children}

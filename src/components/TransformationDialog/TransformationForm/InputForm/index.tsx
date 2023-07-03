@@ -19,7 +19,7 @@ export default function InputForm() {
   const [open, setOpen] = useState(false)
   const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
   const { selectedInput, updateInput } = useInput()
-  const { setSelectedAttribute } = useAttribute()
+  const { setSelectedAttribute, createInputAttribute } = useAttribute()
   const { selectedTransformation } = useTransformation()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedInput?.name!,
@@ -40,6 +40,10 @@ export default function InputForm() {
       const target = e.target as HTMLInputElement
       target.blur()
     }
+  }
+
+  const handleCreateAttribute = () => {
+    createInputAttribute(selectedTransformation!.id, selectedInput!)
   }
 
   const handleDeleteAttribute = (e: MouseEvent, attributeId: number) => {
@@ -83,7 +87,7 @@ export default function InputForm() {
         <C.Label>Attributes</C.Label>
         <C.InputAttributeList>
           <C.AddButtonContainer>
-            <C.AddAttributeButton type="button" onClick={() => setOpen(true)}>
+            <C.AddAttributeButton type="button" onClick={handleCreateAttribute}>
               +
             </C.AddAttributeButton>
           </C.AddButtonContainer>
