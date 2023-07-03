@@ -1,11 +1,12 @@
 'use client'
 
-import useData from '@/hooks/useData'
+import useTransformation from '@/hooks/useTransformation'
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 import TransformationForm from './TransformationForm'
 
 export default function TransformationDialog() {
-  const { openTransformationDialog, setOpenTransformationDialog } = useData()
+  const { openTransformationDialog, setOpenTransformationDialog } =
+    useTransformation()
 
   return (
     <Dialog

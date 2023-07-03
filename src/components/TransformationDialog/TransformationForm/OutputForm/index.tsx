@@ -1,19 +1,118 @@
+import useAttribute from '@/hooks/useAttribute'
+import useTransformation from '@/hooks/useTransformation'
+import {
+  Attribute,
+  InputChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  Output,
+} from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useState } from 'react'
+import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import OutputAttribute from './OutputAttribute'
 import * as C from './styles'
 
+type FormDataProps = {
+  name: string
+}
+
 export default function OutputForm() {
-  const [open, setOpen] = useState(false)
+  const { updateTransformation, selectedTransformation } = useTransformation()
+  const { createOutputAttribute, deleteOutputAttribute, setSelectedAttribute } =
+    useAttribute()
+  const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
+  const [formData, setFormData] = useState<FormDataProps>({
+    name: selectedTransformation?.output.name!,
+  })
+
+  const handleChange = (e: InputChangeEvent) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
+
+  const handleBlur = () => {
+    const editedOutput: Output = {
+      ...selectedTransformation!.output,
+      ...formData,
+    }
+    updateTransformation(selectedTransformation!.id, { output: editedOutput })
+  }
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const target = e.target as HTMLInputElement
+      target.blur()
+    }
+  }
+
+  const handleCreateAttribute = () => {
+    createOutputAttribute(selectedTransformation!.id)
+  }
+
+  const handleDeleteAttribute = (e: MouseEvent, attributeId: number) => {
+    e.stopPropagation()
+
+    deleteOutputAttribute(selectedTransformation!.id, attributeId)
+  }
+
+  const handleEditAttribute = (attribute: Attribute) => {
+    setSelectedAttribute(attribute)
+    setOpenAttributeDialog(true)
+  }
 
   return (
     <C.Form>
+      {/* Forms */}
+      <C.InputGroup>
+        <C.Label>Name</C.Label>
+        <C.Input
+          name="name"
+          value={formData.name}
+          type="text"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      </C.InputGroup>
+
+      <C.InputGroup>
+        <C.Label>Attributes</C.Label>
+        <C.OutputAttributeList>
+          <C.AddButtonContainer>
+            <C.AddAttributeButton type="button" onClick={handleCreateAttribute}>
+              +
+            </C.AddAttributeButton>
+          </C.AddButtonContainer>
+          {selectedTransformation?.output.attributes.length === 0 ? (
+            <C.EmptyLabel>Create new attributes</C.EmptyLabel>
+          ) : (
+            selectedTransformation?.output.attributes.map((attribute) => (
+              <C.OutputAttribute
+                key={attribute.id}
+                onClick={() => handleEditAttribute(attribute)}
+              >
+                <BsFillPencilFill size={20} />
+                <span className="w-full text-start">{attribute.name}</span>
+                <C.DeleteAttribute
+                  onClick={(e) => handleDeleteAttribute(e, attribute.id)}
+                >
+                  <AiFillDelete size={'75%'} />
+                </C.DeleteAttribute>
+              </C.OutputAttribute>
+            ))
+          )}
+        </C.OutputAttributeList>
+      </C.InputGroup>
+
+      {/* Dialogs */}
       <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openAttributeDialog}
+        onClose={() => setOpenAttributeDialog(false)}
         fullWidth={true}
         maxWidth={'xs'}
       >
@@ -22,28 +121,6 @@ export default function OutputForm() {
           <OutputAttribute />
         </DialogContent>
       </Dialog>
-
-      <C.InputGroup>
-        <C.Label>Name</C.Label>
-        <C.Input type="text" />
-      </C.InputGroup>
-      <C.InputGroup>
-        <C.Label>Attributes</C.Label>
-        <C.IOList>
-          <C.IOPlaceholder>
-            <BsFillPencilFill size={20} />
-            Output Attribute 1
-          </C.IOPlaceholder>
-          <C.IOPlaceholder>
-            <BsFillPencilFill size={20} />
-            Output Attribute 2
-          </C.IOPlaceholder>
-
-          <C.AddIOButton type="button" onClick={() => setOpen(true)}>
-            +
-          </C.AddIOButton>
-        </C.IOList>
-      </C.InputGroup>
     </C.Form>
   )
 }

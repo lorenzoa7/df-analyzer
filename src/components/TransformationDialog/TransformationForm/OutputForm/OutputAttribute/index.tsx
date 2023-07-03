@@ -1,28 +1,73 @@
+import useAttribute from '@/hooks/useAttribute'
+import useTransformation from '@/hooks/useTransformation'
+import { AttributeType, InputChangeEvent, KeyboardEvent } from '@/utils/types'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { useState } from 'react'
 import * as C from './styles'
 
-export default function OutputAttribute() {
-  const [type, setType] = useState('TEXT')
-  const [name, setName] = useState<string>('')
+type FormDataProps = {
+  type: AttributeType
+  name: string
+}
 
-  const handleChangeType = (e: SelectChangeEvent): void => {
-    setType(e.target.value)
+export default function OutputAttribute() {
+  const { selectedAttribute, updateOutputAttribute } = useAttribute()
+  const { selectedTransformation } = useTransformation()
+  const [formData, setFormData] = useState<FormDataProps>({
+    type: selectedAttribute?.type!,
+    name: selectedAttribute?.name!,
+  })
+
+  const handleChange = (e: SelectChangeEvent | InputChangeEvent) => {
+    setFormData((prevState) => {
+      const updatedFormData = {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }
+
+      if (e.target.name === 'type') {
+        updateOutputAttribute({
+          attributeId: selectedAttribute?.id!,
+          transformationId: selectedTransformation?.id!,
+          updatedFields: updatedFormData,
+        })
+      }
+
+      return updatedFormData
+    })
   }
 
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setName(e.target.value)
+  const handleBlur = () => {
+    updateOutputAttribute({
+      attributeId: selectedAttribute?.id!,
+      transformationId: selectedTransformation?.id!,
+      updatedFields: formData,
+    })
+  }
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const target = e.target as HTMLInputElement
+      target.blur()
+    }
   }
 
   return (
     <C.Form>
       <C.InputGroup>
         <C.Label>Name</C.Label>
-        <C.Input value={name} onChange={handleChangeName} />
+        <C.Input
+          name="name"
+          value={formData.name}
+          type="text"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
       </C.InputGroup>
       <C.InputGroup>
         <C.Label>Type</C.Label>
-        <Select value={type} onChange={handleChangeType}>
+        <Select name="type" value={formData.type} onChange={handleChange}>
           <MenuItem value="TEXT">TEXT</MenuItem>
           <MenuItem value="NUMERIC">NUMERIC</MenuItem>
           <MenuItem value="FILE">FILE</MenuItem>
