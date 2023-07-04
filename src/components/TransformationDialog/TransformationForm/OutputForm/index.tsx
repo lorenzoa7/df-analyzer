@@ -133,6 +133,7 @@ export default function OutputForm() {
                   )?.name
                 }
                 type="text"
+                readOnly
               />
             </C.InputGroup>
 

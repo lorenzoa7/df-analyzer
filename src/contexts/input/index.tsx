@@ -1,4 +1,5 @@
 import { findHighestId } from '@/functions'
+import useGeneral from '@/hooks/useGeneral'
 import useTransformation from '@/hooks/useTransformation'
 import { Input } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
@@ -20,6 +21,7 @@ const InputContext = createContext<InputContextProps>({} as InputContextProps)
 
 const InputProvider = ({ children }: { children: React.ReactNode }) => {
   const { updateTransformation, getTransformationById } = useTransformation()
+  const { appData } = useGeneral()
   const [selectedInput, setSelectedInput] = useState<Input | null>(null)
 
   const getInputById = (
@@ -76,6 +78,19 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
       const editedInputs = inputList.filter((input) => input.id !== inputId)
 
       updateTransformation(transformationId, { inputs: editedInputs })
+
+      appData.transformations.map((transformation) => {
+        if (
+          transformation.output.reference &&
+          transformation.output.reference.inputId === inputId
+        ) {
+          const editedOutput = {
+            ...transformation.output,
+            reference: null,
+          }
+          updateTransformation(transformationId, { output: editedOutput })
+        }
+      })
     }
   }
 
