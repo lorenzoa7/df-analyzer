@@ -56,7 +56,6 @@ export const OutputAttribute = tw.div`
     bg-stone-600 
     rounded
     font-semibold
-    uppercase
     gap-5
     duration-300
     cursor-pointer
@@ -83,7 +82,6 @@ export const EmptyLabel = tw.p`
     h-12
     rounded
     font-semibold
-    uppercase
     flex
     items-center
     text-center
