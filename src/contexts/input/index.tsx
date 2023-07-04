@@ -1,15 +1,12 @@
 import { findHighestId } from '@/functions'
 import useTransformation from '@/hooks/useTransformation'
-import { Input, Transformation } from '@/utils/types'
+import { Input } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 export type InputContextProps = {
   selectedInput: Input | null
   setSelectedInput: Dispatch<SetStateAction<Input | null>>
-  getInputById: (
-    transformation: Transformation,
-    inputId: number,
-  ) => Input | undefined
+  getInputById: (transformationId: number, inputId: number) => Input | undefined
   createInput: (id: number) => void
   updateInput: (
     transformationId: number,
@@ -26,10 +23,13 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedInput, setSelectedInput] = useState<Input | null>(null)
 
   const getInputById = (
-    transformation: Transformation,
+    transformationId: number,
     inputId: number,
   ): Input | undefined => {
-    return transformation.inputs.find((input) => input.id === inputId)
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      return transformation.inputs.find((input) => input.id === inputId)
+    }
   }
 
   const createInput = (id: number): void => {

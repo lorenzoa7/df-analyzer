@@ -32,7 +32,10 @@ export const Input = tw.input`
     rounded
 `
 
-export const InputGroup = tw.div`
+export const InputGroup = tw.div<PreviewProps>`
+
+    ${(props) => (props.$preview ? 'contrast-[0.9] pointer-events-none' : '')}
+
     flex
     flex-col
     gap-2
@@ -54,7 +57,10 @@ export const OutputAttributeList = tw.div`
     scrollbar-thumb-stone-700
 `
 
-export const OutputAttribute = tw.div`
+export const OutputAttribute = tw.div<PreviewProps>`
+
+    ${(props) => (props.$preview ? 'pointer-events-none' : '')}
+
     flex
     p-5
     items-center

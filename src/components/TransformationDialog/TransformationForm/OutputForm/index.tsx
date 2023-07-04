@@ -1,5 +1,6 @@
 import useAttribute from '@/hooks/useAttribute'
 import useGeneral from '@/hooks/useGeneral'
+import useInput from '@/hooks/useInput'
 import useTransformation from '@/hooks/useTransformation'
 import {
   Attribute,
@@ -34,6 +35,7 @@ export default function OutputForm() {
   const [transformationReference, setTransformationReference] =
     useState<Transformation | null>(null)
   const { appData } = useGeneral()
+  const { getInputById } = useInput()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.output.name!,
   })
@@ -118,7 +120,52 @@ export default function OutputForm() {
       <C.Form>
         {/* Forms */}
 
-        {inputReference && <p>Ok</p>}
+        {inputReference && (
+          <>
+            <C.InputGroup $preview>
+              <C.Label>Name</C.Label>
+              <C.Input
+                name="name"
+                value={
+                  getInputById(
+                    inputReference.transformationId,
+                    inputReference.inputId,
+                  )?.name
+                }
+                type="text"
+              />
+            </C.InputGroup>
+
+            <C.InputGroup>
+              <C.Label>Attributes</C.Label>
+              <C.OutputAttributeList>
+                {getInputById(
+                  inputReference.transformationId,
+                  inputReference.inputId,
+                )?.attributes.length === 0 ? (
+                  <C.EmptyLabel>{`No attributes in
+                  "${
+                    getInputById(
+                      inputReference.transformationId,
+                      inputReference.inputId,
+                    )?.name
+                  }" input`}</C.EmptyLabel>
+                ) : (
+                  getInputById(
+                    inputReference.transformationId,
+                    inputReference.inputId,
+                  )?.attributes.map((attribute) => (
+                    <C.OutputAttribute $preview key={attribute.id}>
+                      <span className="w-full text-start">
+                        {attribute.name}
+                      </span>
+                    </C.OutputAttribute>
+                  ))
+                )}
+              </C.OutputAttributeList>
+            </C.InputGroup>
+          </>
+        )}
 
         {!inputReference && (
           <>
