@@ -7,6 +7,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   Output,
+  Transformation,
 } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -14,6 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useState } from 'react'
 import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
+import InputReferenceList from './InputReferenceList'
 import OutputAttribute from './OutputAttribute'
 import * as C from './styles'
 
@@ -26,6 +28,10 @@ export default function OutputForm() {
   const { createOutputAttribute, deleteOutputAttribute, setSelectedAttribute } =
     useAttribute()
   const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
+  const [openInputReferenceDialog, setOpenInputReferenceDialog] =
+    useState(false)
+  const [transformationReference, setTransformationReference] =
+    useState<Transformation | null>(null)
   const { appData } = useGeneral()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.output.name!,
@@ -77,6 +83,11 @@ export default function OutputForm() {
     // updateInput(selectedTransformation?.id!, selectedInput?.id!, {
     //   transformationOutputReferenceId: newReference,
     // })
+  }
+
+  const handleOpenInputReferenceDialog = (transformation: Transformation) => {
+    setTransformationReference(transformation)
+    setOpenInputReferenceDialog(true)
   }
 
   return (
@@ -156,7 +167,7 @@ export default function OutputForm() {
           transformation.id === selectedTransformation?.id ? null : (
             <C.TransformationItem
               key={transformation.id}
-              onClick={() => handleSetInputReference(transformation.id)}
+              onClick={() => handleOpenInputReferenceDialog(transformation)}
               $selected={inputReference?.transformationId === transformation.id}
             >
               <span className="w-full text-start">{transformation.name}</span>
@@ -175,6 +186,22 @@ export default function OutputForm() {
         <DialogTitle>Set output attribute</DialogTitle>
         <DialogContent>
           <OutputAttribute />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={openInputReferenceDialog}
+        onClose={() => setOpenInputReferenceDialog(false)}
+        fullWidth={true}
+        maxWidth={'xs'}
+      >
+        <DialogTitle>Choose input reference</DialogTitle>
+        <DialogContent>
+          <InputReferenceList
+            id={transformationReference?.id}
+            name={transformationReference?.name}
+            inputs={transformationReference?.inputs}
+          />
         </DialogContent>
       </Dialog>
     </C.Container>
