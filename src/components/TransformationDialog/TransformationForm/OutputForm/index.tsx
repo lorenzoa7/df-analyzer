@@ -39,8 +39,8 @@ export default function OutputForm() {
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.output.name!,
   })
-  const [inputReference, setInputReference] = useState(
-    selectedTransformation?.output.reference,
+  const [inputReference, setInputReference] = useState<Reference | null>(
+    selectedTransformation?.output.reference!,
   )
 
   const handleChange = (e: InputChangeEvent) =>
@@ -79,15 +79,6 @@ export default function OutputForm() {
     setOpenAttributeDialog(true)
   }
 
-  const handleSetInputReference = (transformationId: number) => {
-    // setOutputReference(transformationId)
-    // const newReference =
-    //   transformationId === selectedTransformation!.id ? null : transformationId
-    // updateInput(selectedTransformation?.id!, selectedInput?.id!, {
-    //   transformationOutputReferenceId: newReference,
-    // })
-  }
-
   const handleRemoveInputReference = () => {
     const editedOutput: Output = {
       ...selectedTransformation!.output,
@@ -98,7 +89,10 @@ export default function OutputForm() {
   }
 
   const handleOpenInputReferenceDialog = (transformation: Transformation) => {
-    if (transformation.inputs.length > 0) {
+    if (
+      transformation.inputs.length > 0 &&
+      !selectedTransformation?.output.reference
+    ) {
       const newReference: Reference = {
         transformationId: transformation.id,
         inputId: transformation.inputs[0].id,
@@ -273,6 +267,7 @@ export default function OutputForm() {
             id={transformationReference?.id}
             name={transformationReference?.name}
             inputs={transformationReference?.inputs}
+            inputReference={inputReference}
             setInputReference={setInputReference}
           />
         </DialogContent>

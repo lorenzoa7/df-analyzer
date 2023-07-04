@@ -4,21 +4,21 @@ import { SetStateAction, useState } from 'react'
 import * as C from './styles'
 
 type InputReferenceListProps = Partial<Transformation> & {
-  setInputReference: React.Dispatch<
-    SetStateAction<Reference | null | undefined>
-  >
+  inputReference: Reference | null
+  setInputReference: React.Dispatch<SetStateAction<Reference | null>>
 }
 
 export default function InputReferenceList({
   id = -1,
   name = '',
   inputs = [],
+  inputReference,
   setInputReference,
 }: InputReferenceListProps) {
   const { updateTransformation, selectedTransformation } = useTransformation()
 
   const [selectedId, setSelectedId] = useState(
-    inputs.length > 0 ? inputs[0].id : null,
+    inputReference ? inputReference.inputId : null,
   )
 
   const handleSelectInput = (inputId: number) => {
