@@ -22,6 +22,7 @@ export default function Transformations() {
       output: {
         name: '',
         attributes: [],
+        reference: null,
       },
       inputs: [],
     }

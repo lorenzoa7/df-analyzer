@@ -2,6 +2,14 @@ import tw from 'tailwind-styled-components'
 
 // Types
 
+type TransformationItemProps = {
+  $selected?: boolean
+}
+
+type PreviewProps = {
+  $preview?: boolean
+}
+
 // Styles
 
 export const Form = tw.div`
@@ -104,4 +112,45 @@ export const DeleteAttribute = tw.div`
 export const AddButtonContainer = tw.div`
     w-full 
     h-12
+`
+export const Container = tw.div`
+    flex
+    items-center
+    justify-center
+    w-full
+    gap-3
+    p-5
+`
+export const TransformationListContainer = tw.div`
+    flex
+    flex-col
+    items-center
+    gap-3
+    w-2/4
+    p-3
+    h-96
+    bg-stone-900
+    text-white
+    rounded
+    overflow-y-scroll
+    scrollbar-thin 
+    scrollbar-thumb-stone-300
+`
+export const TransformationItem = tw.div<TransformationItemProps>`
+
+    ${(props) =>
+      props.$selected
+        ? 'bg-stone-500 text-white'
+        : 'bg-stone-100 text-black hover:bg-stone-300'}
+
+    flex
+    p-5
+    items-center
+    w-full 
+    h-12 
+    rounded
+    font-semibold
+    gap-5
+    duration-300
+    cursor-pointer
 `
