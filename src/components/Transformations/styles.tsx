@@ -13,7 +13,6 @@ export const Transformation = tw.div`
     bg-stone-100 
     rounded
     font-semibold
-    uppercase
     gap-5
     duration-300
     cursor-pointer
@@ -54,12 +53,11 @@ export const TransformationsContainer = tw.div`
     scrollbar-thin 
     scrollbar-thumb-stone-300
 `
-export const Label = tw.p`
+export const EmptyLabel = tw.p`
     bg-stone-100/80
     h-12
     rounded
     font-semibold
-    uppercase
     flex
     items-center
     text-center

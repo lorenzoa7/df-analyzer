@@ -75,7 +75,7 @@ export default function Transformations() {
       </C.AddTransformationButton>
 
       {appData.transformations.length === 0 ? (
-        <C.Label>Create new transformations</C.Label>
+        <C.EmptyLabel>Create new transformations</C.EmptyLabel>
       ) : (
         appData.transformations?.map((transformation) => (
           <C.Transformation

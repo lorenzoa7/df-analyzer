@@ -168,7 +168,6 @@ export const TransformationPlaceholder = tw.div`
     bg-stone-100 
     rounded
     font-semibold
-    uppercase
     gap-5
     duration-300
     cursor-pointer
