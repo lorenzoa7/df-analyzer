@@ -1,13 +1,20 @@
 import useTransformation from '@/hooks/useTransformation'
 import { Output, Reference, Transformation } from '@/utils/types'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import * as C from './styles'
+
+type InputReferenceListProps = Partial<Transformation> & {
+  setInputReference: React.Dispatch<
+    SetStateAction<Reference | null | undefined>
+  >
+}
 
 export default function InputReferenceList({
   id = -1,
   name = '',
   inputs = [],
-}: Partial<Transformation>) {
+  setInputReference,
+}: InputReferenceListProps) {
   const { updateTransformation, selectedTransformation } = useTransformation()
 
   const [selectedId, setSelectedId] = useState(
@@ -26,6 +33,7 @@ export default function InputReferenceList({
 
     updateTransformation(selectedTransformation!.id, { output: editedOutput })
     setSelectedId(inputId)
+    setInputReference(newReference)
   }
 
   return (

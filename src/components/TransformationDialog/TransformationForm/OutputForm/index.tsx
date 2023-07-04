@@ -7,6 +7,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   Output,
+  Reference,
   Transformation,
 } from '@/utils/types'
 import Dialog from '@mui/material/Dialog'
@@ -85,7 +86,29 @@ export default function OutputForm() {
     // })
   }
 
+  const handleRemoveInputReference = () => {
+    const editedOutput: Output = {
+      ...selectedTransformation!.output,
+      reference: null,
+    }
+    updateTransformation(selectedTransformation!.id, { output: editedOutput })
+    setInputReference(null)
+  }
+
   const handleOpenInputReferenceDialog = (transformation: Transformation) => {
+    if (transformation.inputs.length > 0) {
+      const newReference: Reference = {
+        transformationId: transformation.id,
+        inputId: transformation.inputs[0].id,
+      }
+      const editedOutput: Output = {
+        ...selectedTransformation!.output,
+        reference: newReference,
+      }
+      updateTransformation(selectedTransformation!.id, { output: editedOutput })
+      setInputReference(newReference)
+    }
+
     setTransformationReference(transformation)
     setOpenInputReferenceDialog(true)
   }
@@ -157,7 +180,7 @@ export default function OutputForm() {
         {selectedTransformation && (
           <C.TransformationItem
             key={selectedTransformation.id}
-            onClick={() => handleSetInputReference(selectedTransformation.id)}
+            onClick={handleRemoveInputReference}
             $selected={inputReference === null}
           >
             <span className="w-full text-start">No output reference</span>
@@ -177,6 +200,7 @@ export default function OutputForm() {
       </C.TransformationListContainer>
 
       {/* Dialogs */}
+
       <Dialog
         open={openAttributeDialog}
         onClose={() => setOpenAttributeDialog(false)}
@@ -201,6 +225,7 @@ export default function OutputForm() {
             id={transformationReference?.id}
             name={transformationReference?.name}
             inputs={transformationReference?.inputs}
+            setInputReference={setInputReference}
           />
         </DialogContent>
       </Dialog>
