@@ -22,6 +22,7 @@ export default function Transformations() {
       output: {
         name: '',
         attributes: [],
+        reference: null,
       },
       inputs: [],
     }
@@ -35,30 +36,32 @@ export default function Transformations() {
   const deleteTransformation = (e: MouseEvent, transformationId: number) => {
     e.stopPropagation()
 
-    const updatedTransformations = appData.transformations.filter(
+    const newTransformationsArray = appData.transformations.filter(
       (transformation) => transformation.id !== transformationId,
     )
 
-    const updatedInputs = updatedTransformations.flatMap((transformation) => {
-      const updatedInput = transformation.inputs.map((input) => {
-        if (input.transformationOutputReferenceId === transformationId) {
+    const updatedTransformations = newTransformationsArray.map(
+      (transformation) => {
+        if (
+          transformation.output.reference &&
+          transformation.output.reference.transformationId === transformationId
+        ) {
           return {
-            ...input,
-            transformationOutputReferenceId: null,
+            ...transformation,
+            output: {
+              ...transformation.output,
+              reference: null,
+            },
           }
         }
-        return input
-      })
 
-      return {
-        ...transformation,
-        inputs: updatedInput,
-      }
-    })
+        return transformation
+      },
+    )
 
     setAppData({
       ...appData,
-      transformations: updatedInputs,
+      transformations: updatedTransformations,
     })
   }
 

@@ -1,15 +1,13 @@
 import { findHighestId } from '@/functions'
+import useGeneral from '@/hooks/useGeneral'
 import useTransformation from '@/hooks/useTransformation'
-import { Input, Transformation } from '@/utils/types'
+import { Input } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 export type InputContextProps = {
   selectedInput: Input | null
   setSelectedInput: Dispatch<SetStateAction<Input | null>>
-  getInputById: (
-    transformation: Transformation,
-    inputId: number,
-  ) => Input | undefined
+  getInputById: (transformationId: number, inputId: number) => Input | undefined
   createInput: (id: number) => void
   updateInput: (
     transformationId: number,
@@ -23,13 +21,17 @@ const InputContext = createContext<InputContextProps>({} as InputContextProps)
 
 const InputProvider = ({ children }: { children: React.ReactNode }) => {
   const { updateTransformation, getTransformationById } = useTransformation()
+  const { appData } = useGeneral()
   const [selectedInput, setSelectedInput] = useState<Input | null>(null)
 
   const getInputById = (
-    transformation: Transformation,
+    transformationId: number,
     inputId: number,
   ): Input | undefined => {
-    return transformation.inputs.find((input) => input.id === inputId)
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      return transformation.inputs.find((input) => input.id === inputId)
+    }
   }
 
   const createInput = (id: number): void => {
@@ -40,7 +42,6 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
         id: findHighestId(inputList) + 1,
         name: 'New Input',
         attributes: [],
-        transformationOutputReferenceId: null,
       }
 
       const editedInputs = inputList.concat(newInput)
@@ -77,6 +78,21 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
       const editedInputs = inputList.filter((input) => input.id !== inputId)
 
       updateTransformation(transformationId, { inputs: editedInputs })
+
+      appData.transformations.map((transformation) => {
+        if (
+          transformation.output.reference &&
+          transformation.output.reference.transformationId ===
+            transformationId &&
+          transformation.output.reference.inputId === inputId
+        ) {
+          const editedOutput = {
+            ...transformation.output,
+            reference: null,
+          }
+          updateTransformation(transformation.id, { output: editedOutput })
+        }
+      })
     }
   }
 

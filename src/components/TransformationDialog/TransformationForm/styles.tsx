@@ -8,7 +8,7 @@ type IOListProps = {
 
 // Styles
 
-export const Form = tw.form`
+export const Form = tw.div`
     flex
     flex-col
     p-5

@@ -103,7 +103,7 @@ export default function TransformationForm() {
       </C.DivGroup>
 
       <C.DivGroup>
-        <C.Label>Outputs</C.Label>
+        <C.Label>Output</C.Label>
         <C.IOList type="output">
           <OutputForm />
         </C.IOList>
