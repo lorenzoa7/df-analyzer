@@ -82,13 +82,15 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
       appData.transformations.map((transformation) => {
         if (
           transformation.output.reference &&
+          transformation.output.reference.transformationId ===
+            transformationId &&
           transformation.output.reference.inputId === inputId
         ) {
           const editedOutput = {
             ...transformation.output,
             reference: null,
           }
-          updateTransformation(transformationId, { output: editedOutput })
+          updateTransformation(transformation.id, { output: editedOutput })
         }
       })
     }
