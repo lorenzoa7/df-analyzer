@@ -1,5 +1,6 @@
 import { AppProvider } from '@/contexts/'
 import '@/styles/globals.css'
+import { PageContainer, PageContent, Title } from './styles'
 
 export const metadata = {
   title: 'DF-Analyzer',
@@ -14,7 +15,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <PageContainer>
+            <PageContent>
+              <Title>Df-Analyzer</Title>
+              {children}
+            </PageContent>
+          </PageContainer>
+        </AppProvider>
       </body>
     </html>
   )

@@ -3,7 +3,6 @@ import tw from 'tailwind-styled-components'
 export const PageContainer = tw.div`
     flex
     justify-center
-    h-screen
     w-screen
 `
 
@@ -130,6 +129,8 @@ export const Header = tw.header`
     h-32 
     justify-center 
     items-center
+    text-lg
+    text-white
 `
 
 export const Main = tw.main`
