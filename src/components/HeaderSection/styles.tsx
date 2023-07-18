@@ -15,6 +15,7 @@ export const DataflowTagInput = tw.input`
     transition-colors
     duration-300
     placeholder-slate-700
+    text-black
 
     hover:bg-zinc-200
     hover:focus:bg-zinc-200
