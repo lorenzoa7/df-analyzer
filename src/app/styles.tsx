@@ -4,6 +4,7 @@ export const PageContainer = tw.div`
     flex
     justify-center
     w-screen
+    h-screen
 `
 
 export const PageContent = tw.div`
@@ -28,7 +29,7 @@ export const MainContainer = tw.div`
     w-[calc(100vw-25vw)]
     bg-stone-800
     p-5
-    h-11/12
+    h-full
     my-5
     rounded
 `

@@ -5,11 +5,11 @@ import * as C from '../styles'
 export default function CodePage() {
   return (
     <C.MainContainer>
-      <C.Header>
+      <C.Header className="h-auto">
         <C.TitleLabel>Code Preview</C.TitleLabel>
       </C.Header>
 
-      <C.Main>
+      <C.Main className="flex-1">
         <CodePreview />
       </C.Main>
 
