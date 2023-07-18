@@ -52,4 +52,3 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export { GeneralContext, GeneralProvider }
-
