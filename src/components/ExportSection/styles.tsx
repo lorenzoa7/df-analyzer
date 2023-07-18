@@ -1,5 +1,13 @@
 import tw from 'tailwind-styled-components'
 
+export const Container = tw.div`
+    flex 
+    w-full 
+    gap-5 
+    justify-between 
+    items-center
+`
+
 export const ExportButton = tw.button`
     h-14
     relative
@@ -33,4 +41,14 @@ export const ExportButton = tw.button`
     hover:before:scale-x-100
 
     before:active:shadow-2xl
+`
+export const BackButton = tw.button`
+    h-14
+    w-46
+    p-2
+    bg-stone-200
+    font-bold
+    hover:bg-stone-400
+    duration-300
+    rounded
 `

@@ -137,7 +137,7 @@ export const Header = tw.header`
 export const Main = tw.main`
     flex 
     w-full 
-    h-[500px] 
+    flex-1
     justify-center 
     items-center 
     gap-10 

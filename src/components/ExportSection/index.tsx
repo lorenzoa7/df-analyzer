@@ -9,15 +9,26 @@ import * as C from './styles'
 export default function ExportSection() {
   const { push } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const handleLoad = () => {
+
+  const handleBack = () => {
     setIsLoading(true)
     Cookie.remove('code_preview')
     push('/')
   }
+
   return (
-    <C.ExportButton onClick={handleLoad}>
-      {isLoading && <BarLoader />}
-      {!isLoading && 'EXPORT'}
-    </C.ExportButton>
+    <C.Container>
+      <C.BackButton onClick={handleBack}>
+        {isLoading && <BarLoader />}
+        {!isLoading && 'GO BACK'}
+      </C.BackButton>
+
+      <C.ExportButton>EXPORT</C.ExportButton>
+
+      <C.BackButton className="invisible">
+        {isLoading && <BarLoader />}
+        {!isLoading && 'GO BACK'}
+      </C.BackButton>
+    </C.Container>
   )
 }

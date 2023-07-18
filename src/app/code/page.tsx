@@ -9,7 +9,7 @@ export default function CodePage() {
         <C.TitleLabel>Code Preview</C.TitleLabel>
       </C.Header>
 
-      <C.Main className="flex-1">
+      <C.Main className="my-3">
         <CodePreview />
       </C.Main>
 
