@@ -27,13 +27,15 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
     transformations: [],
   }
 
-  const [appData, setAppData] = useState(
-    getLocalStorage('app_data') ? getLocalStorage('app_data') : defaultAppData,
-  )
+  const [appData, setAppData] = useState(defaultAppData)
 
   const saveAppData = useCallback(() => {
     setLocalStorage('app_data', appData)
   }, [appData])
+
+  useEffect(() => {
+    if (getLocalStorage('app_data')) setAppData(getLocalStorage('app_data'))
+  }, [])
 
   useEffect(() => saveAppData(), [saveAppData])
 
