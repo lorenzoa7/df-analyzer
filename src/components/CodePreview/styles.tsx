@@ -10,6 +10,7 @@ export const Container = tw.div`
     items-center
     w-full
     h-full
+    gap-3
 `
 
 export const LineList = tw.ul`
@@ -31,6 +32,8 @@ export const CodeLine = tw.li<CodeLineProps>`
     items-center
     w-full
     px-4
+    group
+    py-2
 `
 
 export const LineNumber = tw.span`
@@ -41,4 +44,19 @@ export const LineNumber = tw.span`
 export const CodeText = tw.span`
     ml-2
     w-full
+`
+export const AddTaskButton = tw.div`
+    w-6
+    h-6
+    rounded
+    flex 
+    items-center 
+    justify-center
+    text-white
+    duration-150
+    cursor-pointer
+    bg-stone-700
+    hover:bg-stone-900
+    scale-0
+    group-hover:scale-100
 `

@@ -3,7 +3,6 @@ import tw from 'tailwind-styled-components'
 export const ExportButton = tw.button`
     h-14
     relative
-    mt-5 
     bg-none
     text-stone-200
     border-2
