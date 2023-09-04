@@ -42,6 +42,7 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
         id: findHighestId(inputList) + 1,
         name: 'New Input',
         attributes: [],
+        transformationOutputReferenceId: null,
       }
 
       const editedInputs = inputList.concat(newInput)
@@ -78,21 +79,6 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
       const editedInputs = inputList.filter((input) => input.id !== inputId)
 
       updateTransformation(transformationId, { inputs: editedInputs })
-
-      appData.transformations.map((transformation) => {
-        if (
-          transformation.output.reference &&
-          transformation.output.reference.transformationId ===
-            transformationId &&
-          transformation.output.reference.inputId === inputId
-        ) {
-          const editedOutput = {
-            ...transformation.output,
-            reference: null,
-          }
-          updateTransformation(transformation.id, { output: editedOutput })
-        }
-      })
     }
   }
 
