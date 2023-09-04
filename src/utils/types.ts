@@ -22,21 +22,16 @@ export type Transformation = {
   inputs: Input[]
 }
 
-export type Reference = {
-  transformationId: number
-  inputId: number
-}
-
 export type Output = {
   name: string
   attributes: Attribute[]
-  reference: Reference | null
 }
 
 export type Input = {
   id: number
   name: string
   attributes: Attribute[]
+  transformationOutputReferenceId: number | null
 }
 
 export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
