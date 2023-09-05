@@ -24,15 +24,6 @@ export default function CodeSection() {
     }))
   }
 
-  const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (
-    e,
-  ) => {
-    if (e.key === 'Enter') {
-      const target = e.target as HTMLTextAreaElement
-      target.blur()
-    }
-  }
-
   return (
     <C.Section>
       <C.TitleLabel>Code Input</C.TitleLabel>
@@ -42,7 +33,6 @@ export default function CodeSection() {
         value={formData.code}
         onChange={handleChange}
         onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
       />
     </C.Section>
   )
