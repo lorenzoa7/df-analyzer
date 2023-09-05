@@ -22,7 +22,7 @@ export default function CodePreview() {
         ))}
       </C.LineList>
       <div className="flex w-full justify-end">
-        <button className="flex items-center justify-center w-32 bg-zinc-300 h-10 rounded-lg font-bold hover:bg-zinc-400 duration-300 gap-1">
+        <button className="flex h-10 w-32 items-center justify-center gap-1 rounded-lg bg-zinc-300 font-bold duration-300 hover:bg-zinc-400">
           New Task +
         </button>
       </div>
