@@ -30,6 +30,7 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
   const [appData, setAppData] = useState(defaultAppData)
 
   const saveAppData = useCallback(() => {
+    console.log(appData)
     setLocalStorage('app_data', appData)
   }, [appData])
 

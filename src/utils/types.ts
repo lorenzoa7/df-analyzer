@@ -17,9 +17,12 @@ export type Attribute = {
   type: AttributeType
 }
 
+export type TaskElement = string | number | null
+
 export type Output = {
   name: string
   attributes: Attribute[]
+  taskElement: TaskElement
 }
 
 export type Input = {
@@ -27,6 +30,7 @@ export type Input = {
   name: string
   attributes: Attribute[]
   transformationOutputReferenceId: number | null
+  taskElement: TaskElement
 }
 
 export type Transformation = {

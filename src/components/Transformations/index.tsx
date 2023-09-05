@@ -22,9 +22,15 @@ export default function Transformations() {
       output: {
         name: '',
         attributes: [],
+        taskElement: null,
       },
       inputs: [],
     }
+
+    console.log({
+      ...appData,
+      transformations: transformationsList.concat(newTransformation),
+    })
 
     setAppData({
       ...appData,

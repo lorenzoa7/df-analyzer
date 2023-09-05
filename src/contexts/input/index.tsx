@@ -41,6 +41,7 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
         name: 'New Input',
         attributes: [],
         transformationOutputReferenceId: null,
+        taskElement: null,
       }
 
       const editedInputs = inputList.concat(newInput)

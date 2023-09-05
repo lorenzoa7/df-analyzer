@@ -13,7 +13,8 @@
                         "name": "Output Attribute 1",
                         "type": "TEXT"
                     }
-                ]
+                ],
+                "taskElement": "/home/debora/Documents/numeros"
             },
             "inputs": [
                 {
@@ -26,7 +27,8 @@
                             "type": "TEXT"
                         }
                     ],
-                    "transformationOutputReferenceId": null
+                    "transformationOutputReferenceId": null,
+                    "taskElement": 5
                 },
                 {
                     "id": 1,
@@ -38,7 +40,8 @@
                             "type": "TEXT"
                         }
                     ],
-                    "transformationOutputReferenceId": 2 
+                    "transformationOutputReferenceId": 2,
+                    "taskElement": 1
                 }
             ]
         }
