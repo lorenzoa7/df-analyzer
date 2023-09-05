@@ -9,17 +9,12 @@ export type KeyboardEvent = React.KeyboardEvent<HTMLInputElement>
 
 // DataFlow Data
 
-export type DataFlow = {
-  dataflow_tag: string
-  code: string
-  transformations: Transformation[]
-}
+export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
 
-export type Transformation = {
+export type Attribute = {
   id: number
   name: string
-  output: Output
-  inputs: Input[]
+  type: AttributeType
 }
 
 export type Output = {
@@ -34,10 +29,15 @@ export type Input = {
   transformationOutputReferenceId: number | null
 }
 
-export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
-
-export type Attribute = {
+export type Transformation = {
   id: number
   name: string
-  type: AttributeType
+  output: Output
+  inputs: Input[]
+}
+
+export type DataFlow = {
+  dataflow_tag: string
+  code: string
+  transformations: Transformation[]
 }

@@ -6,16 +6,16 @@ import { useState } from 'react'
 import * as C from './styles'
 
 type FormDataProps = {
-  type: AttributeType
-  name: string
+  type: AttributeType | undefined
+  name: string | undefined
 }
 
 export default function OutputAttribute() {
   const { selectedAttribute, updateOutputAttribute } = useAttribute()
   const { selectedTransformation } = useTransformation()
   const [formData, setFormData] = useState<FormDataProps>({
-    type: selectedAttribute?.type!,
-    name: selectedAttribute?.name!,
+    type: selectedAttribute?.type,
+    name: selectedAttribute?.name,
   })
 
   const handleChange = (e: SelectChangeEvent | InputChangeEvent) => {
@@ -25,10 +25,14 @@ export default function OutputAttribute() {
         [e.target.name]: e.target.value,
       }
 
-      if (e.target.name === 'type') {
+      if (
+        e.target.name === 'type' &&
+        selectedAttribute &&
+        selectedTransformation
+      ) {
         updateOutputAttribute({
-          attributeId: selectedAttribute?.id!,
-          transformationId: selectedTransformation?.id!,
+          attributeId: selectedAttribute?.id,
+          transformationId: selectedTransformation?.id,
           updatedFields: updatedFormData,
         })
       }
@@ -38,11 +42,13 @@ export default function OutputAttribute() {
   }
 
   const handleBlur = () => {
-    updateOutputAttribute({
-      attributeId: selectedAttribute?.id!,
-      transformationId: selectedTransformation?.id!,
-      updatedFields: formData,
-    })
+    if (selectedAttribute && selectedTransformation) {
+      updateOutputAttribute({
+        attributeId: selectedAttribute?.id,
+        transformationId: selectedTransformation?.id,
+        updatedFields: formData,
+      })
+    }
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {

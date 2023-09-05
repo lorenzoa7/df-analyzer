@@ -7,7 +7,6 @@ import * as C from './styles'
 
 export default function CodeSection() {
   const { appData, setAppData } = useGeneral()
-  const [code, setCode] = useState('')
   const [formData, setFormData] = useState({
     code: appData.code,
   })

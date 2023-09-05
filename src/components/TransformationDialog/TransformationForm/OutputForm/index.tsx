@@ -17,7 +17,7 @@ import OutputAttribute from './OutputAttribute'
 import * as C from './styles'
 
 type FormDataProps = {
-  name: string
+  name: string | undefined
 }
 
 export default function OutputForm() {
@@ -26,7 +26,7 @@ export default function OutputForm() {
     useAttribute()
   const [openAttributeDialog, setOpenAttributeDialog] = useState(false)
   const [formData, setFormData] = useState<FormDataProps>({
-    name: selectedTransformation?.output.name!,
+    name: selectedTransformation?.output.name,
   })
 
   const handleChange = (e: InputChangeEvent) =>
@@ -36,11 +36,13 @@ export default function OutputForm() {
     }))
 
   const handleBlur = () => {
-    const editedOutput: Output = {
-      ...selectedTransformation!.output,
-      ...formData,
+    if (selectedTransformation && formData.name) {
+      const editedOutput: Output = {
+        ...selectedTransformation.output,
+        name: formData.name,
+      }
+      updateTransformation(selectedTransformation.id, { output: editedOutput })
     }
-    updateTransformation(selectedTransformation!.id, { output: editedOutput })
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,13 +53,17 @@ export default function OutputForm() {
   }
 
   const handleCreateAttribute = () => {
-    createOutputAttribute(selectedTransformation!.id)
+    if (selectedTransformation) {
+      createOutputAttribute(selectedTransformation.id)
+    }
   }
 
   const handleDeleteAttribute = (e: MouseEvent, attributeId: number) => {
     e.stopPropagation()
 
-    deleteOutputAttribute(selectedTransformation!.id, attributeId)
+    if (selectedTransformation) {
+      deleteOutputAttribute(selectedTransformation.id, attributeId)
+    }
   }
 
   const handleEditAttribute = (attribute: Attribute) => {
