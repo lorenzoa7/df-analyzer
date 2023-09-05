@@ -17,7 +17,7 @@ import OutputForm from './OutputForm'
 import * as C from './styles'
 
 type FormDataProps = {
-  name: string
+  name: string | undefined
 }
 
 export default function TransformationForm() {
@@ -25,7 +25,7 @@ export default function TransformationForm() {
   const { selectedTransformation, updateTransformation } = useTransformation()
   const { createInput, deleteInput, setSelectedInput } = useInput()
   const [formData, setFormData] = useState<FormDataProps>({
-    name: selectedTransformation?.name!,
+    name: selectedTransformation?.name,
   })
 
   const handleChange = (e: InputChangeEvent) =>
@@ -35,7 +35,9 @@ export default function TransformationForm() {
     }))
 
   const handleBlur = () => {
-    updateTransformation(selectedTransformation?.id!, formData)
+    if (selectedTransformation) {
+      updateTransformation(selectedTransformation?.id, formData)
+    }
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -46,13 +48,17 @@ export default function TransformationForm() {
   }
 
   const handleCreateInput = () => {
-    createInput(selectedTransformation!.id)
+    if (selectedTransformation) {
+      createInput(selectedTransformation.id)
+    }
   }
 
   const handleDeleteInput = (e: MouseEvent, inputId: number) => {
     e.stopPropagation()
 
-    deleteInput(selectedTransformation!.id, inputId)
+    if (selectedTransformation) {
+      deleteInput(selectedTransformation.id, inputId)
+    }
   }
 
   const handleEditInput = (input: Input) => {

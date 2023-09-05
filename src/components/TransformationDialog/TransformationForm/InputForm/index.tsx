@@ -18,7 +18,7 @@ import InputAttribute from './InputAttribute'
 import * as C from './styles'
 
 type FormDataProps = {
-  name: string
+  name: string | undefined
 }
 
 export default function InputForm() {
@@ -29,12 +29,12 @@ export default function InputForm() {
   const { selectedTransformation, getTransformationById } = useTransformation()
   const { appData } = useGeneral()
   const [formData, setFormData] = useState<FormDataProps>({
-    name: selectedInput?.name!,
+    name: selectedInput?.name,
   })
   const [outputReference, setOutputReference] = useState(
     selectedInput?.transformationOutputReferenceId
       ? selectedInput?.transformationOutputReferenceId
-      : selectedTransformation!.id,
+      : selectedTransformation?.id,
   )
 
   const handleChange = (e: InputChangeEvent) =>
@@ -44,7 +44,9 @@ export default function InputForm() {
     }))
 
   const handleBlur = () => {
-    updateInput(selectedTransformation?.id!, selectedInput?.id!, formData)
+    if (selectedTransformation && selectedInput) {
+      updateInput(selectedTransformation?.id, selectedInput?.id, formData)
+    }
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -55,17 +57,21 @@ export default function InputForm() {
   }
 
   const handleCreateAttribute = () => {
-    createInputAttribute(selectedTransformation!.id, selectedInput!)
+    if (selectedTransformation && selectedInput) {
+      createInputAttribute(selectedTransformation.id, selectedInput)
+    }
   }
 
   const handleDeleteAttribute = (e: MouseEvent, attributeId: number) => {
     e.stopPropagation()
 
-    deleteInputAttribute(
-      selectedTransformation!.id,
-      selectedInput!,
-      attributeId,
-    )
+    if (selectedTransformation && selectedInput) {
+      deleteInputAttribute(
+        selectedTransformation.id,
+        selectedInput,
+        attributeId,
+      )
+    }
   }
 
   const handleEditAttribute = (attribute: Attribute) => {
@@ -74,13 +80,15 @@ export default function InputForm() {
   }
 
   const handleSetOutputReference = (transformationId: number) => {
-    setOutputReference(transformationId)
-    const newReference =
-      transformationId === selectedTransformation!.id ? null : transformationId
+    if (selectedTransformation && selectedInput) {
+      setOutputReference(transformationId)
+      const newReference =
+        transformationId === selectedTransformation.id ? null : transformationId
 
-    updateInput(selectedTransformation?.id!, selectedInput?.id!, {
-      transformationOutputReferenceId: newReference,
-    })
+      updateInput(selectedTransformation?.id, selectedInput?.id, {
+        transformationOutputReferenceId: newReference,
+      })
+    }
   }
 
   return (
@@ -88,7 +96,7 @@ export default function InputForm() {
       <C.Form>
         {/* Forms */}
 
-        {outputReference === selectedTransformation!.id && (
+        {outputReference === selectedTransformation?.id && (
           <>
             <C.InputGroup>
               <C.Label>Name</C.Label>
@@ -143,43 +151,44 @@ export default function InputForm() {
           </>
         )}
 
-        {!(outputReference === selectedTransformation!.id) && (
-          <>
-            <C.InputGroup $preview>
-              <C.Label>Name</C.Label>
-              <C.Input
-                name="name"
-                value={getTransformationById(outputReference)?.output.name}
-                type="text"
-              />
-            </C.InputGroup>
+        {outputReference &&
+          !(outputReference === selectedTransformation?.id) && (
+            <>
+              <C.InputGroup $preview>
+                <C.Label>Name</C.Label>
+                <C.Input
+                  name="name"
+                  value={getTransformationById(outputReference)?.output.name}
+                  type="text"
+                />
+              </C.InputGroup>
 
-            <C.InputGroup>
-              <C.Label>Attributes</C.Label>
-              <C.InputAttributeList>
-                <>
-                  {getTransformationById(outputReference)?.output.attributes
-                    .length === 0 ? (
-                    <C.EmptyLabel>
-                      {`No attributes in
+              <C.InputGroup>
+                <C.Label>Attributes</C.Label>
+                <C.InputAttributeList>
+                  <>
+                    {getTransformationById(outputReference)?.output.attributes
+                      .length === 0 ? (
+                      <C.EmptyLabel>
+                        {`No attributes in
                       "${getTransformationById(outputReference)?.name}" output`}
-                    </C.EmptyLabel>
-                  ) : (
-                    getTransformationById(
-                      outputReference,
-                    )?.output.attributes.map((attribute) => (
-                      <C.InputAttribute $preview key={attribute.id}>
-                        <span className="w-full text-start">
-                          {attribute.name}
-                        </span>
-                      </C.InputAttribute>
-                    ))
-                  )}
-                </>
-              </C.InputAttributeList>
-            </C.InputGroup>
-          </>
-        )}
+                      </C.EmptyLabel>
+                    ) : (
+                      getTransformationById(
+                        outputReference,
+                      )?.output.attributes.map((attribute) => (
+                        <C.InputAttribute $preview key={attribute.id}>
+                          <span className="w-full text-start">
+                            {attribute.name}
+                          </span>
+                        </C.InputAttribute>
+                      ))
+                    )}
+                  </>
+                </C.InputAttributeList>
+              </C.InputGroup>
+            </>
+          )}
       </C.Form>
 
       {/* List of Transformations */}
