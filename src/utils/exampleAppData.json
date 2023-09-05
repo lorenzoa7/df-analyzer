@@ -13,11 +13,7 @@
                         "name": "Output Attribute 1",
                         "type": "TEXT"
                     }
-                ],
-                "reference": {
-                    "transformationId": 1,
-                    "inputId": 2
-                }
+                ]
             },
             "inputs": [
                 {
@@ -29,7 +25,8 @@
                             "name": "Input Attribute 1",
                             "type": "TEXT"
                         }
-                    ]
+                    ],
+                    "transformationOutputReferenceId": null
                 },
                 {
                     "id": 1,
@@ -40,7 +37,8 @@
                             "name": "Input Attribute 1",
                             "type": "TEXT"
                         }
-                    ]
+                    ],
+                    "transformationOutputReferenceId": 2 
                 }
             ]
         }
