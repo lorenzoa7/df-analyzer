@@ -36,8 +36,16 @@ export type Transformation = {
   inputs: Input[]
 }
 
+export type Task = {
+  id: number
+  transformationId: number
+  outputElement: string[]
+  inputElement: string[] | null
+}
+
 export type DataFlow = {
   dataflow_tag: string
   code: string
   transformations: Transformation[]
+  tasks: Task[]
 }
