@@ -2,7 +2,7 @@
 
 import useGeneral from '@/hooks/useGeneral'
 import { InputChangeEvent, KeyboardEvent } from '@/utils/types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as C from './styles'
 
 export default function HeaderSection() {
@@ -30,6 +30,10 @@ export default function HeaderSection() {
       target.blur()
     }
   }
+
+  useEffect(() => {
+    setFormData({ dataflow_tag: appData.dataflow_tag })
+  }, [appData])
 
   return (
     <>

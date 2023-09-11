@@ -2,7 +2,7 @@
 
 import useGeneral from '@/hooks/useGeneral'
 import { TextareaChangeEvent } from '@/utils/types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as C from './styles'
 
 export default function CodeSection() {
@@ -23,6 +23,10 @@ export default function CodeSection() {
       code: formData.code,
     }))
   }
+
+  useEffect(() => {
+    setFormData({ code: appData.code })
+  }, [appData])
 
   return (
     <C.Section>
