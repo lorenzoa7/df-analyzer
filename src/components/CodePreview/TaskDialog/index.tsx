@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { findHighestId } from '@/functions'
 
 import useGeneral from '@/hooks/useGeneral'
 import useInput from '@/hooks/useInput'
@@ -47,6 +48,17 @@ export default function TaskDialog() {
 
   const onSubmit = (data: TaskData) => {
     console.log(data)
+    const id = findHighestId(appData.tasks) + 1
+    const inputElement = data.inputElement
+      ? data.inputElement.map((element) => element.variableName)
+      : data.inputElement
+    const outputElement = data.outputElement.map(
+      (element) => element.variableName,
+    )
+    const updatedData = { ...data, id, inputElement, outputElement }
+
+    addTask(updatedData)
+    setOpenTaskDialog(false)
   }
 
   const outputElementFieldArray = useFieldArray({
@@ -176,7 +188,10 @@ export default function TaskDialog() {
 
             {inputElementFieldArray.fields.length > 0 && (
               <FormLabel className="self-start text-base">
-                Define input element
+                {`Define input "${getInputById(
+                  Number(selectedTransformationId),
+                  Number(selectedInputId),
+                )?.name}" element`}
               </FormLabel>
             )}
             {inputElementFieldArray.fields.length > 0 &&
@@ -222,7 +237,9 @@ export default function TaskDialog() {
 
             {outputElementFieldArray.fields.length > 0 && (
               <FormLabel className="self-start text-base">
-                Define output element
+                {`Define output "${getTransformationById(
+                  Number(selectedTransformationId),
+                )?.name}" element`}
               </FormLabel>
             )}
             {outputElementFieldArray.fields.length &&

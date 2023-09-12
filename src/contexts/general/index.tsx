@@ -36,7 +36,12 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
   }, [appData])
 
   const getVariableNames = () => {
-    const variables = ['PRIMEIRO_NUMERO', 'SEGUNDO_NUMERO', 'RESULTADO_SOMA']
+    const variables = [
+      'PRIMEIRO_NUMERO',
+      'SEGUNDO_NUMERO',
+      'RESULTADO_SOMA',
+      '/home/debora/Documents/numeros',
+    ]
     return variables.map((variable) => ({
       variableName: variable,
     }))
