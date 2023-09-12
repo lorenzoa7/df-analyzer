@@ -23,7 +23,7 @@ import useTransformation from '@/hooks/useTransformation'
 import { TaskData, taskSchema } from '@/schemas/task-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 export default function TaskDialog() {
@@ -41,29 +41,25 @@ export default function TaskDialog() {
     },
   })
 
+  const onSubmit = (data: TaskData) => {
+    console.log(data)
+  }
+
   const outputElementFieldArray = useFieldArray({
     control: form.control,
     name: 'outputElement',
   })
 
-  const onSubmit = (data: TaskData) => {
-    console.log(data)
-  }
-
   const selectedTransformationId = form.watch('transformationId')
+  const outputElementFieldArrayRef = useRef(outputElementFieldArray)
 
   useEffect(() => {
     const defaultFields = Array.from(
       { length: getNumberOfOutputAttributes(Number(selectedTransformationId)) },
       () => ({ variableName: getVariableNames()[0].variableName }),
     )
-    outputElementFieldArray.replace(defaultFields)
-  }, [
-    selectedTransformationId,
-    outputElementFieldArray,
-    getNumberOfOutputAttributes,
-    getVariableNames,
-  ])
+    outputElementFieldArrayRef.current.replace(defaultFields)
+  }, [selectedTransformationId, getNumberOfOutputAttributes, getVariableNames])
 
   return (
     <Dialog
