@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/select'
 
 import useGeneral from '@/hooks/useGeneral'
+import useInput from '@/hooks/useInput'
 import useTask from '@/hooks/useTask'
 import useTransformation from '@/hooks/useTransformation'
 import { TaskData, taskSchema } from '@/schemas/task-schema'
@@ -29,7 +30,9 @@ import { useFieldArray, useForm } from 'react-hook-form'
 export default function TaskDialog() {
   const { openTaskDialog, setOpenTaskDialog } = useTask()
   const { appData, getVariableNames } = useGeneral()
-  const { getNumberOfOutputAttributes } = useTransformation()
+  const { getNumberOfOutputAttributes, getTransformationById } =
+    useTransformation()
+  const { getInputById } = useInput()
 
   const form = useForm<TaskData>({
     mode: 'onSubmit',
@@ -37,6 +40,7 @@ export default function TaskDialog() {
     defaultValues: {
       transformationId: 1,
       outputElement: [],
+      inputId: 1,
       inputElement: [],
     },
   })
@@ -107,6 +111,42 @@ export default function TaskDialog() {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="inputId"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Select the input</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={String(field.value)}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select the input" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {getTransformationById(
+                        Number(selectedTransformationId),
+                      )?.inputs?.map((input) => (
+                        <SelectItem key={input.id} value={String(input.id)}>
+                          {input.transformationOutputReferenceId
+                            ? getTransformationById(
+                                input.transformationOutputReferenceId,
+                              )?.output.name
+                            : input.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormLabel className="self-start">Select output element</FormLabel>
             {outputElementFieldArray.fields.map((field, index) => (
               <FormField

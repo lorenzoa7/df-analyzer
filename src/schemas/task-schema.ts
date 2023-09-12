@@ -7,6 +7,7 @@ export const taskSchema = z.object({
       variableName: z.string().nonempty('You should select the variable.'),
     }),
   ),
+  inputId: z.coerce.number(),
   inputElement: z
     .array(
       z.object({
