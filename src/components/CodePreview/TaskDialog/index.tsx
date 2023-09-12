@@ -41,7 +41,7 @@ export default function TaskDialog() {
     },
   })
 
-  const { fields, replace } = useFieldArray({
+  const outputElementFieldArray = useFieldArray({
     control: form.control,
     name: 'outputElement',
   })
@@ -57,10 +57,10 @@ export default function TaskDialog() {
       { length: getNumberOfOutputAttributes(Number(selectedTransformationId)) },
       () => ({ variableName: getVariableNames()[0].variableName }),
     )
-    replace(defaultFields)
+    outputElementFieldArray.replace(defaultFields)
   }, [
     selectedTransformationId,
-    replace,
+    outputElementFieldArray,
     getNumberOfOutputAttributes,
     getVariableNames,
   ])
@@ -112,7 +112,7 @@ export default function TaskDialog() {
               )}
             />
             <FormLabel className="self-start">Select output element</FormLabel>
-            {fields.map((field, index) => (
+            {outputElementFieldArray.fields.map((field, index) => (
               <FormField
                 key={field.id}
                 control={form.control}
