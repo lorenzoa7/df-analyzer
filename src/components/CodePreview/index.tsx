@@ -5,6 +5,7 @@ import useTask from '@/hooks/useTask'
 import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
+import TaskDialog from './TaskDialog'
 import * as C from './styles'
 
 export default function CodePreview() {
@@ -30,7 +31,7 @@ export default function CodePreview() {
         <div className="flex w-2/4 grow flex-col items-center gap-5 overflow-y-scroll rounded bg-stone-900 p-3 pb-4 pl-2 pt-2 text-center scrollbar-thin scrollbar-thumb-stone-300">
           <button
             className="h-12 w-24 flex-none rounded-xl bg-stone-100 text-3xl font-medium duration-300 hover:bg-stone-400"
-            onClick={addTask}
+            onClick={() => setOpenTaskDialog(true)}
           >
             +
           </button>
@@ -59,6 +60,7 @@ export default function CodePreview() {
           )}
         </div>
       </div>
+      <TaskDialog />
     </C.Container>
   )
 }
