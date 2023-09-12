@@ -12,10 +12,6 @@ export default function CodePreview() {
   const { setOpenTaskDialog, addTask, deleteTask } = useTask()
   const codeLines = appData.code.split('\n')
 
-  const editTask = () => {
-    setOpenTaskDialog(true)
-  }
-
   return (
     <C.Container>
       <div className="flex h-full w-full gap-10">
@@ -47,7 +43,7 @@ export default function CodePreview() {
             appData.tasks?.map((task) => (
               <div
                 key={task.id}
-                onClick={() => editTask()}
+                onClick={() => setOpenTaskDialog(true)}
                 className="flex h-12 w-full cursor-pointer  items-center  gap-5  rounded bg-stone-100 p-5 font-semibold duration-300 hover:bg-stone-400 [&>*:last-child]:hover:scale-110"
               >
                 <BsFillPencilFill size={20} />

@@ -12,8 +12,8 @@ export default function TransformationDialog() {
       fullWidth={true}
       maxWidth={'lg'}
     >
-      <DialogTitle>Set transformation</DialogTitle>
-      <DialogContent>fgdsf</DialogContent>
+      <DialogTitle>Create new task</DialogTitle>
+      <DialogContent></DialogContent>
     </Dialog>
   )
 }
