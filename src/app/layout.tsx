@@ -1,5 +1,5 @@
+import '@/app/globals.css'
 import { AppProvider } from '@/contexts/'
-import '@/styles/globals.css'
 import { PageContainer, PageContent, Title } from './styles'
 
 export const metadata = {

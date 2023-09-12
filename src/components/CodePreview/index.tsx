@@ -28,7 +28,7 @@ export default function CodePreview() {
           ))}
         </C.LineList>
 
-        <div className="flex w-2/4 grow flex-col items-center gap-5 overflow-y-scroll rounded bg-stone-900 p-3 pb-4 pl-2 pt-2 text-center scrollbar-thin scrollbar-thumb-stone-300">
+        <div className="scrollbar-thin scrollbar-thumb-stone-300 flex w-2/4 grow flex-col items-center gap-5 overflow-y-scroll rounded bg-stone-900 p-3 pb-4 pl-2 pt-2 text-center">
           <button
             className="h-12 w-24 flex-none rounded-xl bg-stone-100 text-3xl font-medium duration-300 hover:bg-stone-400"
             onClick={() => setOpenTaskDialog(true)}

@@ -1,5 +1,13 @@
 'use client'
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
 import { TaskData, taskSchema } from '@/schemas/task-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,6 +16,7 @@ import { useForm } from 'react-hook-form'
 
 export default function TaskDialog() {
   const { openTaskDialog, setOpenTaskDialog } = useTask()
+  const { appData } = useGeneral()
 
   const {
     register,
@@ -32,11 +41,31 @@ export default function TaskDialog() {
       open={openTaskDialog}
       onClose={() => setOpenTaskDialog(false)}
       fullWidth={true}
-      maxWidth={'lg'}
+      maxWidth={'sm'}
+      className="z-10"
     >
       <DialogTitle>Create new task</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleSubmit(onSubmit)}></form>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex w-full flex-col items-center justify-center p-10"
+        >
+          <Select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select the transformation" />
+            </SelectTrigger>
+            <SelectContent>
+              {appData.transformations.map((transformation) => (
+                <SelectItem
+                  key={transformation.id}
+                  value={`(${transformation.id}) ${transformation.name}`}
+                >
+                  {`(${transformation.id}) ${transformation.name}`}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </form>
       </DialogContent>
     </Dialog>
   )
