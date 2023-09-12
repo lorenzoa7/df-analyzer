@@ -14,6 +14,10 @@ export type InputContextProps = {
     updatedFields: Partial<Input>,
   ) => void
   deleteInput: (tranformationId: number, attributeId: number) => void
+  getNumberOfInputAttributes: (
+    transformationId: number,
+    inputId: number,
+  ) => number
 }
 
 const InputContext = createContext<InputContextProps>({} as InputContextProps)
@@ -80,6 +84,19 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const getNumberOfInputAttributes = (
+    transformationId: number,
+    inputId: number,
+  ) => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) {
+      const input = transformation.inputs.find((input) => input.id === inputId)
+      if (input) return input.attributes.length
+    }
+
+    return 0
+  }
+
   return (
     <InputContext.Provider
       value={{
@@ -89,6 +106,7 @@ const InputProvider = ({ children }: { children: React.ReactNode }) => {
         createInput,
         updateInput,
         deleteInput,
+        getNumberOfInputAttributes,
       }}
     >
       {children}

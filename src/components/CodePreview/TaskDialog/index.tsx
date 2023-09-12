@@ -32,7 +32,7 @@ export default function TaskDialog() {
   const { appData, getVariableNames } = useGeneral()
   const { getNumberOfOutputAttributes, getTransformationById } =
     useTransformation()
-  const { getInputById } = useInput()
+  const { getNumberOfInputAttributes } = useInput()
 
   const form = useForm<TaskData>({
     mode: 'onSubmit',
@@ -54,8 +54,15 @@ export default function TaskDialog() {
     name: 'outputElement',
   })
 
+  const inputElementFieldArray = useFieldArray({
+    control: form.control,
+    name: 'inputElement',
+  })
+
   const selectedTransformationId = form.watch('transformationId')
+  const selectedInputId = form.watch('inputId')
   const outputElementFieldArrayRef = useRef(outputElementFieldArray)
+  const inputElementFieldArrayRef = useRef(inputElementFieldArray)
 
   useEffect(() => {
     const defaultFields = Array.from(
@@ -64,6 +71,24 @@ export default function TaskDialog() {
     )
     outputElementFieldArrayRef.current.replace(defaultFields)
   }, [selectedTransformationId, getNumberOfOutputAttributes, getVariableNames])
+
+  useEffect(() => {
+    const defaultFields = Array.from(
+      {
+        length: getNumberOfInputAttributes(
+          Number(selectedTransformationId),
+          Number(selectedInputId),
+        ),
+      },
+      () => ({ variableName: getVariableNames()[0].variableName }),
+    )
+    inputElementFieldArrayRef.current.replace(defaultFields)
+  }, [
+    selectedTransformationId,
+    selectedInputId,
+    getNumberOfInputAttributes,
+    getVariableNames,
+  ])
 
   return (
     <Dialog
@@ -147,7 +172,45 @@ export default function TaskDialog() {
               )}
             />
 
-            <FormLabel className="self-start">Select output element</FormLabel>
+            {inputElementFieldArray.fields.length > 0 && (
+              <FormLabel className="self-start">Select input element</FormLabel>
+            )}
+            {inputElementFieldArray.fields.map((field, index) => (
+              <FormField
+                key={field.id}
+                control={form.control}
+                name={`inputElement.${index}.variableName`}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={getVariableNames()[0].variableName}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select the input elements" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {getVariableNames().map((variable, index) => (
+                          <SelectItem key={index} value={variable.variableName}>
+                            {variable.variableName}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+
+            {outputElementFieldArray.fields.length > 0 && (
+              <FormLabel className="self-start">
+                Select output element
+              </FormLabel>
+            )}
             {outputElementFieldArray.fields.map((field, index) => (
               <FormField
                 key={field.id}
