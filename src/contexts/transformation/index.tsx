@@ -12,6 +12,7 @@ export type TransformationContextProps = {
     id: number,
     updatedFields: Partial<Transformation>,
   ) => void
+  getNumberOfOutputAttributes: (transformationId: number) => number
 }
 
 const TransformationContext = createContext<TransformationContextProps>(
@@ -62,6 +63,13 @@ const TransformationProvider = ({
     })
   }
 
+  const getNumberOfOutputAttributes = (transformationId: number) => {
+    const transformation = getTransformationById(transformationId)
+    if (transformation) return transformation?.output.attributes.length
+
+    return 0
+  }
+
   return (
     <TransformationContext.Provider
       value={{
@@ -71,6 +79,7 @@ const TransformationProvider = ({
         setSelectedTransformation,
         getTransformationById,
         updateTransformation,
+        getNumberOfOutputAttributes,
       }}
     >
       {children}

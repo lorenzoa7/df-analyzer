@@ -14,6 +14,7 @@ export type GeneralContextProps = {
   setAppData: Dispatch<SetStateAction<DataFlow>>
   defaultAppData: DataFlow
   saveAppData: () => void
+  getVariableNames: () => { variableName: string }[]
 }
 
 const GeneralContext = createContext<GeneralContextProps>(
@@ -25,6 +26,7 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
     dataflow_tag: '',
     code: '',
     transformations: [],
+    tasks: [],
   }
 
   const [appData, setAppData] = useState(defaultAppData)
@@ -32,6 +34,13 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
   const saveAppData = useCallback(() => {
     setLocalStorage('app_data', appData)
   }, [appData])
+
+  const getVariableNames = () => {
+    const variables = ['PRIMEIRO_NUMERO', 'SEGUNDO_NUMERO', 'RESULTADO_SOMA']
+    return variables.map((variable) => ({
+      variableName: variable,
+    }))
+  }
 
   useEffect(() => {
     if (getLocalStorage('app_data')) setAppData(getLocalStorage('app_data'))
@@ -46,6 +55,7 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
         setAppData,
         defaultAppData,
         saveAppData,
+        getVariableNames,
       }}
     >
       {children}
