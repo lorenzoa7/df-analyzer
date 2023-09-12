@@ -7,7 +7,10 @@ export type TaskContextProps = {
   setOpenTaskDialog: Dispatch<SetStateAction<boolean>>
   getTaskById: (id: number) => Task | undefined
   addTask: (task: Task) => void
-  deleteTask: (taskId: number) => void
+  deleteTask: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    taskId: number,
+  ) => void
 }
 
 const TaskContext = createContext<TaskContextProps>({} as TaskContextProps)
@@ -29,7 +32,11 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }
 
-  const deleteTask = (taskId: number) => {
+  const deleteTask = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    taskId: number,
+  ) => {
+    e.stopPropagation()
     const tasksList = appData.tasks
     const updatedTasks = tasksList.filter((task) => task.id !== taskId)
 
@@ -55,4 +62,3 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export { TaskContext, TaskProvider }
-

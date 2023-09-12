@@ -40,7 +40,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "eslint-config-lorenzoa7": "^1.2.6",
+    "eslint-config-lorenzoa7": "^1.2.7",
     "tailwind-scrollbar": "^3.0.4",
     "tailwind-styled-components": "^2.2.0"
   }

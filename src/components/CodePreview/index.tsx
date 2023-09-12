@@ -2,15 +2,16 @@
 
 import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
+import useTransformation from '@/hooks/useTransformation'
 import { AiFillDelete } from 'react-icons/ai'
-import { BsFillPencilFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
 import TaskDialog from './TaskDialog'
 import * as C from './styles'
 
 export default function CodePreview() {
   const { appData } = useGeneral()
-  const { setOpenTaskDialog, addTask, deleteTask } = useTask()
+  const { setOpenTaskDialog, deleteTask } = useTask()
+  const { getTransformationById } = useTransformation()
   const codeLines = appData.code.split('\n')
 
   return (
@@ -45,13 +46,16 @@ export default function CodePreview() {
               <div
                 key={task.id}
                 onClick={() => setOpenTaskDialog(true)}
-                className="flex h-12 w-full cursor-pointer  items-center  gap-5  rounded bg-stone-100 p-5 font-semibold duration-300 hover:bg-stone-400 [&>*:last-child]:hover:scale-110"
+                className="flex h-12 w-full items-center gap-5 rounded bg-stone-100 p-5 font-semibold duration-300"
               >
-                <BsFillPencilFill size={20} />
-                <span className="w-full text-start">{task.id}</span>
+                <span className="w-full text-start">{`(${
+                  task.id
+                }) Transformation: ${getTransformationById(
+                  task.transformationId,
+                )?.name}`}</span>
                 <div
-                  onClick={() => deleteTask(task.id)}
-                  className="flex h-8 w-8 scale-0 cursor-pointer items-center justify-center rounded bg-stone-700 text-white duration-150 hover:bg-stone-900"
+                  onClick={(e) => deleteTask(e, task.id)}
+                  className="flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-stone-700 text-white duration-150 hover:bg-stone-900"
                 >
                   <AiFillDelete size={'75%'} />
                 </div>
