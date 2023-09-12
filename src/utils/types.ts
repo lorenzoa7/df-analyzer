@@ -39,8 +39,9 @@ export type Transformation = {
 export type Task = {
   id: number
   transformationId: number
-  outputElement: string[]
+  inputId: number
   inputElement: string[] | null
+  outputElement: string[]
 }
 
 export type DataFlow = {

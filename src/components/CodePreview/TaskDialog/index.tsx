@@ -28,7 +28,7 @@ import { useEffect, useRef } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 export default function TaskDialog() {
-  const { openTaskDialog, setOpenTaskDialog } = useTask()
+  const { openTaskDialog, setOpenTaskDialog, addTask } = useTask()
   const { appData, getVariableNames } = useGeneral()
   const { getNumberOfOutputAttributes, getTransformationById } =
     useTransformation()

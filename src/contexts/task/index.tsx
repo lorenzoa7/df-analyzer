@@ -1,4 +1,3 @@
-import { findHighestId } from '@/functions'
 import useGeneral from '@/hooks/useGeneral'
 import { Task } from '@/utils/types'
 import { Dispatch, SetStateAction, createContext, useState } from 'react'
@@ -7,7 +6,7 @@ export type TaskContextProps = {
   openTaskDialog: boolean
   setOpenTaskDialog: Dispatch<SetStateAction<boolean>>
   getTaskById: (id: number) => Task | undefined
-  addTask: () => void
+  addTask: (task: Task) => void
   deleteTask: (taskId: number) => void
 }
 
@@ -22,18 +21,11 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     return appData.tasks.find((task) => task.id === id)
   }
 
-  const addTask = () => {
+  const addTask = (task: Task) => {
     const tasksList = appData.tasks
-    const newTask: Task = {
-      id: findHighestId(tasksList) + 1,
-      transformationId: 1,
-      inputElement: null,
-      outputElement: [''],
-    }
-
     setAppData({
       ...appData,
-      tasks: tasksList.concat(newTask),
+      tasks: tasksList.concat(task),
     })
   }
 
@@ -63,3 +55,4 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export { TaskContext, TaskProvider }
+
