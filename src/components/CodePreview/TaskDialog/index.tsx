@@ -32,7 +32,7 @@ export default function TaskDialog() {
   const { appData, getVariableNames } = useGeneral()
   const { getNumberOfOutputAttributes, getTransformationById } =
     useTransformation()
-  const { getNumberOfInputAttributes } = useInput()
+  const { getNumberOfInputAttributes, getInputById } = useInput()
 
   const form = useForm<TaskData>({
     mode: 'onSubmit',
@@ -110,7 +110,9 @@ export default function TaskDialog() {
               name="transformationId"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Select the transformation</FormLabel>
+                  <FormLabel className="text-base">
+                    Select the transformation
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={String(field.value)}
@@ -142,7 +144,7 @@ export default function TaskDialog() {
               name="inputId"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Select the input</FormLabel>
+                  <FormLabel className="text-base">Select the input</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={String(field.value)}
@@ -173,74 +175,96 @@ export default function TaskDialog() {
             />
 
             {inputElementFieldArray.fields.length > 0 && (
-              <FormLabel className="self-start">Select input element</FormLabel>
-            )}
-            {inputElementFieldArray.fields.map((field, index) => (
-              <FormField
-                key={field.id}
-                control={form.control}
-                name={`inputElement.${index}.variableName`}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={getVariableNames()[0].variableName}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select the input elements" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {getVariableNames().map((variable, index) => (
-                          <SelectItem key={index} value={variable.variableName}>
-                            {variable.variableName}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
-
-            {outputElementFieldArray.fields.length > 0 && (
-              <FormLabel className="self-start">
-                Select output element
+              <FormLabel className="self-start text-base">
+                Define input element
               </FormLabel>
             )}
-            {outputElementFieldArray.fields.map((field, index) => (
-              <FormField
-                key={field.id}
-                control={form.control}
-                name={`outputElement.${index}.variableName`}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={getVariableNames()[0].variableName}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select the input elements" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {getVariableNames().map((variable, index) => (
-                          <SelectItem key={index} value={variable.variableName}>
-                            {variable.variableName}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+            {inputElementFieldArray.fields.length > 0 &&
+              inputElementFieldArray.fields.map((field, index) => (
+                <FormField
+                  key={field.id}
+                  control={form.control}
+                  name={`inputElement.${index}.variableName`}
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel className="self-start text-xs">
+                        {`Associate "${getInputById(
+                          Number(selectedTransformationId),
+                          Number(selectedInputId),
+                        )?.attributes[index]?.name}" attribute to a variable`}
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={getVariableNames()[0].variableName}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Define input element" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {getVariableNames().map((variable, index) => (
+                            <SelectItem
+                              key={index}
+                              value={variable.variableName}
+                            >
+                              {variable.variableName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+
+            {outputElementFieldArray.fields.length > 0 && (
+              <FormLabel className="self-start text-base">
+                Define output element
+              </FormLabel>
+            )}
+            {outputElementFieldArray.fields.length &&
+              outputElementFieldArray.fields.map((field, index) => (
+                <FormField
+                  key={field.id}
+                  control={form.control}
+                  name={`outputElement.${index}.variableName`}
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel className="self-start text-xs">
+                        {`Associate "${getTransformationById(
+                          Number(selectedTransformationId),
+                        )?.output.attributes[index]
+                          ?.name}" attribute to a variable`}
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={getVariableNames()[0].variableName}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Define the input elements" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {getVariableNames().map((variable, index) => (
+                            <SelectItem
+                              key={index}
+                              value={variable.variableName}
+                            >
+                              {variable.variableName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
 
             <Button type="submit" className="w-1/2">
               Create
