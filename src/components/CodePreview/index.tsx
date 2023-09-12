@@ -2,7 +2,6 @@
 
 import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
-import type { Task } from '@/utils/types'
 import { AiFillDelete } from 'react-icons/ai'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
@@ -10,11 +9,10 @@ import * as C from './styles'
 
 export default function CodePreview() {
   const { appData } = useGeneral()
-  const { setOpenTaskDialog, setSelectedTask, addTask } = useTask()
+  const { setOpenTaskDialog, addTask, deleteTask } = useTask()
   const codeLines = appData.code.split('\n')
 
-  const editTask = (task: Task) => {
-    setSelectedTask(task)
+  const editTask = () => {
     setOpenTaskDialog(true)
   }
 
@@ -49,13 +47,13 @@ export default function CodePreview() {
             appData.tasks?.map((task) => (
               <div
                 key={task.id}
-                onClick={() => editTask(task)}
+                onClick={() => editTask()}
                 className="flex h-12 w-full cursor-pointer  items-center  gap-5  rounded bg-stone-100 p-5 font-semibold duration-300 hover:bg-stone-400 [&>*:last-child]:hover:scale-110"
               >
                 <BsFillPencilFill size={20} />
                 <span className="w-full text-start">{task.id}</span>
                 <div
-                  onClick={() => console.log('deleted')}
+                  onClick={() => deleteTask(task.id)}
                   className="flex h-8 w-8 scale-0 cursor-pointer items-center justify-center rounded bg-stone-700 text-white duration-150 hover:bg-stone-900"
                 >
                   <AiFillDelete size={'75%'} />

@@ -6,10 +6,9 @@ import { Dispatch, SetStateAction, createContext, useState } from 'react'
 export type TaskContextProps = {
   openTaskDialog: boolean
   setOpenTaskDialog: Dispatch<SetStateAction<boolean>>
-  selectedTask: Task | null
-  setSelectedTask: Dispatch<SetStateAction<Task | null>>
   getTaskById: (id: number) => Task | undefined
   addTask: () => void
+  deleteTask: (taskId: number) => void
 }
 
 const TaskContext = createContext<TaskContextProps>({} as TaskContextProps)
@@ -19,13 +18,11 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [openTaskDialog, setOpenTaskDialog] = useState(false)
 
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-
   const getTaskById = (id: number): Task | undefined => {
     return appData.tasks.find((task) => task.id === id)
   }
 
-  const addTask = (): void => {
+  const addTask = () => {
     const tasksList = appData.tasks
     const newTask: Task = {
       id: findHighestId(tasksList) + 1,
@@ -40,15 +37,24 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }
 
+  const deleteTask = (taskId: number) => {
+    const tasksList = appData.tasks
+    const updatedTasks = tasksList.filter((task) => task.id !== taskId)
+
+    setAppData({
+      ...appData,
+      tasks: updatedTasks,
+    })
+  }
+
   return (
     <TaskContext.Provider
       value={{
         openTaskDialog,
         setOpenTaskDialog,
-        selectedTask,
-        setSelectedTask,
         getTaskById,
         addTask,
+        deleteTask,
       }}
     >
       {children}
