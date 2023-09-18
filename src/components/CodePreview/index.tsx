@@ -3,8 +3,18 @@
 import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
 import useTransformation from '@/hooks/useTransformation'
+import { ListEnd, ListStart, Plus } from 'lucide-react'
 import { AiFillDelete } from 'react-icons/ai'
-import { FaPlus } from 'react-icons/fa'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 import TaskDialog from './TaskDialog'
 import * as C from './styles'
 
@@ -34,9 +44,63 @@ export default function CodePreview() {
               <C.CodeText>
                 {typeof line === 'string' ? line : getTaskName(line.taskId)}
               </C.CodeText>
-              <C.AddTaskButton>
-                <FaPlus size={'65%'} />
-              </C.AddTaskButton>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <C.AddTaskButton>
+                    <Plus className="h-4 w-4" />
+                  </C.AddTaskButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger
+                      disabled={appData.tasks.every((task) => task.hasEndStamp)}
+                    >
+                      <ListStart className="mr-2 h-4 w-4" />
+                      <span>Begin</span>
+                    </DropdownMenuSubTrigger>
+                    {!appData.tasks.every((task) => task.hasEndStamp) && (
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          {appData.tasks.map((task) => {
+                            if (!task.hasBeginStamp) {
+                              return (
+                                <DropdownMenuItem key={task.id}>
+                                  {getTaskName(task.id)}
+                                </DropdownMenuItem>
+                              )
+                            }
+                            return null
+                          })}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    )}
+                  </DropdownMenuSub>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger
+                      disabled={appData.tasks.every((task) => task.hasEndStamp)}
+                    >
+                      <ListEnd className="mr-2 h-4 w-4" />
+                      <span>End</span>
+                    </DropdownMenuSubTrigger>
+                    {!appData.tasks.every((task) => task.hasEndStamp) && (
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          {appData.tasks.map((task) => {
+                            if (!task.hasEndStamp) {
+                              return (
+                                <DropdownMenuItem key={task.id}>
+                                  {getTaskName(task.id)}
+                                </DropdownMenuItem>
+                              )
+                            }
+                            return null
+                          })}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    )}
+                  </DropdownMenuSub>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </C.CodeLine>
           ))}
         </C.LineList>
@@ -57,7 +121,6 @@ export default function CodePreview() {
             appData.tasks?.map((task) => (
               <div
                 key={task.id}
-                onClick={() => setOpenTaskDialog(true)}
                 className="flex h-12 w-full items-center gap-5 rounded bg-stone-100 p-5 font-semibold duration-300"
               >
                 <span className="w-full text-start">{`(${

@@ -58,6 +58,4 @@ export const AddTaskButton = tw.div`
     cursor-pointer
     bg-stone-700
     hover:bg-stone-900
-    scale-0
-    group-hover:scale-100
 `
