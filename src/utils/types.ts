@@ -42,6 +42,13 @@ export type Task = {
   inputId: number
   inputElement: string[] | null
   outputElement: string[]
+  hasBeginStamp: boolean
+  hasEndStamp: boolean
+}
+
+export type CodeStamp = {
+  taskId: number
+  stamp: 'begin' | 'end'
 }
 
 export type DataFlow = {
@@ -49,4 +56,5 @@ export type DataFlow = {
   code: string
   transformations: Transformation[]
   tasks: Task[]
+  codeLines: (string | CodeStamp)[]
 }

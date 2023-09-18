@@ -11,10 +11,11 @@ import * as C from './styles'
 
 export default function LoadSection() {
   const { push } = useRouter()
-  const { setAppData } = useGeneral()
+  const { setAppData, appData } = useGeneral()
   const [isLoading, setIsLoading] = useState(false)
   const handleLoad = () => {
     setIsLoading(true)
+    setAppData((state) => ({ ...state, codeLines: appData.code.split('\n') }))
     Cookie.set('code_preview', 'true')
     push('/code')
   }

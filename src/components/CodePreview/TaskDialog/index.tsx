@@ -55,7 +55,16 @@ export default function TaskDialog() {
     const outputElement = data.outputElement.map(
       (element) => element.variableName,
     )
-    const updatedData = { ...data, id, inputElement, outputElement }
+    const hasBeginStamp = false
+    const hasEndStamp = false
+    const updatedData = {
+      ...data,
+      id,
+      inputElement,
+      outputElement,
+      hasBeginStamp,
+      hasEndStamp,
+    }
 
     addTask(updatedData)
     setOpenTaskDialog(false)

@@ -27,6 +27,7 @@ const GeneralProvider = ({ children }: { children: React.ReactNode }) => {
     code: '',
     transformations: [],
     tasks: [],
+    codeLines: [],
   }
 
   const [appData, setAppData] = useState(defaultAppData)

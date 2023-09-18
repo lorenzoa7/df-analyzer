@@ -10,18 +10,30 @@ import * as C from './styles'
 
 export default function CodePreview() {
   const { appData } = useGeneral()
-  const { setOpenTaskDialog, deleteTask } = useTask()
+  const { setOpenTaskDialog, deleteTask, getTaskById } = useTask()
   const { getTransformationById } = useTransformation()
-  const codeLines = appData.code.split('\n')
+
+  const getTaskName = (taskId: number) => {
+    const task = getTaskById(taskId)
+    if (task) {
+      return `(${task.id}) Transformation: ${getTransformationById(
+        task.transformationId,
+      )?.name}`
+    }
+
+    return 'Task'
+  }
 
   return (
     <C.Container>
       <div className="flex h-full w-full gap-10">
         <C.LineList>
-          {codeLines.map((line, index) => (
+          {appData.codeLines.map((line, index) => (
             <C.CodeLine key={index} $even={(index + 1) % 2 === 0}>
               <C.LineNumber>{index + 1}</C.LineNumber>
-              <C.CodeText>{line}</C.CodeText>
+              <C.CodeText>
+                {typeof line === 'string' ? line : getTaskName(line.taskId)}
+              </C.CodeText>
               <C.AddTaskButton>
                 <FaPlus size={'65%'} />
               </C.AddTaskButton>
