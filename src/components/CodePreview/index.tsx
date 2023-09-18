@@ -2,7 +2,6 @@
 
 import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
-import useTransformation from '@/hooks/useTransformation'
 import { CodeStamp, Task } from '@/utils/types'
 import { ListEnd, ListStart, Plus } from 'lucide-react'
 import { AiFillDelete } from 'react-icons/ai'
@@ -24,18 +23,6 @@ type SetCodeStampProps = CodeStamp & { index: number }
 export default function CodePreview() {
   const { appData, setAppData } = useGeneral()
   const { setOpenTaskDialog, deleteTask, getTaskById, updateTask } = useTask()
-  const { getTransformationById } = useTransformation()
-
-  const getTaskName = (taskId: number) => {
-    const task = getTaskById(taskId)
-    if (task) {
-      return `(${task.id}) Transformation: ${getTransformationById(
-        task.transformationId,
-      )?.name}`
-    }
-
-    return 'Task'
-  }
 
   const setCodeStamp = ({ index, taskId, stamp }: SetCodeStampProps) => {
     const updatedCodeLines = appData.codeLines
@@ -67,7 +54,8 @@ export default function CodePreview() {
               <C.CodeText>
                 {typeof line === 'string'
                   ? line
-                  : `${line.stamp.toUpperCase()}: ${getTaskName(line.taskId)}`}
+                  : `${line.stamp.toUpperCase()}: ${getTaskById(line.taskId)
+                      ?.name}`}
               </C.CodeText>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -101,7 +89,7 @@ export default function CodePreview() {
                                     })
                                   }
                                 >
-                                  {getTaskName(task.id)}
+                                  {getTaskById(task.id)?.name}
                                 </DropdownMenuItem>
                               )
                             }
@@ -134,7 +122,7 @@ export default function CodePreview() {
                                     })
                                   }
                                 >
-                                  {getTaskName(task.id)}
+                                  {getTaskById(task.id)?.name}
                                 </DropdownMenuItem>
                               )
                             }
@@ -168,11 +156,9 @@ export default function CodePreview() {
                 key={task.id}
                 className="flex h-12 w-full items-center gap-5 rounded bg-stone-100 p-5 font-semibold duration-300"
               >
-                <span className="w-full text-start">{`(${
-                  task.id
-                }) Transformation: ${getTransformationById(
-                  task.transformationId,
-                )?.name}`}</span>
+                <span className="w-full text-start">
+                  {getTaskById(task.id)?.name}
+                </span>
                 <div
                   onClick={(e) => deleteTask(e, task.id)}
                   className="flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-stone-700 text-white duration-150 hover:bg-stone-900"

@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -22,7 +23,7 @@ import useGeneral from '@/hooks/useGeneral'
 import useInput from '@/hooks/useInput'
 import useTask from '@/hooks/useTask'
 import useTransformation from '@/hooks/useTransformation'
-import { TaskData, taskSchema } from '@/schemas/task-schema'
+import { TaskData, useTaskSchema } from '@/schemas/task-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 import { useEffect, useRef } from 'react'
@@ -35,10 +36,13 @@ export default function TaskDialog() {
     useTransformation()
   const { getNumberOfInputAttributes, getInputById } = useInput()
 
+  const taskSchema = useTaskSchema()
+
   const form = useForm<TaskData>({
     mode: 'onSubmit',
     resolver: zodResolver(taskSchema),
     defaultValues: {
+      name: '',
       transformationId: 1,
       outputElement: [],
       inputId: 1,
@@ -47,7 +51,6 @@ export default function TaskDialog() {
   })
 
   const onSubmit = (data: TaskData) => {
-    console.log(data)
     const id = findHighestId(appData.tasks) + 1
     const inputElement = data.inputElement
       ? data.inputElement.map((element) => element.variableName)
@@ -126,6 +129,22 @@ export default function TaskDialog() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex w-full flex-col items-center justify-center gap-3 p-5"
           >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-base">
+                    Create a name for the task
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Type a unique name..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="transformationId"

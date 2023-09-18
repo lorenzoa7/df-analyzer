@@ -38,6 +38,7 @@ export type Transformation = {
 
 export type Task = {
   id: number
+  name: string
   transformationId: number
   inputId: number
   inputElement: string[] | null
