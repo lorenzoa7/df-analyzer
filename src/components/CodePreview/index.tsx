@@ -3,6 +3,7 @@
 import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
 import useTransformation from '@/hooks/useTransformation'
+import { CodeStamp, Task } from '@/utils/types'
 import { ListEnd, ListStart, Plus } from 'lucide-react'
 import { AiFillDelete } from 'react-icons/ai'
 import {
@@ -18,9 +19,11 @@ import {
 import TaskDialog from './TaskDialog'
 import * as C from './styles'
 
+type SetCodeStampProps = CodeStamp & { index: number }
+
 export default function CodePreview() {
-  const { appData } = useGeneral()
-  const { setOpenTaskDialog, deleteTask, getTaskById } = useTask()
+  const { appData, setAppData } = useGeneral()
+  const { setOpenTaskDialog, deleteTask, getTaskById, updateTask } = useTask()
   const { getTransformationById } = useTransformation()
 
   const getTaskName = (taskId: number) => {
@@ -34,6 +37,26 @@ export default function CodePreview() {
     return 'Task'
   }
 
+  const setCodeStamp = ({ index, taskId, stamp }: SetCodeStampProps) => {
+    const updatedCodeLines = appData.codeLines
+    updatedCodeLines.splice(index, 0, {
+      taskId,
+      stamp,
+    })
+    const editedTask: Partial<Task> =
+      stamp === 'begin'
+        ? {
+            hasBeginStamp: true,
+          }
+        : { hasEndStamp: true }
+
+    updateTask(taskId, editedTask)
+    setAppData((state) => ({
+      ...state,
+      codeLines: updatedCodeLines,
+    }))
+  }
+
   return (
     <C.Container>
       <div className="flex h-full w-full gap-10">
@@ -42,7 +65,9 @@ export default function CodePreview() {
             <C.CodeLine key={index} $even={(index + 1) % 2 === 0}>
               <C.LineNumber>{index + 1}</C.LineNumber>
               <C.CodeText>
-                {typeof line === 'string' ? line : getTaskName(line.taskId)}
+                {typeof line === 'string'
+                  ? line
+                  : `${line.stamp.toUpperCase()}: ${getTaskName(line.taskId)}`}
               </C.CodeText>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -53,18 +78,29 @@ export default function CodePreview() {
                 <DropdownMenuContent>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger
-                      disabled={appData.tasks.every((task) => task.hasEndStamp)}
+                      disabled={appData.tasks.every(
+                        (task) => task.hasBeginStamp,
+                      )}
                     >
                       <ListStart className="mr-2 h-4 w-4" />
                       <span>Begin</span>
                     </DropdownMenuSubTrigger>
-                    {!appData.tasks.every((task) => task.hasEndStamp) && (
+                    {!appData.tasks.every((task) => task.hasBeginStamp) && (
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          {appData.tasks.map((task) => {
+                          {appData.tasks.map((task, index) => {
                             if (!task.hasBeginStamp) {
                               return (
-                                <DropdownMenuItem key={task.id}>
+                                <DropdownMenuItem
+                                  key={task.id}
+                                  onClick={() =>
+                                    setCodeStamp({
+                                      index,
+                                      taskId: task.id,
+                                      stamp: 'begin',
+                                    })
+                                  }
+                                >
                                   {getTaskName(task.id)}
                                 </DropdownMenuItem>
                               )
@@ -88,7 +124,16 @@ export default function CodePreview() {
                           {appData.tasks.map((task) => {
                             if (!task.hasEndStamp) {
                               return (
-                                <DropdownMenuItem key={task.id}>
+                                <DropdownMenuItem
+                                  key={task.id}
+                                  onClick={() =>
+                                    setCodeStamp({
+                                      index: index + 1,
+                                      taskId: task.id,
+                                      stamp: 'end',
+                                    })
+                                  }
+                                >
                                   {getTaskName(task.id)}
                                 </DropdownMenuItem>
                               )

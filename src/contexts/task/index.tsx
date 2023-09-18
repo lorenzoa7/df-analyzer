@@ -11,6 +11,7 @@ export type TaskContextProps = {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     taskId: number,
   ) => void
+  updateTask: (taskId: number, updatedFields: Partial<Task>) => void
 }
 
 const TaskContext = createContext<TaskContextProps>({} as TaskContextProps)
@@ -46,6 +47,23 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }
 
+  const updateTask = (taskId: number, updatedFields: Partial<Task>) => {
+    const task = getTaskById(taskId)
+    if (task) {
+      const updatedTasks = appData.tasks.map((task) => {
+        if (task.id === taskId) {
+          return {
+            ...task,
+            ...updatedFields,
+          }
+        }
+        return task
+      })
+
+      setAppData((state) => ({ ...state, tasks: updatedTasks }))
+    }
+  }
+
   return (
     <TaskContext.Provider
       value={{
@@ -54,6 +72,7 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
         getTaskById,
         addTask,
         deleteTask,
+        updateTask,
       }}
     >
       {children}
@@ -62,3 +81,4 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export { TaskContext, TaskProvider }
+
