@@ -3,7 +3,7 @@
 import useGeneral from '@/hooks/useGeneral'
 import useTask from '@/hooks/useTask'
 import { CodeStamp, Task } from '@/utils/types'
-import { ListEnd, ListStart, Plus } from 'lucide-react'
+import { ListEnd, ListStart, Plus, Trash } from 'lucide-react'
 import { AiFillDelete } from 'react-icons/ai'
 import {
   DropdownMenu,
@@ -44,6 +44,22 @@ export default function CodePreview() {
     }))
   }
 
+  const deleteCodeLine = ({ index, taskId, stamp }: SetCodeStampProps) => {
+    const updatedCodeLines = appData.codeLines
+    updatedCodeLines.splice(index, 1)
+    const editedTask: Partial<Task> =
+      stamp === 'begin'
+        ? {
+            hasBeginStamp: false,
+          }
+        : { hasEndStamp: false }
+    updateTask(taskId, editedTask)
+    setAppData((state) => ({
+      ...state,
+      codeLines: updatedCodeLines,
+    }))
+  }
+
   return (
     <C.Container>
       <div className="flex h-full w-full gap-10">
@@ -76,7 +92,7 @@ export default function CodePreview() {
                     {!appData.tasks.every((task) => task.hasBeginStamp) && (
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          {appData.tasks.map((task, index) => {
+                          {appData.tasks.map((task) => {
                             if (!task.hasBeginStamp) {
                               return (
                                 <DropdownMenuItem
@@ -132,6 +148,20 @@ export default function CodePreview() {
                       </DropdownMenuPortal>
                     )}
                   </DropdownMenuSub>
+                  {typeof line !== 'string' && (
+                    <DropdownMenuItem
+                      onClick={() =>
+                        deleteCodeLine({
+                          index,
+                          stamp: line.stamp,
+                          taskId: line.taskId,
+                        })
+                      }
+                    >
+                      <Trash className="mr-2 h-4 w-4" />
+                      <span>Delete</span>
+                    </DropdownMenuItem>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </C.CodeLine>
