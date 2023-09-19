@@ -16,12 +16,13 @@ export const Container = tw.div`
 export const LineList = tw.ul`
     bg-zinc-100
     w-full
-    h-[600px]
+    h-full
     flex
     flex-col
     overflow-y-scroll
     scrollbar-thin 
     scrollbar-thumb-stone-700
+    rounded
 `
 
 export const CodeLine = tw.li<CodeLineProps>`
@@ -57,6 +58,4 @@ export const AddTaskButton = tw.div`
     cursor-pointer
     bg-stone-700
     hover:bg-stone-900
-    scale-0
-    group-hover:scale-100
 `

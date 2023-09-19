@@ -1,6 +1,8 @@
-import { Attribute, Input, Transformation } from '@/utils/types'
+import type { Attribute, Input, Task, Transformation } from '@/utils/types'
 
-const findHighestId = (array: Array<Transformation | Input | Attribute>) => {
+const findHighestId = (
+  array: Array<Transformation | Input | Attribute | Task>,
+) => {
   let highestId = 0
 
   array.forEach((item) => {

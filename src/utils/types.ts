@@ -36,8 +36,26 @@ export type Transformation = {
   inputs: Input[]
 }
 
+export type Task = {
+  id: number
+  name: string
+  transformationId: number
+  inputId: number
+  inputElement: string[] | null
+  outputElement: string[]
+  hasBeginStamp: boolean
+  hasEndStamp: boolean
+}
+
+export type CodeStamp = {
+  taskId: number
+  stamp: 'begin' | 'end'
+}
+
 export type DataFlow = {
   dataflow_tag: string
   code: string
   transformations: Transformation[]
+  tasks: Task[]
+  codeLines: (string | CodeStamp)[]
 }

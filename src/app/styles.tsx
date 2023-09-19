@@ -159,6 +159,7 @@ export const Footer = tw.footer`
     flex
     items-center
     justify-center
+    gap-5
 `
 
 export const TransformationPlaceholder = tw.div`

@@ -22,7 +22,11 @@ type FormDataProps = {
 
 export default function TransformationForm() {
   const [openInputDialog, setOpenInputDialog] = useState(false)
-  const { selectedTransformation, updateTransformation } = useTransformation()
+  const {
+    selectedTransformation,
+    updateTransformation,
+    getTransformationById,
+  } = useTransformation()
   const { createInput, deleteInput, setSelectedInput } = useInput()
   const [formData, setFormData] = useState<FormDataProps>({
     name: selectedTransformation?.name,
@@ -98,7 +102,13 @@ export default function TransformationForm() {
                 onClick={() => handleEditInput(input)}
               >
                 <BsFillPencilFill size={20} />
-                <span className="w-full text-start">{input.name}</span>
+                <span className="w-full text-start">
+                  {input.transformationOutputReferenceId
+                    ? getTransformationById(
+                        input.transformationOutputReferenceId,
+                      )?.output.name
+                    : input.name}
+                </span>
                 <C.DeleteInput onClick={(e) => handleDeleteInput(e, input.id)}>
                   <AiFillDelete size={'75%'} />
                 </C.DeleteInput>

@@ -61,6 +61,18 @@
             ]
         }
     ],
-    "tasks": [],
-    "codeLines": []
+    "tasks": [
+        {
+            "id": 1,
+            "transformationId": 1,
+            "inputElement": ["/home/debora/Documents/numeros"],
+            "outputElement": ["PRIMEIRO_NUMERO", "SEGUNDO_NUMERO"]
+        },
+        {
+            "id": 2,
+            "transformationId": 2,
+            "inputElement": null,
+            "outputElement": ["RESULTADO_SOMA"]
+        }
+    ]
 }
