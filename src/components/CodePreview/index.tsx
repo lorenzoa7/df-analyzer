@@ -24,10 +24,16 @@ export default function CodePreview() {
   const { appData, setAppData } = useGeneral()
   const { setOpenTaskDialog, deleteTask, getTaskById, updateTask } = useTask()
 
-  const setCodeStamp = ({ index, taskId, stamp }: SetCodeStampProps) => {
+  const setCodeStamp = ({
+    index,
+    taskId,
+    transformationId,
+    stamp,
+  }: SetCodeStampProps) => {
     const updatedCodeLines = appData.codeLines
     updatedCodeLines.splice(index, 0, {
       taskId,
+      transformationId,
       stamp,
     })
     const editedTask: Partial<Task> =
@@ -44,7 +50,11 @@ export default function CodePreview() {
     }))
   }
 
-  const deleteCodeLine = ({ index, taskId, stamp }: SetCodeStampProps) => {
+  const deleteCodeLine = ({
+    index,
+    taskId,
+    stamp,
+  }: Omit<SetCodeStampProps, 'transformationId'>) => {
     const updatedCodeLines = appData.codeLines
     updatedCodeLines.splice(index, 1)
     const editedTask: Partial<Task> =
@@ -101,6 +111,7 @@ export default function CodePreview() {
                                     setCodeStamp({
                                       index,
                                       taskId: task.id,
+                                      transformationId: task.transformationId,
                                       stamp: 'begin',
                                     })
                                   }
@@ -134,6 +145,7 @@ export default function CodePreview() {
                                     setCodeStamp({
                                       index: index + 1,
                                       taskId: task.id,
+                                      transformationId: task.transformationId,
                                       stamp: 'end',
                                     })
                                   }

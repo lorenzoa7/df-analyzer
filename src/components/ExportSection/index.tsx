@@ -1,6 +1,9 @@
 'use client'
 
 import useGeneral from '@/hooks/useGeneral'
+import useInput from '@/hooks/useInput'
+import useTask from '@/hooks/useTask'
+import useTransformation from '@/hooks/useTransformation'
 import Cookie from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -10,6 +13,9 @@ import * as C from './styles'
 export default function ExportSection() {
   const { push } = useRouter()
   const { appData } = useGeneral()
+  const { getTransformationById } = useTransformation()
+  const { getInputById } = useInput()
+  const { getTaskById } = useTask()
   const [isLoading, setIsLoading] = useState(false)
 
   const handleBack = () => {
@@ -92,9 +98,69 @@ export default function ExportSection() {
           `tf${transformation.id} = Transformation("${transformation.name}")`,
         ].concat(inputs, output, lastTransformationPart)
       })
-      .concat(['', 'df.save()', '', '# Retrospective provenance'])
+      .concat(['df.save()', '', '# Retrospective provenance'])
 
     updatedCode = updatedCode.concat(prospectiveProvenance)
+
+    const retrospectiveProvenance = appData.codeLines
+      .flatMap((line) => {
+        if (typeof line === 'string') return [line]
+        if (line.stamp === 'begin') {
+          const task = getTaskById(line.taskId)
+          const hasInputElement = !!(task && task.inputElement)
+          let dependecyTaskName
+          if (!hasInputElement && task?.transformationId) {
+            const transformationOutputId = getInputById(
+              task.transformationId,
+              task.inputId,
+            )?.transformationOutputReferenceId
+            if (transformationOutputId) {
+              const attributesNames = getTransformationById(
+                transformationOutputId,
+              )?.output.attributes.map((attribute) => attribute.name)
+
+              dependecyTaskName = appData.tasks.find(
+                (task) =>
+                  task.outputElement.toString() === attributesNames?.toString(),
+              )?.name
+            }
+          }
+          return [
+            `${task?.name} = Task(${
+              line.taskId
+            }, dataflow_tag, "${getTransformationById(line.transformationId)
+              ?.name}"${
+              dependecyTaskName ? `, dependency=${dependecyTaskName}` : ''
+            })`,
+          ].concat(
+            task && task.inputElement
+              ? [
+                  `${task?.name}_input = DataSet("${getInputById(
+                    line.transformationId,
+                    task.inputId,
+                  )?.name}", [Element([${task.inputElement.toString()}])])`,
+                  `${task?.name}.add_dataset(${task?.name}_input)`,
+                ]
+              : [],
+            [`${task?.name}.begin()`],
+          )
+        }
+
+        const task = getTaskById(line.taskId)
+        if (task)
+          return [
+            `${task?.name}_output= DataSet("${getTransformationById(
+              line.transformationId,
+            )?.name}", [Element([${task.outputElement.toString()}])])`,
+            `${task?.name}.add_dataset(${task?.name}_output)`,
+            `${task?.name}.end()`,
+          ]
+
+        return []
+      })
+      .concat([''])
+
+    updatedCode = updatedCode.concat(retrospectiveProvenance)
 
     console.log(updatedCode)
   }

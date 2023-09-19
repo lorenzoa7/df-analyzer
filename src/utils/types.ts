@@ -49,6 +49,7 @@ export type Task = {
 
 export type CodeStamp = {
   taskId: number
+  transformationId: number
   stamp: 'begin' | 'end'
 }
 
