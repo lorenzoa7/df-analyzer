@@ -39,11 +39,16 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
   ) => {
     e.stopPropagation()
     const tasksList = appData.tasks
+    const codeLinesList = appData.codeLines
     const updatedTasks = tasksList.filter((task) => task.id !== taskId)
+    const updatedCodeLines = codeLinesList.filter(
+      (line) => typeof line === 'string' || line.taskId !== taskId,
+    )
 
     setAppData({
       ...appData,
       tasks: updatedTasks,
+      codeLines: updatedCodeLines,
     })
   }
 
@@ -81,4 +86,3 @@ const TaskProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export { TaskContext, TaskProvider }
-
