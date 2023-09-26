@@ -161,8 +161,17 @@ export default function ExportSection() {
       .concat([''])
 
     updatedCode = updatedCode.concat(retrospectiveProvenance)
-
     console.log(updatedCode)
+    const generatedPythonCode = updatedCode.join('\n')
+
+    // Download File
+    const blob = new Blob([generatedPythonCode], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${appData.dataflow_tag}-df.py`
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
