@@ -12,7 +12,10 @@ export default function Transformations() {
     <Card>
       <CardHeader>
         <CardTitle>Transformation</CardTitle>
-        <CardDescription>Type the tag of your dataflow.</CardDescription>
+        <CardDescription>
+          Define how many transformations it will have and their respective
+          names.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <TransformationsForm />

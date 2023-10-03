@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
+import { defaultDataflowData } from '@/config/defaults'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useApp } from '@/providers/app-provider'
 import { CodeData, codeSchema } from '@/schemas/code-schema'
@@ -29,6 +30,10 @@ export default function CodeForm() {
     setDataflowData((dataflowData) => ({ ...dataflowData, code: data.code }))
     goToNextStep()
   }
+  const isDisabled =
+    !form.formState.isDirty &&
+    form.getValues('code') === defaultDataflowData.code
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -48,7 +53,7 @@ export default function CodeForm() {
             </FormItem>
           )}
         />
-        <StepButtons />
+        <StepButtons isNextDisabled={isDisabled} />
       </form>
     </Form>
   )

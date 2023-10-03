@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { defaultDataflowData } from '@/config/defaults'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useApp } from '@/providers/app-provider'
 import {
@@ -35,6 +36,16 @@ export default function TagForm() {
     }))
     goToNextStep()
   }
+  const isDisabled =
+    !form.formState.isDirty &&
+    form.getValues('dataflowTag') === defaultDataflowData.dataflow_tag
+
+  const redo = () => {
+    setDataflowData((dataflowData) => ({
+      ...dataflowData,
+      dataflow_tag: defaultDataflowData.dataflow_tag,
+    }))
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -54,7 +65,7 @@ export default function TagForm() {
             </FormItem>
           )}
         />
-        <StepButtons />
+        <StepButtons isNextDisabled={isDisabled} backFunction={redo} />
       </form>
     </Form>
   )

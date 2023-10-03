@@ -1,5 +1,6 @@
 'use client'
 
+import { defaultDataflowData } from '@/config/defaults'
 import { localStorageNames } from '@/config/storage'
 import { getLocalStorage } from '@/functions/get-local-storage'
 import { setLocalStorage } from '@/functions/set-local-storage'
@@ -21,13 +22,6 @@ export type Props = {
 const AppContext = createContext<Props>({} as Props)
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const defaultDataflowData: DataFlow = {
-    dataflow_tag: '',
-    code: '',
-    transformations: [],
-    tasks: [],
-    codeLines: [],
-  }
   const [dataflowData, setDataflowData] = useState(
     (getLocalStorage(localStorageNames.dataflowData) as DataFlow) ||
       defaultDataflowData,

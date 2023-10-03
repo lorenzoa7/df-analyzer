@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { defaultTransformation } from '@/config/defaults'
+import { defaultDataflowData, defaultTransformation } from '@/config/defaults'
 import { newId } from '@/functions/new-id'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useApp } from '@/providers/app-provider'
@@ -57,7 +57,16 @@ export default function TransformationsForm() {
     goToNextStep()
   }
 
-  const isDisabled = !form.formState.isDirty
+  const isDisabled =
+    !form.formState.isDirty &&
+    form.getValues('transformations').length ===
+      defaultDataflowData.transformations.length
+  const redo = () => {
+    setDataflowData((dataflowData) => ({
+      ...dataflowData,
+      transformations: defaultDataflowData.transformations,
+    }))
+  }
 
   return (
     <Form {...form}>
@@ -66,13 +75,13 @@ export default function TransformationsForm() {
           variant="secondary"
           type="button"
           onClick={() => append({ name: '' })}
-          className="w-[32rem]"
+          className="w-full"
         >
           <Plus className="mr-2 w-4" />
           <span>Add</span>
         </Button>
         <FormMessage />
-        <Separator className="w-[32rem]" />
+        <Separator className="w-full" />
         <ScrollArea className="h-96 p-2">
           <div className="flex flex-col gap-5 p-2">
             {fields.map((field, index) => (
@@ -107,7 +116,7 @@ export default function TransformationsForm() {
           </div>
         </ScrollArea>
 
-        <StepButtons isNextDisabled={isDisabled} />
+        <StepButtons isNextDisabled={isDisabled} backFunction={redo} />
       </form>
     </Form>
   )

@@ -1,4 +1,12 @@
-import { Transformation } from '@/lib/types'
+import { DataFlow, Transformation } from '@/lib/types'
+
+export const defaultDataflowData = {
+  dataflow_tag: '',
+  code: '',
+  transformations: [],
+  tasks: [],
+  codeLines: [],
+} satisfies DataFlow
 
 export const defaultTransformation = {
   output: {

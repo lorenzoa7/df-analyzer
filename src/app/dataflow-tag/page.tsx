@@ -12,7 +12,7 @@ export default function DataflowTag() {
     <Card>
       <CardHeader>
         <CardTitle>Dataflow Tag</CardTitle>
-        <CardDescription>Type the tag of your dataflow.</CardDescription>
+        <CardDescription>Define the tag of your dataflow.</CardDescription>
       </CardHeader>
       <CardContent>
         <TagForm />
