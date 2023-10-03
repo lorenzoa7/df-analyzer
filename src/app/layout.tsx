@@ -21,9 +21,11 @@ export default function RootLayout({ children }: Props) {
         className={`overflow-x-hidden bg-slate-100 font-mono text-slate-900 antialiased ${fontMono.variable}`}
       >
         <Header />
-        <main className="mt-24 flex min-h-screen w-full flex-col items-center px-11">
+        <main className="mt-24 flex h-[calc(100vh-6rem)] w-full flex-col items-center px-11">
           <Menu />
-          {children}
+          <div className="flex w-full flex-1 items-center justify-center">
+            {children}
+          </div>
         </main>
       </body>
     </html>

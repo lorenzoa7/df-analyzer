@@ -16,5 +16,5 @@ export default function Home() {
     router.replace(siteRoutes[actualStep])
   }, [router])
 
-  return null
+  return <div>Loading...</div>
 }
