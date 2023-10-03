@@ -11,6 +11,7 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log(getLocalStorage(localStorageNames.actualStep))
     const actualStep = (getLocalStorage(localStorageNames.actualStep) ??
       siteSteps[0]) as SiteSteps
     router.replace(siteRoutes[actualStep])

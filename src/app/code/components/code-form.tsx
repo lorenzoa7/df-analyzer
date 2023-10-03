@@ -12,6 +12,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { SiteRoutes } from '@/config/routes'
 import { getNextRoute } from '@/functions/get-next-route'
 import { getPreviousRoute } from '@/functions/get-previous-route'
+import { useConstrolNavigation } from '@/hooks/use-control-navigation'
+import { useApp } from '@/providers/app-provider'
 import { CodeData, codeSchema } from '@/schemas/codeSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { usePathname } from 'next/navigation'
@@ -19,6 +21,8 @@ import { useForm } from 'react-hook-form'
 
 export default function CodeForm() {
   const currentRoute = usePathname() as SiteRoutes
+  const { goToNextStep } = useConstrolNavigation()
+  const { setDataflowData } = useApp()
   const form = useForm<CodeData>({
     resolver: zodResolver(codeSchema),
     defaultValues: {
@@ -27,7 +31,8 @@ export default function CodeForm() {
   })
 
   const onSubmit = (data: CodeData) => {
-    console.log(data)
+    setDataflowData((dataflowData) => ({ ...dataflowData, code: data.code }))
+    goToNextStep(currentRoute)
   }
   return (
     <Form {...form}>
