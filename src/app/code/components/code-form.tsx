@@ -55,7 +55,7 @@ export default function CodeForm() {
         />
         <StepButtons.Root>
           {getPreviousRoute(currentRoute) !== currentRoute && (
-            <StepButtons.Back currentRoute={currentRoute} />
+            <StepButtons.Back />
           )}
           {getNextRoute(currentRoute) !== currentRoute && <StepButtons.Next />}
         </StepButtons.Root>

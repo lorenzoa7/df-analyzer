@@ -1,20 +1,20 @@
 import { SiteRoutes } from '@/config/routes'
-import { getPreviousRoute } from '@/functions/get-previous-route'
+import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Button } from '../ui/button'
 
-type Props = {
-  currentRoute: SiteRoutes
-}
-
-export default function StepButtonsBack({ currentRoute }: Props) {
+export default function StepButtonsBack() {
+  const currentRoute = usePathname() as SiteRoutes
+  const { goToPreviousStep } = useConstrolNavigation()
   return (
-    <Link href={getPreviousRoute(currentRoute)} passHref>
-      <Button variant="outline" type="submit">
-        <ArrowLeft className="mr-2 w-4" />
-        <span>Back</span>
-      </Button>
-    </Link>
+    <Button
+      variant="outline"
+      type="submit"
+      onClick={() => goToPreviousStep(currentRoute)}
+    >
+      <ArrowLeft className="mr-2 w-4" />
+      <span>Back</span>
+    </Button>
   )
 }

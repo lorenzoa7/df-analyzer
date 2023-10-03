@@ -1,17 +1,30 @@
 import { SiteRoutes } from '@/config/routes'
-import { localStorageNames } from '@/config/storage'
+import { cookiesNames } from '@/config/storage'
 import { getNextRoute } from '@/functions/get-next-route'
+import { getPreviousRoute } from '@/functions/get-previous-route'
 import { getStepByRoute } from '@/functions/get-step-by-route'
-import { setLocalStorage } from '@/functions/set-local-storage'
+import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
 export const useConstrolNavigation = () => {
   const router = useRouter()
   const goToNextStep = (currentRoute: SiteRoutes) => {
     const nextRoute = getNextRoute(currentRoute)
-    setLocalStorage(localStorageNames.actualStep, getStepByRoute(nextRoute))
-    router.replace(nextRoute)
+    const nextStep = getStepByRoute(nextRoute)
+    if (nextStep) {
+      Cookies.set(cookiesNames.actualStep, nextStep)
+      router.replace(nextRoute)
+    }
   }
 
-  return { goToNextStep }
+  const goToPreviousStep = (currentRoute: SiteRoutes) => {
+    const previousRoute = getPreviousRoute(currentRoute)
+    const previousStep = getStepByRoute(previousRoute)
+    if (previousStep) {
+      Cookies.set(cookiesNames.actualStep, previousStep)
+      router.replace(previousRoute)
+    }
+  }
+
+  return { goToNextStep, goToPreviousStep }
 }

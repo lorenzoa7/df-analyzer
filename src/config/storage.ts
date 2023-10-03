@@ -7,3 +7,7 @@ export const localStorageNames = {
   actualStep: 'actualStep',
   dataflowData: 'dataflowData',
 } satisfies Record<string, LocalStorageKeys>
+
+export const cookiesNames = {
+  actualStep: `${storageKey}-actualStep`,
+} satisfies Record<string, string>
