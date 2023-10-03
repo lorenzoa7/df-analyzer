@@ -1,4 +1,5 @@
 import Header from '@/components/header'
+import Menu from '@/components/menu'
 import { siteConfig } from '@/config/site'
 import { fontMono } from '@/lib/fonts'
 import type { Metadata } from 'next'
@@ -20,7 +21,10 @@ export default function RootLayout({ children }: Props) {
         className={`overflow-x-hidden bg-slate-100 font-mono text-slate-900 antialiased ${fontMono.variable}`}
       >
         <Header />
-        {children}
+        <main className="mt-24 flex min-h-screen w-full flex-col items-center px-11">
+          <Menu />
+          {children}
+        </main>
       </body>
     </html>
   )

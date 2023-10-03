@@ -4,3 +4,18 @@ export const siteConfig = {
 } satisfies Record<string, string>
 
 export type SiteConfig = typeof siteConfig
+
+export const siteSteps = [
+  'code',
+  'dataflowTag',
+  'transformations',
+  'output',
+  'outputAttributes',
+  'inputs',
+  'inputsAttributes',
+  'tasks',
+  'tasksStamps',
+  'export',
+] as const satisfies readonly string[]
+
+export type SiteSteps = (typeof siteSteps)[number]
