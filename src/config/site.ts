@@ -9,7 +9,7 @@ export const siteSteps = [
   'code',
   'dataflowTag',
   'transformations',
-  'output',
+  'outputs',
   'outputAttributes',
   'inputs',
   'inputsAttributes',

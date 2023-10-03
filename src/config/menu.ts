@@ -19,8 +19,8 @@ export const menuConfig = [
     route: '/transformations',
   },
   {
-    title: 'Output',
-    route: '/output',
+    title: 'Outputs',
+    route: '/outputs',
   },
   {
     title: 'Output Attributes',

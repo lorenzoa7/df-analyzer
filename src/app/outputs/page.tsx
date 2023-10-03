@@ -5,18 +5,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import TransformationsForm from './components/transformations-form'
 
-export default function Transformations() {
+export default function Outputs() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Transformation</CardTitle>
+        <CardTitle>Outputs</CardTitle>
         <CardDescription>Type the tag of your dataflow.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <TransformationsForm />
-      </CardContent>
+      <CardContent></CardContent>
     </Card>
   )
 }

@@ -20,11 +20,11 @@ import { useForm } from 'react-hook-form'
 
 export default function TagForm() {
   const { goToNextStep } = useConstrolNavigation()
-  const { setDataflowData } = useApp()
+  const { setDataflowData, dataflowData } = useApp()
   const form = useForm<DataflowTagData>({
     resolver: zodResolver(dataflowTagSchema),
     defaultValues: {
-      dataflowTag: '',
+      dataflowTag: dataflowData.dataflow_tag,
     },
   })
 

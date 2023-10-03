@@ -2,11 +2,15 @@ import StepButtonsBack from './back'
 import StepButtonsNext from './next'
 import StepButtonsRoot from './root'
 
-export default function StepButtons() {
+type Props = {
+  isNextDisabled?: boolean
+}
+
+export default function StepButtons({ isNextDisabled = false }: Props) {
   return (
     <StepButtonsRoot>
       <StepButtonsBack />
-      <StepButtonsNext />
+      <StepButtonsNext isDisabled={isNextDisabled} />
     </StepButtonsRoot>
   )
 }
