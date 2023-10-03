@@ -4,11 +4,12 @@ import { getNextRoute } from '@/functions/get-next-route'
 import { getPreviousRoute } from '@/functions/get-previous-route'
 import { getStepByRoute } from '@/functions/get-step-by-route'
 import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 export const useConstrolNavigation = () => {
   const router = useRouter()
-  const goToNextStep = (currentRoute: SiteRoutes) => {
+  const currentRoute = usePathname() as SiteRoutes
+  const goToNextStep = () => {
     const nextRoute = getNextRoute(currentRoute)
     const nextStep = getStepByRoute(nextRoute)
     if (nextStep) {
@@ -17,7 +18,7 @@ export const useConstrolNavigation = () => {
     }
   }
 
-  const goToPreviousStep = (currentRoute: SiteRoutes) => {
+  const goToPreviousStep = () => {
     const previousRoute = getPreviousRoute(currentRoute)
     const previousStep = getStepByRoute(previousRoute)
     if (previousStep) {

@@ -28,17 +28,13 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     tasks: [],
     codeLines: [],
   }
-  const [dataflowData, setDataflowData] = useState(defaultDataflowData)
+  const [dataflowData, setDataflowData] = useState(
+    (getLocalStorage(localStorageNames.dataflowData) as DataFlow) ||
+      defaultDataflowData,
+  )
   const saveDataflowData = useCallback(() => {
     setLocalStorage(localStorageNames.dataflowData, dataflowData)
   }, [dataflowData])
-
-  useEffect(() => {
-    const data = getLocalStorage(
-      localStorageNames.dataflowData,
-    ) as DataFlow | null
-    if (data) setDataflowData(data)
-  }, [])
 
   useEffect(() => saveDataflowData(), [saveDataflowData])
 

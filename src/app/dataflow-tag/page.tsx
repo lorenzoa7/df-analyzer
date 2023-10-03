@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import TagForm from './components/tag-form'
 
 export default function DataflowTag() {
   return (
@@ -13,7 +14,9 @@ export default function DataflowTag() {
         <CardTitle>Dataflow Tag</CardTitle>
         <CardDescription>Type the tag of your dataflow.</CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <TagForm />
+      </CardContent>
     </Card>
   )
 }

@@ -8,25 +8,31 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useApp } from '@/providers/app-provider'
-import { CodeData, codeSchema } from '@/schemas/code-schema'
+import {
+  DataflowTagData,
+  dataflowTagSchema,
+} from '@/schemas/dataflow-tag-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-export default function CodeForm() {
+export default function TagForm() {
   const { goToNextStep } = useConstrolNavigation()
-  const { setDataflowData, dataflowData } = useApp()
-  const form = useForm<CodeData>({
-    resolver: zodResolver(codeSchema),
+  const { setDataflowData } = useApp()
+  const form = useForm<DataflowTagData>({
+    resolver: zodResolver(dataflowTagSchema),
     defaultValues: {
-      code: dataflowData.code,
+      dataflowTag: '',
     },
   })
 
-  const onSubmit = (data: CodeData) => {
-    setDataflowData((dataflowData) => ({ ...dataflowData, code: data.code }))
+  const onSubmit = (data: DataflowTagData) => {
+    setDataflowData((dataflowData) => ({
+      ...dataflowData,
+      dataflow_tag: data.dataflowTag,
+    }))
     goToNextStep()
   }
   return (
@@ -34,13 +40,13 @@ export default function CodeForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
-          name="code"
+          name="dataflowTag"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea
-                  className="h-96 w-[32rem] resize-none"
-                  placeholder="Paste here..."
+                <Input
+                  className="w-[32rem]"
+                  placeholder="Dataflow Tag..."
                   {...field}
                 />
               </FormControl>
