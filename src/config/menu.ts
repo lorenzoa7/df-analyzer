@@ -23,8 +23,8 @@ export const menuConfig = [
     route: '/outputs',
   },
   {
-    title: 'Output Attributes',
-    route: '/output-attributes',
+    title: 'Outputs Attributes',
+    route: '/outputs-attributes',
   },
   {
     title: 'Inputs',

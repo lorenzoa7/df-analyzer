@@ -5,7 +5,7 @@ export const siteRoutes = {
   dataflowTag: '/dataflow-tag',
   transformations: '/transformations',
   outputs: '/outputs',
-  outputAttributes: '/output-attributes',
+  outputsAttributes: '/outputs-attributes',
   inputs: '/inputs',
   inputsAttributes: '/inputs-attributes',
   tasks: '/tasks',

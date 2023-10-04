@@ -1,4 +1,4 @@
-import { DataFlow, Transformation } from '@/lib/types'
+import { DataFlow, Output, Transformation } from '@/lib/types'
 
 export const defaultDataflowData = {
   dataflow_tag: '',
@@ -15,3 +15,7 @@ export const defaultTransformation = {
   },
   inputs: [],
 } satisfies Omit<Transformation, 'id' | 'name'>
+
+export const defaultOutput = {
+  attributes: [],
+} satisfies Omit<Output, 'name'>
