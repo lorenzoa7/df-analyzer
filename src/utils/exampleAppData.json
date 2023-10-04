@@ -1,0 +1,66 @@
+{
+    "dataflow_tag": "soma",
+    "code": "PRIMEIRO_NUMERO = 5\nSEGUNDO_NUMERO = 1\n\nRESULTADO_SOMA = PRIMEIRO_NUMERO + SEGUNDO_NUMERO",
+    "transformations": [
+        {
+            "id": 1,
+            "name": "ExtrairNumeros",
+            "output": {
+                "name": "oExtrairNumeros",
+                "attributes": [
+                    {
+                        "id": 1,
+                        "name": "PRIMEIRO_NUMERO",
+                        "type": "NUMERIC"
+                    },
+                    {
+                        "id": 2,
+                        "name": "SEGUNDO_NUMERO",
+                        "type": "NUMERIC"
+                    }
+                ]
+
+            },
+            "inputs": [
+                {
+                    "id": 1,
+                    "name": "iExtrairNumeros",
+                    "attributes": [
+                        {
+                            "id": 1,
+                            "name": "SOMA_FILE",
+                            "type": "FILE"
+                        }
+                    ],
+                    "transformationOutputReferenceId": null
+    
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "ExecutarSoma",
+            "output": {
+                "name": "oExecutarSoma",
+                "attributes": [
+                    {
+                        "id": 1,
+                        "name": "RESULTADO_SOMA",
+                        "type": "NUMERIC"
+                    }
+                ]
+
+            },
+            "inputs": [
+                {
+                    "id": 1,
+                    "name": "New Input",
+                    "attributes": [],
+                    "transformationOutputReferenceId": 1
+                }
+            ]
+        }
+    ],
+    "tasks": [],
+    "codeLines": []
+}
