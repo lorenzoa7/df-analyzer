@@ -10,6 +10,7 @@ import { useApp } from '@/providers/app-provider'
 import { InputsData, inputsSchema } from '@/schemas/inputs-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
+import InputsFields from './inputs-fields'
 
 export default function InputsForm() {
   const { goToNextStep } = useConstrolNavigation()
@@ -32,6 +33,33 @@ export default function InputsForm() {
 
   const onSubmit = (data: InputsData) => {
     console.log(data)
+    const transformationsList = dataflowData.transformations
+
+    const newTransformations = transformationsList.flatMap((transformation) => {
+      const list = data.inputsList.find(
+        (input) => input.transformationId === transformation._id,
+      )
+
+      if (list) {
+        return {
+          ...transformation,
+          inputs: list.inputs.map((input) => ({ ...input, attributes: [] })),
+        }
+      }
+
+      return []
+    })
+
+    if (
+      newTransformations &&
+      newTransformations.length === transformationsList.length
+    ) {
+      setDataflowData((dataflowData) => ({
+        ...dataflowData,
+        transformations: newTransformations,
+      }))
+      goToNextStep()
+    }
   }
 
   const isDisabled = form
@@ -50,7 +78,10 @@ export default function InputsForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center space-y-5"
+      >
         <FormMessage />
         <Separator className="w-full" />
         <ScrollArea className="h-[28rem] w-[36rem] p-2">
@@ -63,7 +94,11 @@ export default function InputsForm() {
 
                 <Separator className="my-5 w-full" />
 
-                {/* <AttributesFields control={form.control} nestIndex={index} /> */}
+                <InputsFields
+                  control={form.control}
+                  nestIndex={index}
+                  nestTransformationId={fields[index].transformationId}
+                />
               </div>
             ))}
           </div>

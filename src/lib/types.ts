@@ -15,7 +15,7 @@ export type Input = {
   _id: number
   name: string
   attributes: Attribute[]
-  transformationOutputReferenceId: number | null
+  transformationOutputReferenceId: number
 }
 
 export type Transformation = {

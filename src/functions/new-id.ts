@@ -1,8 +1,7 @@
-import { Attribute, Input, Task, Transformation } from '@/lib/types'
 import { findHighestId } from './find-highest-id'
 
 type Props = {
-  idList: Array<Transformation | Input | Attribute | Task>
+  idList: number[]
   modifier?: number
 }
 

@@ -26,7 +26,7 @@ export default function StepButtons({
   }
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex w-full items-center justify-between">
       {hasPreviousRoute && (
         <Button variant="outline" type="button" onClick={handleClickBackButton}>
           <ArrowLeft className="mr-2 w-4" />

@@ -12,7 +12,7 @@ export default function Inputs() {
     <Card>
       <CardHeader>
         <CardTitle>Inputs</CardTitle>
-        <CardDescription>
+        <CardDescription className="w-[32rem]">
           Define how many inputs each transformation will have and their
           respective names.
         </CardDescription>

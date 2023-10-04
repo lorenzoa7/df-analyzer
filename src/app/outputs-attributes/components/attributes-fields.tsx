@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { attributeTypes } from '@/config/data'
+import { extractIds } from '@/functions/extract-ids'
 import { newId } from '@/functions/new-id'
 import { Plus, X } from 'lucide-react'
 import { Control, useFieldArray } from 'react-hook-form'
@@ -48,7 +49,7 @@ export default function AttributesFields({ nestIndex, control }: Props) {
         type="button"
         onClick={() =>
           append({
-            _id: newId({ idList: fields }),
+            _id: newId({ idList: extractIds(fields) }),
             name: '',
             type: attributeTypes[0],
           })

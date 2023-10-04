@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { defaultDataflowData, defaultTransformation } from '@/config/defaults'
+import { extractIds } from '@/functions/extract-ids'
 import { newId } from '@/functions/new-id'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useApp } from '@/providers/app-provider'
@@ -45,7 +46,10 @@ export default function TransformationsForm() {
     const newTransformations = data.transformations.map(
       (transformation, index) => ({
         ...defaultTransformation,
-        _id: newId({ idList: transformationsList, modifier: index }),
+        _id: newId({
+          idList: extractIds(transformationsList),
+          modifier: index,
+        }),
         name: transformation.name,
       }),
     )

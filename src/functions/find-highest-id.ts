@@ -1,12 +1,8 @@
-import type { Attribute, Input, Task, Transformation } from '@/lib/types'
-
-export const findHighestId = (
-  array: Array<Transformation | Input | Attribute | Task>,
-) => {
+export const findHighestId = (array: number[]) => {
   let highestId = 0
 
-  array.forEach((item) => {
-    if (item._id > highestId) highestId = item._id
+  array.forEach((id) => {
+    if (id > highestId) highestId = id
   })
 
   return highestId
