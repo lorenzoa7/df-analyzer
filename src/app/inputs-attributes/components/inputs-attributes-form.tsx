@@ -14,6 +14,7 @@ import {
 } from '@/schemas/inputs-attributes-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
+import AttributesFields from './attributes-fields'
 
 export default function InputsAttributesForm() {
   const { goToNextStep } = useConstrolNavigation()
@@ -24,12 +25,16 @@ export default function InputsAttributesForm() {
     resolver: zodResolver(inputsAttributesSchema),
     defaultValues: {
       inputsAttributes: dataflowData.transformations.flatMap((transformation) =>
-        transformation.inputs.map((input) => ({
-          transformationId: transformation._id,
-          inputId: input._id,
-          attributes:
-            getInputById(transformation._id, input._id)?.attributes ?? [],
-        })),
+        transformation.inputs.flatMap((input) =>
+          input.transformationOutputReferenceId === -1
+            ? {
+                transformationId: transformation._id,
+                inputId: input._id,
+                attributes:
+                  getInputById(transformation._id, input._id)?.attributes ?? [],
+              }
+            : [],
+        ),
       ),
     },
   })
@@ -40,7 +45,43 @@ export default function InputsAttributesForm() {
   })
 
   const onSubmit = (data: InputsAttributesData) => {
-    console.log(data)
+    const transformationsList = dataflowData.transformations
+
+    const newTransformations = transformationsList.flatMap((transformation) => {
+      const newInputs = transformation.inputs.flatMap((input) => {
+        if (input.transformationOutputReferenceId !== -1) {
+          return input
+        }
+
+        const list = data.inputsAttributes.find(
+          (attributesData) =>
+            attributesData.transformationId === transformation._id &&
+            attributesData.inputId === input._id,
+        )
+
+        if (list) {
+          return {
+            ...input,
+            attributes: list.attributes,
+          }
+        }
+
+        return []
+      })
+
+      return {
+        ...transformation,
+        inputs: newInputs,
+      }
+    })
+
+    if (newTransformations.length === transformationsList.length) {
+      setDataflowData((dataflowData) => ({
+        ...dataflowData,
+        transformations: newTransformations,
+      }))
+      goToNextStep()
+    }
   }
 
   const isDisabled = form
@@ -70,15 +111,17 @@ export default function InputsAttributesForm() {
             {fields.map((field, index) => (
               <div key={field.id}>
                 <FormLabel className="font-bold">
-                  {
-                    getTransformationById(fields[index].transformationId)
-                      ?.output.name
-                  }
+                  {`Transformation: ${getTransformationById(
+                    fields[index].transformationId,
+                  )?.name} / Input: ${getInputById(
+                    fields[index].transformationId,
+                    fields[index].inputId,
+                  )?.name}`}
                 </FormLabel>
 
                 <Separator className="my-5 w-full" />
 
-                {/* <AttributesFields control={form.control} nestIndex={index} /> */}
+                <AttributesFields control={form.control} nestIndex={index} />
               </div>
             ))}
           </div>

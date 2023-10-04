@@ -1,8 +1,8 @@
 import { AttributeType } from '@/lib/types'
 
 export const attributeTypes = [
-  'FILE',
-  'NUMERIC',
-  'RDFILE',
   'TEXT',
+  'NUMERIC',
+  'FILE',
+  'RDFILE',
 ] as const satisfies readonly AttributeType[]
