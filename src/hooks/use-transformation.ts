@@ -5,7 +5,7 @@ export const useTransformation = () => {
   const transformationsList = dataflowData.transformations
   const getTransformationById = (id: number) => {
     return transformationsList.find(
-      (transformation) => transformation.id === id,
+      (transformation) => transformation._id === id,
     )
   }
 

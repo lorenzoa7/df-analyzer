@@ -45,7 +45,7 @@ export default function TransformationsForm() {
     const newTransformations = data.transformations.map(
       (transformation, index) => ({
         ...defaultTransformation,
-        id: newId({ idList: transformationsList, modifier: index }),
+        _id: newId({ idList: transformationsList, modifier: index }),
         name: transformation.name,
       }),
     )
@@ -82,7 +82,7 @@ export default function TransformationsForm() {
         </Button>
         <FormMessage />
         <Separator className="w-full" />
-        <ScrollArea className="h-96 p-2">
+        <ScrollArea className="h-[26rem] w-[36rem] p-2">
           <div className="flex flex-col gap-5 p-2">
             {fields.map((field, index) => (
               <FormField

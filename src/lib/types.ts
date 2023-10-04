@@ -1,7 +1,7 @@
 export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
 
 export type Attribute = {
-  id: number
+  _id: number
   name: string
   type: AttributeType
 }
@@ -12,21 +12,21 @@ export type Output = {
 }
 
 export type Input = {
-  id: number
+  _id: number
   name: string
   attributes: Attribute[]
   transformationOutputReferenceId: number | null
 }
 
 export type Transformation = {
-  id: number
+  _id: number
   name: string
   output: Output
   inputs: Input[]
 }
 
 export type Task = {
-  id: number
+  _id: number
   name: string
   transformationId: number
   inputId: number

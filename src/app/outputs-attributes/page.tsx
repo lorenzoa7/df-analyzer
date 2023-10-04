@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import OutputsAttributesForm from './components/outputs-attributes-form'
 
 export default function Outputs() {
   return (
@@ -13,7 +14,9 @@ export default function Outputs() {
         <CardTitle>Outputs Attributes</CardTitle>
         <CardDescription>Define the attributes of the outputs.</CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <OutputsAttributesForm />
+      </CardContent>
     </Card>
   )
 }

@@ -6,7 +6,7 @@ export const findHighestId = (
   let highestId = 0
 
   array.forEach((item) => {
-    if (item.id > highestId) highestId = item.id
+    if (item._id > highestId) highestId = item._id
   })
 
   return highestId
