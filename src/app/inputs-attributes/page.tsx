@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import InputsAttributesForm from './components/inputs-attributes-form'
 
 export default function InputsAttributes() {
   return (
@@ -13,7 +14,9 @@ export default function InputsAttributes() {
         <CardTitle>Inputs Attributes</CardTitle>
         <CardDescription>Define the attributes of the inputs.</CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <InputsAttributesForm />
+      </CardContent>
     </Card>
   )
 }
