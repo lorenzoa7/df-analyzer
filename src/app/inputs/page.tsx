@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import InputsForm from './components/inputs-form'
 
 export default function Inputs() {
   return (
@@ -16,7 +17,9 @@ export default function Inputs() {
           respective names.
         </CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <InputsForm />
+      </CardContent>
     </Card>
   )
 }
