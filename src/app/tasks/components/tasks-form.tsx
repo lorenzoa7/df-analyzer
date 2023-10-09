@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useTransformation } from '@/hooks/use-transformation'
+import { Task } from '@/lib/types'
 import { useApp } from '@/providers/app-provider'
 import { TasksData, tasksSchema } from '@/schemas/tasks-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -34,7 +35,28 @@ export default function TasksForm() {
   })
 
   const onSubmit = (data: TasksData) => {
-    console.log(data)
+    const newTasks: Task[] = data.tasksList.flatMap((item) => {
+      const tasks: Task[] = item.tasks.flatMap((task) => {
+        return {
+          _id: task._id,
+          name: task.name,
+          transformationId: item.transformationId,
+          inputId: task.inputId,
+          inputElement: [],
+          outputElement: [],
+          hasBeginStamp: false,
+          hasEndStamp: false,
+        }
+      })
+
+      return tasks
+    })
+
+    setDataflowData((dataflowData) => ({
+      ...dataflowData,
+      tasks: newTasks,
+    }))
+    goToNextStep()
   }
 
   const isDisabled = form
