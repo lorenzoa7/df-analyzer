@@ -14,6 +14,7 @@ export const siteSteps = [
   'inputs',
   'inputsAttributes',
   'tasks',
+  'tasksElements',
   'tasksStamps',
   'export',
 ] as const satisfies readonly string[]

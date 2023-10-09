@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import TasksForm from './components/tasks-form'
 
 export default function Tasks() {
   return (
@@ -15,7 +16,9 @@ export default function Tasks() {
           Define how many tasks it will have and their respective names.
         </CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <TasksForm />
+      </CardContent>
     </Card>
   )
 }

@@ -14,7 +14,7 @@ export const defaultTransformation = {
     attributes: [],
   },
   inputs: [],
-} satisfies Omit<Transformation, 'id' | 'name'>
+} satisfies Omit<Transformation, '_id' | 'name'>
 
 export const defaultOutput = {
   attributes: [],

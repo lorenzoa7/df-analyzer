@@ -39,6 +39,10 @@ export const menuConfig = [
     route: '/tasks',
   },
   {
+    title: 'Tasks Elements',
+    route: '/tasks-elements',
+  },
+  {
     title: 'Tasks Stamps',
     route: '/tasks-stamps',
   },
