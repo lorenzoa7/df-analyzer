@@ -79,6 +79,7 @@ export default function TasksElementsForm() {
     setDataflowData((dataflowData) => ({
       ...dataflowData,
       tasks: newTasks,
+      codeLines: dataflowData.code.split('\n'),
     }))
     goToNextStep()
   }

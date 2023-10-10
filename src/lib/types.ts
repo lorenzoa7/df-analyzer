@@ -1,4 +1,6 @@
 export type AttributeType = 'TEXT' | 'NUMERIC' | 'FILE' | 'RDFILE'
+export type Stamp = 'begin' | 'end'
+export type CodeLineTypes = 'code' | 'stamp'
 
 export type Attribute = {
   _id: number
@@ -39,7 +41,7 @@ export type Task = {
 export type CodeStamp = {
   taskId: number
   transformationId: number
-  stamp: 'begin' | 'end'
+  stamp: Stamp
 }
 
 export type DataFlow = {
