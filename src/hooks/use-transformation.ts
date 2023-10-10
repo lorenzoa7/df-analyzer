@@ -9,5 +9,14 @@ export const useTransformation = () => {
     )
   }
 
-  return { getTransformationById }
+  const getOutputAttributeById = (
+    transformationId: number,
+    attributeId: number,
+  ) => {
+    return getTransformationById(transformationId)?.output.attributes.find(
+      (attribute) => attribute._id === attributeId,
+    )
+  }
+
+  return { getTransformationById, getOutputAttributeById }
 }

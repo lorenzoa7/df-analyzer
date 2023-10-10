@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import TasksElementsForm from './components/tasks-elements-form'
 
 export default function Tasks() {
   return (
@@ -15,7 +16,9 @@ export default function Tasks() {
           Associate the variables of the code to the attributes of each task.
         </CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <TasksElementsForm />
+      </CardContent>
     </Card>
   )
 }

@@ -10,5 +10,16 @@ export const useInput = () => {
     }
   }
 
-  return { getInputById }
+  const getInputAttributeById = (
+    transformationId: number,
+    inputId: number,
+    attributeId: number,
+  ) => {
+    const input = getInputById(transformationId, inputId)
+    if (input) {
+      return input.attributes.find((attribute) => attribute._id === attributeId)
+    }
+  }
+
+  return { getInputById, getInputAttributeById }
 }
