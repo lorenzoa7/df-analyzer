@@ -32,7 +32,6 @@ export default function InputsForm() {
   })
 
   const onSubmit = (data: InputsData) => {
-    console.log(data)
     const transformationsList = dataflowData.transformations
 
     const newTransformations = transformationsList.flatMap((transformation) => {
