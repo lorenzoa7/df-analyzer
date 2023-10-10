@@ -32,7 +32,7 @@ export type Task = {
   name: string
   transformationId: number
   inputId: number
-  inputElement: string[] | null
+  inputElement: string[]
   outputElement: string[]
   hasBeginStamp: boolean
   hasEndStamp: boolean

@@ -4,6 +4,7 @@ import { defaultDataflowData } from '@/config/defaults'
 import { localStorageNames } from '@/config/storage'
 import { getLocalStorage } from '@/functions/get-local-storage'
 import { setLocalStorage } from '@/functions/set-local-storage'
+
 import { DataFlow } from '@/lib/types'
 import {
   createContext,
@@ -34,7 +35,11 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AppContext.Provider
-      value={{ dataflowData, setDataflowData, defaultDataflowData }}
+      value={{
+        dataflowData,
+        setDataflowData,
+        defaultDataflowData,
+      }}
     >
       {children}
     </AppContext.Provider>

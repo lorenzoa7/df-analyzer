@@ -2,8 +2,9 @@ import { useApp } from '@/providers/app-provider'
 
 export const useTransformation = () => {
   const { dataflowData } = useApp()
-  const transformationsList = dataflowData.transformations
+
   const getTransformationById = (id: number) => {
+    const transformationsList = dataflowData.transformations
     return transformationsList.find(
       (transformation) => transformation._id === id,
     )

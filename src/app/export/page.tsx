@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import ExportSection from './components/export-section'
 
 export default function Export() {
   return (
@@ -16,7 +17,9 @@ export default function Export() {
           You can copy or download the python code below.
         </CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <ExportSection />
+      </CardContent>
     </Card>
   )
 }
