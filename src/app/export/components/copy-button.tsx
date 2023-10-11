@@ -34,7 +34,12 @@ export default function CopyButton({ copyText }: Props) {
   }
 
   return (
-    <Button variant="ghost" className="h-8 w-32" onClick={handleCopyClick}>
+    <Button
+      type="button"
+      variant="ghost"
+      className="h-8 w-32"
+      onClick={handleCopyClick}
+    >
       <span>{isCopied ? 'Copied!' : 'Copy'}</span>
       {isCopied ? (
         <Check className="ml-2 h-4 w-4" />

@@ -134,9 +134,9 @@ export const useExport = () => {
         const task = getTaskById(line.taskId)
         if (task)
           return [
-            `${task?.name}_output= DataSet("o${getTransformationById(
+            `${task?.name}_output= DataSet("${getTransformationById(
               line.transformationId,
-            )?.name}", [Element([${task.outputElement.toString()}])])`,
+            )?.output.name}", [Element([${task.outputElement.toString()}])])`,
             `${task?.name}.add_dataset(${task?.name}_output)`,
             `${task?.name}.end()`,
           ]

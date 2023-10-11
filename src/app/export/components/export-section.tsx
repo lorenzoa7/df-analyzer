@@ -3,18 +3,30 @@
 import StepButtons from '@/components/step-buttons'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { defaultDataflowData } from '@/config/defaults'
+import { siteSteps } from '@/config/site'
+import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useExport } from '@/hooks/use-export'
-import { Download } from 'lucide-react'
+import { useApp } from '@/providers/app-provider'
+import { Download, RotateCcw } from 'lucide-react'
 import CopyButton from './copy-button'
 
 export default function ExportSection() {
   const { generateScript, downloadFile } = useExport()
+  const { goToStep } = useConstrolNavigation()
+  const { setDataflowData } = useApp()
   const script = generateScript()
 
+  const resetData = () => {
+    setDataflowData(defaultDataflowData)
+    goToStep(siteSteps[0])
+  }
+
   return (
-    <div className="flex flex-col gap-2 px-2">
+    <section className="flex flex-col gap-2 px-2">
       <div className="mb-2 flex w-full justify-end px-2">
         <Button
+          type="button"
           variant="ghost"
           className="h-8 w-32"
           onClick={() => downloadFile(script)}
@@ -40,7 +52,13 @@ export default function ExportSection() {
           ))}
         </ul>
       </ScrollArea>
-      <StepButtons />
-    </div>
+      <div className="flex w-full items-center justify-between">
+        <StepButtons />
+        <Button className="w-72" onClick={resetData}>
+          <span>Create another script</span>
+          <RotateCcw className="ml-2 w-4" />
+        </Button>
+      </div>
+    </section>
   )
 }

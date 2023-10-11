@@ -1,4 +1,5 @@
 import { SiteRoutes } from '@/config/routes'
+import { SiteSteps } from '@/config/site'
 import { cookiesNames } from '@/config/storage'
 import { getNextRoute } from '@/functions/get-next-route'
 import { getPreviousRoute } from '@/functions/get-previous-route'
@@ -27,5 +28,10 @@ export const useConstrolNavigation = () => {
     }
   }
 
-  return { goToNextStep, goToPreviousStep }
+  const goToStep = (step: SiteSteps) => {
+    Cookies.set(cookiesNames.actualStep, step)
+    router.replace(step)
+  }
+
+  return { goToNextStep, goToPreviousStep, goToStep }
 }

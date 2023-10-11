@@ -15,18 +15,18 @@ dataflow_tag = "soma"
 df = Dataflow(dataflow_tag)
 
 # Prospective provenance
-tf1 = Transformation("ExtrairNumeros")
-tf1_input1 = Set("iExtrairNumeros", SetType.INPUT, [Attribute("SOMA_FILE", AttributeType.FILE)])
-tf1_output = Set("oExtrairNumeros", SetType.OUTPUT, [Attribute("PRIMEIRO_NUMERO", AttributeType.NUMERIC),Attribute("SEGUNDO_NUMERO", AttributeType.NUMERIC)])
-tf1.set_sets([tf1_input1,tf1_output])
-df.add_transformation(tf1)
+tf3 = Transformation("ExtrairNumeros")
+tf3_input1 = Set("iExtrairNumeros", SetType.INPUT, [Attribute("SOMA_FILE", AttributeType.FILE)])
+tf3_output = Set("oExtrairNumeros", SetType.OUTPUT, [Attribute("PRIMEIRO_NUMERO", AttributeType.NUMERIC),Attribute("SEGUNDO_NUMERO", AttributeType.NUMERIC)])
+tf1.set_sets([tf3_input1,tf3_output])
+df.add_transformation(tf3)
 
-tf2 = Transformation("ExecutarSoma")
-tf1_output.set_type(SetType.INPUT)
-tf1_output.dependency=tf1._tag
-tf2_output = Set("oExecutarSoma", SetType.OUTPUT, [Attribute("RESULTADO_SOMA", AttributeType.NUMERIC)])
-tf1.set_sets([tf1_output,tf2_output])
-df.add_transformation(tf2)
+tf4 = Transformation("ExecutarSoma")
+tf3_output.set_type(SetType.INPUT)
+tf3_output.dependency=tf3._tag
+tf4_output = Set("oExecutarSoma", SetType.OUTPUT, [Attribute("RESULTADO_SOMA", AttributeType.NUMERIC)])
+tf1.set_sets([tf3_output,tf4_output])
+df.add_transformation(tf4)
 
 df.save()
 
