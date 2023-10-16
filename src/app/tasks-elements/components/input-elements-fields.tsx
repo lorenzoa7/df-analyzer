@@ -1,14 +1,10 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { FormField, FormLabel } from '@/components/ui/form'
+import { extractVariables } from '@/functions/extract-variables'
 import { useInput } from '@/hooks/use-input'
+import { useApp } from '@/providers/app-provider'
 import { TasksElementsData } from '@/schemas/tasks-elements-schema'
-import { Control, useFieldArray } from 'react-hook-form'
+import { Control, UseFormSetValue, useFieldArray } from 'react-hook-form'
+import InputFormItem from './input-form-item'
 
 type Props = {
   nestIndex: number
@@ -19,6 +15,7 @@ type Props = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any
   >
+  setValue: UseFormSetValue<TasksElementsData>
 }
 
 export default function InputElementsFields({
@@ -26,12 +23,15 @@ export default function InputElementsFields({
   nestTransformationId,
   nestInputId,
   control,
+  setValue,
 }: Props) {
   const { fields } = useFieldArray({
     control,
     name: `tasksElementsList.${nestIndex}.inputElements`,
   })
   const { getInputAttributeById } = useInput()
+  const { dataflowData } = useApp()
+  const variables = extractVariables(dataflowData.code)
 
   if (fields.length > 0) {
     return (
@@ -43,25 +43,22 @@ export default function InputElementsFields({
               control={control}
               name={`tasksElementsList.${nestIndex}.inputElements.${index}.variableName`}
               render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <div className="flex flex-col gap-2">
-                      <FormLabel>
-                        {`Associate "${getInputAttributeById(
-                          nestTransformationId,
-                          nestInputId,
-                          fields[index].attributeId,
-                        )?.name}" attribute to a variable`}
-                      </FormLabel>
-                      <Input
-                        className="w-full"
-                        placeholder="Variable name..."
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <InputFormItem
+                  nestIndex={nestIndex}
+                  itemIndex={index}
+                  inputId={fields[index].inputId}
+                  attributeId={fields[index].attributeId}
+                  attributeName={
+                    getInputAttributeById(
+                      nestTransformationId,
+                      nestInputId,
+                      fields[index].attributeId,
+                    )?.name
+                  }
+                  field={field}
+                  variables={variables}
+                  setValue={setValue}
+                />
               )}
             />
           </div>

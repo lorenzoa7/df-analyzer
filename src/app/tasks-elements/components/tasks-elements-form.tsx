@@ -23,6 +23,7 @@ export default function TasksElementsForm() {
   const { setDataflowData, dataflowData } = useApp()
   const { getTransformationById } = useTransformation()
   const { getTaskById } = useTask()
+
   const form = useForm<TasksElementsData>({
     resolver: zodResolver(tasksElementsSchema),
     defaultValues: {
@@ -126,6 +127,7 @@ export default function TasksElementsForm() {
                       getTaskById(fields[index].taskId)?.transformationId ?? -1
                     }
                     nestIndex={index}
+                    setValue={form.setValue}
                   />
                   <InputElementsFields
                     control={form.control}
@@ -136,6 +138,7 @@ export default function TasksElementsForm() {
                       getTaskById(fields[index].taskId)?.inputId ?? -1
                     }
                     nestIndex={index}
+                    setValue={form.setValue}
                   />
                 </div>
               </div>
