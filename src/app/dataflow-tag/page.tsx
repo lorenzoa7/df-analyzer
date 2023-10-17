@@ -1,22 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import TagForm from './components/tag-form'
 
 export default function DataflowTag() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Dataflow Tag</CardTitle>
-        <CardDescription>Define the tag of your dataflow.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <TagForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.dataflowTag.title}
+      description={cardConfig.dataflowTag.description}
+    >
+      <TagForm />
+    </StepCard>
   )
 }

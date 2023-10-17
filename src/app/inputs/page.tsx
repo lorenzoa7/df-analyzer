@@ -1,25 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import InputsForm from './components/inputs-form'
 
 export default function Inputs() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Inputs</CardTitle>
-        <CardDescription className="w-[32rem]">
-          Define how many inputs each transformation will have and their
-          respective names.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <InputsForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.inputs.title}
+      description={cardConfig.inputs.description}
+    >
+      <InputsForm />
+    </StepCard>
   )
 }

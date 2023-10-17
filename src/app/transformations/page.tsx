@@ -1,25 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import TransformationsForm from './components/transformations-form'
 
 export default function Transformations() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Transformation</CardTitle>
-        <CardDescription>
-          Define how many transformations it will have and their respective
-          names.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <TransformationsForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.transformations.title}
+      description={cardConfig.transformations.description}
+    >
+      <TransformationsForm />
+    </StepCard>
   )
 }

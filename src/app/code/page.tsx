@@ -1,24 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import CodeForm from './components/code-form'
 
 export default function Code() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Code</CardTitle>
-        <CardDescription>
-          Paste here your raw code so we can begin!
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <CodeForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.code.title}
+      description={cardConfig.code.description}
+    >
+      <CodeForm />
+    </StepCard>
   )
 }

@@ -1,24 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import TasksElementsForm from './components/tasks-elements-form'
 
-export default function Tasks() {
+export default function TasksElements() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Tasks Elements</CardTitle>
-        <CardDescription>
-          Associate the variables of the code to the attributes of each task.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <TasksElementsForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.tasksElements.title}
+      description={cardConfig.tasksElements.description}
+    >
+      <TasksElementsForm />
+    </StepCard>
   )
 }

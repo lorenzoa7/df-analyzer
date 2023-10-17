@@ -1,24 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import TasksForm from './components/tasks-form'
 
 export default function Tasks() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Tasks</CardTitle>
-        <CardDescription>
-          Define how many tasks it will have and their respective names.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <TasksForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.tasks.title}
+      description={cardConfig.tasks.description}
+    >
+      <TasksForm />
+    </StepCard>
   )
 }

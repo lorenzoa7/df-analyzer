@@ -23,10 +23,16 @@ export type Props = {
 const AppContext = createContext<Props>({} as Props)
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [dataflowData, setDataflowData] = useState(
-    (getLocalStorage(localStorageNames.dataflowData) as DataFlow) ||
-      defaultDataflowData,
-  )
+  const [dataflowData, setDataflowData] = useState<DataFlow>(() => {
+    if (typeof window !== 'undefined') {
+      const localDataflowData = getLocalStorage(localStorageNames.dataflowData)
+      if (localDataflowData) {
+        return localDataflowData as DataFlow
+      }
+    }
+    return defaultDataflowData
+  })
+
   const saveDataflowData = useCallback(() => {
     setLocalStorage(localStorageNames.dataflowData, dataflowData)
   }, [dataflowData])

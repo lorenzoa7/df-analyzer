@@ -1,22 +1,14 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import StepCard from '@/components/step-card'
+import { cardConfig } from '@/config/data'
 import InputsAttributesForm from './components/inputs-attributes-form'
 
 export default function InputsAttributes() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Inputs Attributes</CardTitle>
-        <CardDescription>Define the attributes of the inputs.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <InputsAttributesForm />
-      </CardContent>
-    </Card>
+    <StepCard
+      title={cardConfig.inputsAttributes.title}
+      description={cardConfig.inputsAttributes.description}
+    >
+      <InputsAttributesForm />
+    </StepCard>
   )
 }
