@@ -74,7 +74,7 @@ export const useExport = () => {
         ]
 
         const lastTransformationPart = [
-          `tf1.set_sets([${sets.toString()}])`,
+          `tf${transformation._id}.set_sets([${sets.toString()}])`,
           `df.add_transformation(tf${transformation._id})`,
           '',
         ]
@@ -111,10 +111,10 @@ export const useExport = () => {
             }
           }
           return [
-            `${task?.name} = Task(${getTaskById(line.taskId)
-              ?.name}, dataflow_tag, "${getTransformationById(
-              line.transformationId,
-            )?.name}"${
+            `${task?.name} = Task(${
+              line.taskId
+            }, dataflow_tag, "${getTransformationById(line.transformationId)
+              ?.name}"${
               dependecyTaskName ? `, dependency=${dependecyTaskName}` : ''
             })`,
           ].concat(
