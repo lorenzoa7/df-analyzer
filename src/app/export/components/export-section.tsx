@@ -23,7 +23,7 @@ export default function ExportSection() {
   }
 
   return (
-    <section className="flex flex-col gap-2 px-2">
+    <section className="flex flex-col items-center gap-2 px-2">
       <div className="mb-2 flex w-full justify-end px-2">
         <Button
           type="button"
@@ -36,7 +36,7 @@ export default function ExportSection() {
         </Button>
         <CopyButton copyText={script.join('\n')} />
       </div>
-      <ScrollArea className="h-[32rem] w-[64rem]">
+      <ScrollArea className="h-80 w-[72rem] 2xl:h-[32rem]">
         <ul className="flex flex-col p-2">
           {script.map((line, index) => (
             <li

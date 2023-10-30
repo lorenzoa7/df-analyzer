@@ -1,56 +1,51 @@
 'use client'
 
 import StepButtons from '@/components/step-buttons'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Form, FormLabel, FormMessage } from '@/components/ui/form'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { defaultOutput, defaultTransformation } from '@/config/defaults'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
 import { useTransformation } from '@/hooks/use-transformation'
 import { useApp } from '@/providers/app-provider'
-import { OutputsData, outputsSchema } from '@/schemas/outputs-schema'
+import {
+  OutputsAttributesData,
+  outputsAttributesSchema,
+} from '@/schemas/outputs-attributes-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
+import AttributesFields from './attributes-fields'
 
-export default function OutputsForm() {
+export default function OutputsAttributesForm() {
   const { goToNextStep } = useConstrolNavigation()
   const { setDataflowData, dataflowData } = useApp()
   const { getTransformationById } = useTransformation()
-  const form = useForm<OutputsData>({
-    resolver: zodResolver(outputsSchema),
+  const form = useForm<OutputsAttributesData>({
+    resolver: zodResolver(outputsAttributesSchema),
     defaultValues: {
-      outputs: dataflowData.transformations.map((transformation) => ({
-        ...transformation.output,
+      outputsAttributes: dataflowData.transformations.map((transformation) => ({
         transformationId: transformation._id,
+        attributes: transformation.output.attributes,
       })),
     },
   })
 
   const { fields } = useFieldArray({
     control: form.control,
-    name: 'outputs',
+    name: 'outputsAttributes',
   })
 
-  const onSubmit = (data: OutputsData) => {
+  const onSubmit = (data: OutputsAttributesData) => {
     const transformationsList = dataflowData.transformations
 
     const newTransformations = transformationsList.flatMap((transformation) => {
-      const output = data.outputs.find(
+      const list = data.outputsAttributes.find(
         (output) => output.transformationId === transformation._id,
       )
 
-      if (output) {
+      if (list) {
         return {
           ...transformation,
-          output: { ...defaultOutput, name: output.name },
+          output: { ...transformation.output, attributes: list.attributes },
         }
       }
 
@@ -69,16 +64,16 @@ export default function OutputsForm() {
     }
   }
 
-  const isDisabled =
-    form.getValues('outputs').filter((output) => output.name.length > 0)
-      .length < dataflowData.transformations.length
+  const isDisabled = form
+    .getValues('outputsAttributes')
+    .some((item) => item.attributes.length < 1)
 
   const redo = () => {
     setDataflowData((dataflowData) => ({
       ...dataflowData,
       transformations: dataflowData.transformations.map((transformation) => ({
         ...transformation,
-        output: defaultTransformation.output,
+        output: { ...transformation.output, attributes: [] },
       })),
     }))
   }
@@ -88,35 +83,21 @@ export default function OutputsForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormMessage />
         <Separator className="w-full" />
-        <ScrollArea className="h-[26rem] w-[36rem] p-2">
+        <ScrollArea className="h-72 w-[36rem] p-2 2xl:h-[28rem]">
           <div className="flex flex-col gap-5 p-2">
             {fields.map((field, index) => (
-              <FormField
-                key={field.id}
-                control={form.control}
-                name={`outputs.${index}.name`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="flex flex-col gap-2">
-                        <FormLabel className="font-bold">
-                          {
-                            getTransformationById(
-                              fields[index].transformationId,
-                            )?.name
-                          }
-                        </FormLabel>
-                        <Input
-                          className="w-full"
-                          placeholder="Output name..."
-                          {...field}
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div key={field.id}>
+                <FormLabel className="font-bold">
+                  {
+                    getTransformationById(fields[index].transformationId)
+                      ?.output.name
+                  }
+                </FormLabel>
+
+                <Separator className="my-5 w-full" />
+
+                <AttributesFields control={form.control} nestIndex={index} />
+              </div>
             ))}
           </div>
         </ScrollArea>

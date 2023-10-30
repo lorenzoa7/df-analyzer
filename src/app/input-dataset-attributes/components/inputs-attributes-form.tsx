@@ -106,7 +106,7 @@ export default function InputsAttributesForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormMessage />
         <Separator className="w-full" />
-        <ScrollArea className="h-[28rem] w-[36rem] p-2">
+        <ScrollArea className="h-80 w-[36rem] p-2 2xl:h-[28rem]">
           <div className="flex flex-col gap-5 p-2">
             {fields.map((field, index) => (
               <div key={field.id}>

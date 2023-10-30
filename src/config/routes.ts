@@ -1,13 +1,13 @@
 import { SiteSteps } from './site'
 
 export const siteRoutes = {
-  code: '/code',
+  script: '/script',
   dataflowTag: '/dataflow-tag',
-  transformations: '/transformations',
-  outputs: '/outputs',
-  outputsAttributes: '/outputs-attributes',
-  inputs: '/inputs',
-  inputsAttributes: '/inputs-attributes',
+  dataTransformations: '/data-transformations',
+  outputDataset: '/output-dataset',
+  outputDatasetAttributes: '/output-dataset-attributes',
+  inputDatasets: '/input-datasets',
+  inputDatasetAttributes: '/input-dataset-attributes',
   tasks: '/tasks',
   tasksElements: '/tasks-elements',
   tasksStamps: '/tasks-stamps',

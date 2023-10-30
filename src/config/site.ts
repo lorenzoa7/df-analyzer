@@ -6,13 +6,13 @@ export const siteConfig = {
 export type SiteConfig = typeof siteConfig
 
 export const siteSteps = [
-  'code',
+  'script',
   'dataflowTag',
-  'transformations',
-  'outputs',
-  'outputsAttributes',
-  'inputs',
-  'inputsAttributes',
+  'dataTransformations',
+  'outputDataset',
+  'outputDatasetAttributes',
+  'inputDatasets',
+  'inputDatasetAttributes',
   'tasks',
   'tasksElements',
   'tasksStamps',

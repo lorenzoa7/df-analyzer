@@ -7,32 +7,32 @@ export type MenuItem = {
 
 export const menuConfig = [
   {
-    title: 'Code',
-    route: '/code',
+    title: 'Script',
+    route: '/script',
   },
   {
     title: 'Dataflow Tag',
     route: '/dataflow-tag',
   },
   {
-    title: 'Transformations',
-    route: '/transformations',
+    title: 'Data Transformations',
+    route: '/data-transformations',
   },
   {
-    title: 'Outputs',
-    route: '/outputs',
+    title: 'Output Dataset',
+    route: '/output-dataset',
   },
   {
-    title: 'Outputs Attributes',
-    route: '/outputs-attributes',
+    title: 'Output Dataset Attributes',
+    route: '/output-dataset-attributes',
   },
   {
-    title: 'Inputs',
-    route: '/inputs',
+    title: 'Input Datasets',
+    route: '/input-datasets',
   },
   {
-    title: 'Inputs Attributes',
-    route: '/inputs-attributes',
+    title: 'Input Dataset Attributes',
+    route: '/input-dataset-attributes',
   },
   {
     title: 'Tasks',

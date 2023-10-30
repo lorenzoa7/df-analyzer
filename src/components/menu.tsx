@@ -9,7 +9,7 @@ import MenuItem from './menu-item'
 export default function Menu() {
   const currentRoute = usePathname() as SiteRoutes
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex w-[70%] flex-wrap items-center justify-center gap-5">
       {menuConfig.map((item, index) => (
         <MenuItem
           key={item.title}

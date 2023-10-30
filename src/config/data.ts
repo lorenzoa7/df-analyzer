@@ -19,53 +19,54 @@ export const cardConfig: Record<
   SiteSteps,
   Record<'title' | 'description', string>
 > = {
-  code: {
-    title: 'Code',
-    description: 'Paste here your raw code so we can begin!',
+  script: {
+    title: 'Script',
+    description: 'Paste here your Script so we can start the instrumentation!',
   },
   dataflowTag: {
     title: 'Dataflow Tag',
-    description: 'Define the tag of your dataflow.',
-  },
-  transformations: {
-    title: 'Transformations',
     description:
-      'Define how many transformations it will have and their respective names',
+      'Assign a tag to the dataflow for which you wish to capture provenance data.',
   },
-  outputs: {
+  dataTransformations: {
+    title: 'Data Transformations',
+    description: 'Specify the name of data transformations within your script.',
+  },
+  outputDataset: {
     title: 'Outputs',
-    description: 'Define the names of the transformation outputs.',
-  },
-  outputsAttributes: {
-    title: 'Outputs Attributes',
-    description: 'Define the attributes of the outputs.',
-  },
-  inputs: {
-    title: 'Inputs',
     description:
-      'Define how many inputs each transformation will have and their respective names.',
+      'Specify the names of the output datasets for the transformations.',
   },
-  inputsAttributes: {
-    title: 'Inputs Attributes',
-    description: 'Define the attributes of the inputs.',
+  outputDatasetAttributes: {
+    title: 'Output Dataset Attributes',
+    description: 'Specify the attributes for each output dataset.',
+  },
+  inputDatasets: {
+    title: 'Input Datasets',
+    description:
+      'Specify the input datasets for each transformation and their corresponding names.',
+  },
+  inputDatasetAttributes: {
+    title: 'Input Dataset Attributes',
+    description: 'Specify the attributes of the following input datasets.',
   },
   tasks: {
     title: 'Tasks',
     description:
-      'Define how many tasks it will have and their respective names.',
+      'Specify the tasks that will be executed in the script and their respective names.',
   },
   tasksElements: {
     title: 'Tasks Elements',
     description:
-      'Associate the variables of the code to the attributes of each task.',
+      "Link the script's variables to the attributes of each dataset consumed or produced by a task.",
   },
   tasksStamps: {
     title: 'Tasks Stamps',
-    description: 'Define when a task begins and when it ends in the code.',
+    description: 'Mark in your script where each task begins and ends.',
   },
   export: {
-    title: 'Export',
+    title: 'Export Instrumented Script',
     description:
-      'Congratulations! You have successfully generated a Df-Analyzer script! You can copy or download the python code below.',
+      'Congratulations! You have successfully instrumented your script for use with Df-Analyzer. You can now copy or download the Python code provided below.',
   },
 }
