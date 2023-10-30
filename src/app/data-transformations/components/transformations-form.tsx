@@ -12,10 +12,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { defaultDataflowData, defaultTransformation } from '@/config/defaults'
+import { defaultDataflowData } from '@/config/defaults'
 import { extractIds } from '@/functions/extract-ids'
 import { newId } from '@/functions/new-id'
 import { useConstrolNavigation } from '@/hooks/use-control-navigation'
+import { Transformation } from '@/lib/types'
 import { useApp } from '@/providers/app-provider'
 import {
   TransformationsData,
@@ -43,14 +44,18 @@ export default function TransformationsForm() {
   const onSubmit = (data: TransformationsData) => {
     const transformationsList = dataflowData.transformations
 
-    const newTransformations = data.transformations.map(
+    const newTransformations: Transformation[] = data.transformations.map(
       (transformation, index) => ({
-        ...defaultTransformation,
         _id: newId({
           idList: extractIds(transformationsList),
           modifier: index,
         }),
         name: transformation.name,
+        inputs: [],
+        output: {
+          name: `o${transformation.name}`,
+          attributes: [],
+        },
       }),
     )
 

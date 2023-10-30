@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/select'
 import { extractIds } from '@/functions/extract-ids'
 import { newId } from '@/functions/new-id'
+import { useTransformation } from '@/hooks/use-transformation'
 import { useApp } from '@/providers/app-provider'
 import { InputsData } from '@/schemas/inputs-schema'
 import { Plus, X } from 'lucide-react'
@@ -42,6 +43,7 @@ export default function InputsFields({
     name: `inputsList.${nestIndex}.inputs`,
   })
   const { dataflowData } = useApp()
+  const { getTransformationById } = useTransformation()
 
   const activateOutputReference = (index: number) => {
     const input = fields[index]
@@ -63,6 +65,8 @@ export default function InputsFields({
     return fields[index].transformationOutputReferenceId !== -1
   }
 
+  const transformationName = getTransformationById(nestTransformationId)?.name
+
   return (
     <>
       <Button
@@ -71,7 +75,11 @@ export default function InputsFields({
         onClick={() =>
           append({
             _id: newId({ idList: extractIds(fields) }),
-            name: '',
+            name: transformationName
+              ? `i${transformationName}${
+                  fields.length === 0 ? '' : fields.length
+                }`
+              : '',
             transformationOutputReferenceId: -1,
           })
         }

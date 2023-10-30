@@ -45,6 +45,7 @@ export default function TasksFields({
   const { getTransformationById } = useTransformation()
   const { getInputById } = useInput()
   const nestTransformation = getTransformationById(nestTransformationId)
+  const transformationName = nestTransformation?.name
   return (
     <>
       <Button
@@ -53,7 +54,11 @@ export default function TasksFields({
         onClick={() =>
           append({
             _id: newId({ idList: extractIds(fields), modifier: nestIndex }),
-            name: '',
+            name: transformationName
+              ? `t${transformationName}${
+                  fields.length === 0 ? '' : fields.length
+                }`
+              : '',
             inputId: nestTransformation?.inputs[0]._id ?? 1,
           })
         }
