@@ -44,6 +44,7 @@ export default function InputFormItem({
   const hasVariables = Object.keys(variables).length > 0
   const [useVariableAssistant, setUseVariableAssistant] = useState(false)
   const defaultVariableName = hasVariables ? Object.keys(variables)[0] : ''
+  console.log(defaultVariableName)
 
   useEffect(() => {
     if (hasVariables && useVariableAssistant) {
@@ -105,7 +106,7 @@ export default function InputFormItem({
         {useVariableAssistant && (
           <Select
             onValueChange={field.onChange}
-            defaultValue={'PRIMEIRO_NUMERO'}
+            defaultValue={defaultVariableName}
           >
             <FormControl>
               <SelectTrigger className="w-full">

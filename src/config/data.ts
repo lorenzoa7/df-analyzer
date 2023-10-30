@@ -33,7 +33,7 @@ export const cardConfig: Record<
     description: 'Specify the name of data transformations within your script.',
   },
   outputDataset: {
-    title: 'Outputs',
+    title: 'Output Dataset',
     description:
       'Specify the names of the output datasets for the transformations.',
   },

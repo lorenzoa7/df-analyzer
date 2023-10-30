@@ -100,13 +100,10 @@ export const useExport = () => {
               task.inputId,
             )?.transformationOutputReferenceId
             if (transformationOutputId) {
-              const attributesNames = getTransformationById(
-                transformationOutputId,
-              )?.output.attributes.map((attribute) => attribute.name)
-
               dependecyTaskName = dataflowData.tasks.find(
-                (task) =>
-                  task.outputElement.toString() === attributesNames?.toString(),
+                (_task) =>
+                  _task.transformationId === transformationOutputId &&
+                  _task.inputId === task.inputId,
               )?.name
             }
           }
