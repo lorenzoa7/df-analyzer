@@ -5,8 +5,8 @@ import TasksStampsForm from './components/tasks-stamps-form'
 export default function TasksStamps() {
   return (
     <StepCard
-      title={cardConfig.tasksStamps.title}
-      description={cardConfig.tasksStamps.description}
+      title={cardConfig.scriptInstrumentationPt2.title}
+      description={cardConfig.scriptInstrumentationPt2.description}
     >
       <TasksStampsForm />
     </StepCard>

@@ -39,12 +39,12 @@ export const menuConfig = [
     route: '/tasks',
   },
   {
-    title: 'Tasks Elements',
-    route: '/tasks-elements',
+    title: 'Script Instrumentation pt.1',
+    route: '/script-instrumentation-pt1',
   },
   {
-    title: 'Tasks Stamps',
-    route: '/tasks-stamps',
+    title: 'Script Instrumentation pt.2',
+    route: '/script-instrumentation-pt1',
   },
   {
     title: 'Export',

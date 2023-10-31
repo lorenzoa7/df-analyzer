@@ -14,8 +14,8 @@ export const siteSteps = [
   'inputDatasets',
   'inputDatasetAttributes',
   'tasks',
-  'tasksElements',
-  'tasksStamps',
+  'scriptInstrumentationPt1',
+  'scriptInstrumentationPt2',
   'export',
 ] as const satisfies readonly string[]
 

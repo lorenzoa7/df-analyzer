@@ -55,13 +55,13 @@ export const cardConfig: Record<
     description:
       'Specify the tasks that will be executed in the script and their respective names.',
   },
-  tasksElements: {
-    title: 'Tasks Elements',
+  scriptInstrumentationPt1: {
+    title: 'Script Instrumentation pt.1',
     description:
       "Link the script's variables to the attributes of each dataset consumed or produced by a task.",
   },
-  tasksStamps: {
-    title: 'Tasks Stamps',
+  scriptInstrumentationPt2: {
+    title: 'Script Instrumentation pt.2',
     description: 'Mark in your script where each task begins and ends.',
   },
   export: {

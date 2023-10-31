@@ -9,8 +9,8 @@ export const siteRoutes = {
   inputDatasets: '/input-datasets',
   inputDatasetAttributes: '/input-dataset-attributes',
   tasks: '/tasks',
-  tasksElements: '/tasks-elements',
-  tasksStamps: '/tasks-stamps',
+  scriptInstrumentationPt1: '/script-instrumentation-pt1',
+  scriptInstrumentationPt2: '/script-instrumentation-pt2',
   export: '/export',
 } as const satisfies Record<SiteSteps, string>
 
