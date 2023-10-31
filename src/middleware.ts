@@ -21,7 +21,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(newURL)
   }
 
-  const response = NextResponse.redirect(new URL(siteRoutes.code, request.url))
+  const response = NextResponse.redirect(
+    new URL(siteRoutes.script, request.url),
+  )
   response.cookies.set(cookiesNames.actualStep, siteSteps[0])
   return response
 }
