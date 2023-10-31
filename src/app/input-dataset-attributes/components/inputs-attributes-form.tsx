@@ -113,7 +113,7 @@ export default function InputsAttributesForm() {
                 <FormLabel className="font-bold">
                   {`Transformation: ${getTransformationById(
                     fields[index].transformationId,
-                  )?.name} / Input: ${getInputById(
+                  )?.name} / Input Dataset: ${getInputById(
                     fields[index].transformationId,
                     fields[index].inputId,
                   )?.name}`}

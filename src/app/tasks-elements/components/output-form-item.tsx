@@ -79,7 +79,7 @@ export default function OutputFormItem({
     <FormItem className="w-full">
       <div className="flex flex-col gap-4">
         <FormLabel>
-          {`Associate "${attributeName}" attribute to a variable`}
+          {`Associate attribute "${attributeName}" to a variable in the script`}
         </FormLabel>
         {hasVariables && (
           <div className="flex items-center">
@@ -88,7 +88,7 @@ export default function OutputFormItem({
               onCheckedChange={() => setUseVariableAssistant((state) => !state)}
             />
             <FormLabel className="ml-2">
-              Use an assistant to select the variable
+              Assist me in selecting the script variable
             </FormLabel>
           </div>
         )}

@@ -103,7 +103,8 @@ export default function InputsFields({
                     />
                   </FormControl>
                   <FormLabel className="ml-2">
-                    Set this input as another transformation output.
+                    The input dataset for this transformation is the output
+                    dataset of another transformation.
                   </FormLabel>
                   <FormMessage />
                 </FormItem>
