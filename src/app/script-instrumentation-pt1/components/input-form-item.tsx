@@ -44,7 +44,6 @@ export default function InputFormItem({
   const hasVariables = Object.keys(variables).length > 0
   const [useVariableAssistant, setUseVariableAssistant] = useState(false)
   const defaultVariableName = hasVariables ? Object.keys(variables)[0] : ''
-  console.log(defaultVariableName)
 
   useEffect(() => {
     if (hasVariables && useVariableAssistant) {
@@ -97,7 +96,13 @@ export default function InputFormItem({
                 }
               />
             </FormControl>
-            <FormLabel className="ml-2">
+            <FormLabel
+              className="ml-2"
+              onClick={(e) => {
+                e.preventDefault()
+                setUseVariableAssistant((state) => !state)
+              }}
+            >
               Assist me in selecting the script variable
             </FormLabel>
           </div>

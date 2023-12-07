@@ -87,7 +87,13 @@ export default function OutputFormItem({
               checked={useVariableAssistant}
               onCheckedChange={() => setUseVariableAssistant((state) => !state)}
             />
-            <FormLabel className="ml-2">
+            <FormLabel
+              className="ml-2"
+              onClick={(e) => {
+                e.preventDefault()
+                setUseVariableAssistant((state) => !state)
+              }}
+            >
               Assist me in selecting the script variable
             </FormLabel>
           </div>

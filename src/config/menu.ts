@@ -44,7 +44,7 @@ export const menuConfig = [
   },
   {
     title: 'Script Instrumentation pt.2',
-    route: '/script-instrumentation-pt1',
+    route: '/script-instrumentation-pt2',
   },
   {
     title: 'Export',
