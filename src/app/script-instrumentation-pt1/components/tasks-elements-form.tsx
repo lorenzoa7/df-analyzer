@@ -109,7 +109,7 @@ export default function TasksElementsForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormMessage />
         <Separator className="w-full" />
-        <ScrollArea className="h-80 w-[44rem] p-2 2xl:h-[28rem]">
+        <ScrollArea className="h-64 w-[44rem] p-2 2xl:h-[28rem]">
           <div className="flex flex-col gap-5 p-2">
             {fields.map((field, index) => (
               <div key={field.id}>

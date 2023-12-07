@@ -44,7 +44,7 @@ export default function CodeForm() {
             <FormItem>
               <FormControl>
                 <Textarea
-                  className="h-96 w-[32rem] resize-none"
+                  className="h-64 w-[32rem] resize-none"
                   placeholder="Paste here..."
                   {...field}
                 />

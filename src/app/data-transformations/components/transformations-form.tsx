@@ -91,7 +91,7 @@ export default function TransformationsForm() {
         </Button>
         <FormMessage />
         <Separator className="w-full" />
-        <ScrollArea className="h-64 w-[36rem] p-2 2xl:h-[26rem]">
+        <ScrollArea className="h-60 w-[36rem] p-2 2xl:h-[26rem]">
           <div className="flex flex-col gap-5 p-2">
             {fields.map((field, index) => (
               <FormField

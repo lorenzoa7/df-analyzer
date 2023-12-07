@@ -168,7 +168,7 @@ export default function TasksStampsForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormMessage />
         <Separator className="w-full" />
-        <ScrollArea className="h-80 w-[64rem] p-2 2xl:h-[32rem]">
+        <ScrollArea className="h-64 w-[64rem] p-2 2xl:h-[32rem]">
           <ul className="flex flex-col p-2">
             {fields.map((field, index) => {
               const line = fields[index]

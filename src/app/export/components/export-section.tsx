@@ -36,7 +36,7 @@ export default function ExportSection() {
         </Button>
         <CopyButton copyText={script.join('\n')} />
       </div>
-      <ScrollArea className="h-80 w-[72rem] 2xl:h-[32rem]">
+      <ScrollArea className="h-64 w-[72rem] 2xl:h-[30rem]">
         <ul className="flex flex-col p-2">
           {script.map((line, index) => (
             <li
