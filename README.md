@@ -1,4 +1,4 @@
-# 🗄️ <a href="https://dfanalyzer.vercel.app/">Script Instrumentation for DfAnalyzer</a></h1>
+# 🗄️ <a href="https://dfparser.vercel.app/">DfParser: Script Instrumentation for DfAnalyzer</a></h1>
 
 
 
@@ -9,14 +9,14 @@
   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 </div>
 
-![Script Instrumentation for DfAnalyzer Demo](https://github.com/lorenzoa7/script-instrumentation-for-dfanalyzer/blob/master/public/github/demo_script_instrumentation_for_dfanalyzer.gif.gif)
+![DfParser Demo](https://github.com/lorenzoa7/df-parser/blob/master/public/github/demo_dfparser.gif)
 
 
 ## 📑 About
 <p>A web application that helps the user to instrument a script for the Df-Analyzer tool, which is used to capture provenance in dataflow, in the context of scientific applications. The user is guided through a flow of steps until the final code is generated.</p>
 
 
-<a href="https://dfanalyzer-instrumentation.vercel.app
+<a href="https://dfparser.vercel.app
 /">App Preview</a>
 
 ## 🌟 Features
@@ -32,7 +32,7 @@
 ### 1. Clone this repository:
 <pre>
   <code>
-    git clone https://github.com/lorenzoa7/script-instrumentation-for-dfanalyzer.git
+    git clone https://github.com/lorenzoa7/df-parser.git
   </code>
 </pre>
 

@@ -13,7 +13,7 @@ export default function Footer() {
         <Github size={15} />
         Lorenzo Aceti
       </Link>
-      <span>- Script Instrumentation for DfAnalyzer</span>
+      <span>- DfParser: Script Instrumentation for DfAnalyzer</span>
       <span>- 2023</span>
     </footer>
   )
