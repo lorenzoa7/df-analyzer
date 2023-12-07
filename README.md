@@ -1,4 +1,4 @@
-# 🗄️ <a href="https://dfanalyzer.vercel.app/">Df-Analyzer Interface</a></h1>
+# 🗄️ <a href="https://dfanalyzer.vercel.app/">Script Instrumentation for DfAnalyzer</a></h1>
 
 
 
@@ -9,26 +9,30 @@
   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 </div>
 
-![Df Analyzer Interface Demo](https://github.com/lorenzoa7/ai-chatbot/blob/master/public/github/demo_df_analyzer.gif)
+![Script Instrumentation for DfAnalyzer Demo](https://github.com/lorenzoa7/script-instrumentation-for-dfanalyzer/blob/master/public/github/demo_script_instrumentation_for_dfanalyzer.gif.gif)
 
 
 ## 📑 About
-<p>A web application that helps the user to generate their own script code, compatible enough to be used in a powerful analysis tool called Df-Analyzer.</p>
+<p>A web application that helps the user to instrument a script for the Df-Analyzer tool, which is used to capture provenance in dataflow, in the context of scientific applications. The user is guided through a flow of steps until the final code is generated.</p>
 
 
-<a href="https://dfanalyzer.vercel.app/">App Preview</a>
+<a href="https://dfanalyzer-instrumentation.vercel.app
+/">App Preview</a>
 
 ## 🌟 Features
 
-- Work in progress
-
+- Generation of instrumented Python code for DfAnalyzer
+- Complex forms created with react-hook-form and zod
+- Well-defined flow of steps to assist the user
+- Possibility to download the instrumented script at the end
+- Capture of code variables to assist in association with dataset attributes
 
 ## 🎮 How to start
 
 ### 1. Clone this repository:
 <pre>
   <code>
-    git clone https://github.com/lorenzoa7/df-analyzer.git
+    git clone https://github.com/lorenzoa7/script-instrumentation-for-dfanalyzer.git
   </code>
 </pre>
 
